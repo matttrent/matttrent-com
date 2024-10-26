@@ -3,6 +3,13 @@ import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 
 const pageTitle = "Matthew Trentacoste";
+
+import { getCollection, getEntry } from "astro:content";
+
+// Get all entries from a collection.
+// Requires the name of the collection as an argument.
+// Example: retrieve `src/content/blog/**`
+const allNotes = await getCollection("notes");
 ---
 
 <Layout title={pageTitle}>
@@ -62,8 +69,14 @@ const pageTitle = "Matthew Trentacoste";
   <section>
     <h2>Notes</h2>
     <dl class="dl-horizontal-wide">
-      <dt>2024 Oct</dt>
-      <dd><a href="/notes/2024-summer">2024 summer</a></dd>
+      <dt>2024</dt>
+      {
+        allNotes.map((p) => (
+          <dd>
+            <a href={`/notes/${p.slug}`}>{p.data.title}</a>
+          </dd>
+        ))
+      }
     </dl>
   </section>
 
@@ -193,21 +206,20 @@ const pageTitle = "Matthew Trentacoste";
           Implementing Performance Numerical Libraries on Graphics Hardware</a
         > (B.Sc.)
       </dd>
-    </section>
+    </dl>
 
     <section>
       <div class="epigraph">
         <blockquote>
           <p>
             What information consumes is rather obvious: it consumes the
-            attention of its recipients. Hence a wealth of information creates
-            a poverty of attention and a need to allocate that attention
+            attention of its recipients. Hence a wealth of information creates a
+            poverty of attention and a need to allocate that attention
             efficiently among the overabundance of information...
           </p>
           <footer>Herbert Simon, 1970</footer>
         </blockquote>
       </div>
     </section>
-
-
+  </section>
 </Layout>
