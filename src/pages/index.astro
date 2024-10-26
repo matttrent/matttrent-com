@@ -1,15 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import NotesList from "../components/NotesList.astro";
 
 const pageTitle = "Matthew Trentacoste";
-
-import { getCollection, getEntry } from "astro:content";
-
-// Get all entries from a collection.
-// Requires the name of the collection as an argument.
-// Example: retrieve `src/content/blog/**`
-const allNotes = await getCollection("notes");
 ---
 
 <Layout title={pageTitle}>
@@ -66,19 +59,7 @@ const allNotes = await getCollection("notes");
     </p>
   </section>
 
-  <!-- <section>
-    <h2>Notes</h2>
-    <dl class="dl-horizontal-wide">
-      <dt>2024</dt>
-      {
-        allNotes.map((p) => (
-          <dd>
-            <a href={`/notes/${p.slug}`}>{p.data.title}</a>
-          </dd>
-        ))
-      }
-    </dl>
-  </section> -->
+  <NotesList />
 
   <section>
     <h2>Random artifacts</h2>

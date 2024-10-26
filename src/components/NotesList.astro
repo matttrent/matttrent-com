@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+
+// Get all non-draft notes
+const allNotes = await getCollection("notes", ({ data }) => {
+  return data.isDraft !== true;
+});
+
+// Group filtered notes by year
+const notesByYear = allNotes.reduce((acc, note) => {
+  const year = note.data.date.getFullYear();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(note);
+  return acc;
+}, {} as Record<number, typeof allNotes>);
+
+// Convert to array and sort by year descending
+const sortedYearGroups = Object.entries(notesByYear)
+  .sort(([a], [b]) => Number(b) - Number(a));
+---
+
+{
+  allNotes.length > 0 && (
+    <section>
+      <h2>Notes</h2>
+      <dl class="dl-horizontal">
+        {sortedYearGroups.map(([year, notes]) => (
+          <>
+            <dt>{year}</dt>
+            {notes.map((note) => (
+              <dd>
+                <a href={`/notes/${note.slug}`}>{note.data.title}</a>
+              </dd>
+            ))}
+          </>
+        ))}
+      </dl>
+    </section>
+  )
+}
