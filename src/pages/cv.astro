@@ -1,6 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+// importing all styles here to ensure they're loaded in correct order
+import "../css/tufte.css";
+import "../css/latex.css";
+import "../css/custom.css";
 import "../css/cv.css";
+
 import ArtifactsList from "../components/ArtifactsList.astro";
 import CVList from "../components/CVList.astro";
 
