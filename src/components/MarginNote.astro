@@ -11,4 +11,4 @@ const { text } = Astro.props;
 
 <label for="mn-{name}" class="margin-toggle">&#8853;</label>
 <input type="checkbox" id="mn-{name}" class="margin-toggle"/>
-<span class="marginnote">{text}</span>
+<span class="marginnote" set:html={text}></span>
