@@ -1,0 +1,30 @@
+---
+import { groupAndSortByDate } from '../utils/dateGrouping';
+
+export interface ArtifactItem {
+  date: string;
+  content: string;
+}
+
+interface Props {
+  items: ArtifactItem[];
+}
+
+const { items } = Astro.props;
+const sortedDateGroups = groupAndSortByDate(items, {
+  sortKey: (item) => item.date
+});
+---
+
+<dl class="dl-horizontal">
+  {
+    sortedDateGroups.map(([date, artifacts]) => (
+      <>
+        <dt>{date}</dt>
+        {artifacts.map((artifact) => (
+          <dd set:html={artifact.content} />
+        ))}
+      </>
+    ))
+  }
+</dl> 

@@ -1,0 +1,36 @@
+---
+import { groupAndSortByDate } from '../utils/dateGrouping';
+
+export interface CVItem {
+  dates: string;
+  id?: string;
+  subject: string;
+  description: string;
+}
+
+interface Props {
+  items: CVItem[];
+}
+
+const { items } = Astro.props;
+const sortedDateGroups = groupAndSortByDate(items, {
+  sortKey: (item) => item.dates.split('-')[0],
+  displayKey: (item) => item.dates
+});
+---
+
+<dl class="dl-horizontal">
+  {
+    sortedDateGroups.map(([dates, items]) => (
+      <>
+        <dt>{dates}</dt>
+        {items.map((item) => (
+          <>
+            <dd id={item.id} set:html={item.subject} />
+            <dd class="dl-small-text" set:html={item.description} />
+          </>
+        ))}
+      </>
+    ))
+  }
+</dl> 
