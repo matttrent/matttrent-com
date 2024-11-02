@@ -1,14 +1,13 @@
 ---
-import Page from "../layouts/Page.astro";
+import Layout from "../layouts/Layout.astro";
 import MarginNote from "../components/MarginNote.astro";
-
-// import * as scalePerception from "./scale-dependent-perception.md";
-// import { Content } from "./scale-dependent-perception.md";
 
 const pageTitle = "Manipulating Scale-Dependent Perception of Images";
 ---
 
-<Page title={pageTitle}>
+<Layout title={pageTitle}>
+  <h1>{pageTitle}</h1>
+  <section>
   <figure>
     <img src="/attachments/research/chuckclose_full.png" alt="" width="35.5%" />
     <img src="/attachments/research/chuckclose_crop.png" alt="" width="61.5%" />
@@ -76,4 +75,5 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
       data-ratio="1.33333333333333"
       src="//speakerdeck.com/assets/embed.js"></script>
   </figure>
-</Page>
+  </section>
+</Layout>

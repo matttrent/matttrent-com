@@ -1,5 +1,5 @@
 ---
-import Page from "../../layouts/Page.astro";
+import NotesLayout from "../../layouts/NotesLayout.astro";
 import { getCollection } from "astro:content";
 
 // 1. Generate a new path for every collection entry
@@ -18,6 +18,6 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<Page title={entry.data.title}>
+<NotesLayout title={entry.data.title}>
   <Content />
-</Page>
+</NotesLayout>

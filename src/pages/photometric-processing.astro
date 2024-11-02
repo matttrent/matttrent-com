@@ -1,14 +1,13 @@
 ---
-import Page from "../layouts/Page.astro";
+import Layout from "../layouts/Layout.astro";
 import MarginNote from "../components/MarginNote.astro";
-
-// import * as photoProcess from "./photometric-processing.md";
-// import { Content } from "./photometric-processing.md";
 
 const pageTitle = "Photometric Image Processing for HDR Displays";
 ---
 
-<Page title={pageTitle}>
+<Layout title={pageTitle}>
+  <h1>{pageTitle}</h1>
+  <section>
   <figure>
     <img
       src="/attachments/research/photometric-processing-1.png"
@@ -79,4 +78,5 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
       data-ratio="1.29456384323641"
       src="//speakerdeck.com/assets/embed.js"></script>
   </figure>
-</Page>
+  </section>
+</Layout>
