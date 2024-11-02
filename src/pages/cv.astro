@@ -1,36 +1,17 @@
 ---
-// TODO: Migrate back to using a layout and figure out the correct order of CSS imports
-
-import GoogleAnalytics from "../components/GoogleAnalytics.astro";
-
-import "../css/tufte.css";
-import "../css/latex.css";
-import "../css/custom.css";
-import "../css/cv.css";
+import Layout from "../layouts/Layout.astro";
+import cvStyles from "../css/cv.css";
 
 const pageTitle = "Matthew Trentacoste";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <GoogleAnalytics />
+<Layout title={pageTitle} styles={[cvStyles]}>
+  <h1>{pageTitle}</h1>
 
-    <meta charset="utf-8" />
-    <title>{pageTitle}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-  </head>
-
-  <body>
-    <article class="single-article">
-      <h1>{pageTitle}</h1>
-
-      <p>
-        [my-intials]@matttrent.com<br />
-        +1.415.326.3226
-      </p>
+  <p>
+    [my-intials]@matttrent.com<br />
+    +1.415.326.3226
+  </p>
 
       <!-- <section>
       <p>
@@ -387,7 +368,4 @@ const pageTitle = "Matthew Trentacoste";
         <h2>References</h2>
         <p>Ask and ye shall receive.</p>
       </section>
-
-    </article>
-  </body>
-</html>
+  </Layout>
