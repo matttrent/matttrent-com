@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import cvStyles from "../css/cv.css";
+import "../css/cv.css";
 import ArtifactsList from "../components/ArtifactsList.astro";
 import CVList from "../components/CVList.astro";
 
@@ -169,7 +169,7 @@ const talksAndMisc = [
 ];
 ---
 
-<Layout title={pageTitle} styles={[cvStyles]}>
+<Layout title={pageTitle}>
   <h1>{pageTitle}</h1>
   <p>
     [my-intials]@matttrent.com<br />

@@ -7,10 +7,9 @@ import "../css/custom.css";
 
 interface Props {
 	title: string;
-	styles?: any[];  // Array of imported style modules
 }
 
-const { title, styles = [] } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
