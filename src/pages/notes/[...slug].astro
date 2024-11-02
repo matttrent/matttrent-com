@@ -6,7 +6,9 @@ import { getCollection } from "astro:content";
 export async function getStaticPaths() {
   const noteEntries = await getCollection("notes");
   return noteEntries.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { 
+      slug: `${entry.data.date.getFullYear()}/${entry.slug}` 
+    },
     props: { entry },
   }));
 }
