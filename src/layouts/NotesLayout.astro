@@ -2,14 +2,19 @@
 import Layout from "./Layout.astro";
 
 interface Props {
-  title: string;
+  content: {
+    title: string;
+    date?: Date;
+    isDraft?: boolean;
+    [key: string]: any;
+  }
 }
 
-const { title } = Astro.props;
+const { content } = Astro.props;
 ---
 
-<Layout title={title}>
-  <h1>{title}</h1>
+<Layout title={content.title}>
+  <h1>{content.title}{content.isDraft && " (draft)"}</h1>
   <section>
     <slot />
   </section>

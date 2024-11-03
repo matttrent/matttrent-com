@@ -26,6 +26,7 @@ const sortedYearGroups = groupAndSortByDate(allNotes, {
             {notes.map((note) => (
               <dd>
                 <a href={`/notes/${note.slug}`}>{note.data.title}</a>
+                {note.data.isDraft && " (draft)"}
               </dd>
             ))}
           </>
