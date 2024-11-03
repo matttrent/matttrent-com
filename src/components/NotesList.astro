@@ -22,7 +22,7 @@ const sortedYearGroups = groupAndSortByDate(allNotes, {
             <dt>{year}</dt>
             {notes.map((note) => (
               <dd>
-                <a href={`/notes/${year}/${note.slug}`}>{note.data.title}</a>
+                <a href={`/notes/${note.slug}`}>{note.data.title}</a>
               </dd>
             ))}
           </>
