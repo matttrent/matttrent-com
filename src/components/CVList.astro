@@ -1,5 +1,5 @@
 ---
-import { groupAndSortByDate } from '../utils/dateGrouping';
+import { groupAndSortByDate } from "../utils/dateGrouping";
 
 export interface CVItem {
   dates: string;
@@ -14,8 +14,8 @@ interface Props {
 
 const { items } = Astro.props;
 const sortedDateGroups = groupAndSortByDate(items, {
-  sortKey: (item) => item.dates.split('-')[0],
-  displayKey: (item) => item.dates
+  groupKey: (item) => item.dates.split("-")[0],
+  displayKey: (item) => item.dates,
 });
 ---
 
@@ -33,4 +33,4 @@ const sortedDateGroups = groupAndSortByDate(items, {
       </>
     ))
   }
-</dl> 
+</dl>

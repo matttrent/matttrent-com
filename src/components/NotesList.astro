@@ -8,7 +8,8 @@ const allNotes = await getCollection("notes", ({ data }) => {
 });
 
 const sortedYearGroups = groupAndSortByDate(allNotes, {
-  sortKey: (note) => note.data.date.getFullYear()
+  groupKey: (note) => note.data.date.getFullYear(),
+  sortKey: (note) => note.data.date,
 });
 ---
 
