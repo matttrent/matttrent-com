@@ -1,10 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import { groupAndSortByDate } from '../utils/dateGrouping';
+import { groupAndSortByDate } from "../utils/dateGrouping";
 
 // Get all non-draft notes
 const allNotes = await getCollection("notes", ({ data }) => {
-  return data.isDraft !== true;
+  return import.meta.env.PROD ? data.draft !== true : true;
 });
 
 const sortedYearGroups = groupAndSortByDate(allNotes, {
