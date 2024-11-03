@@ -1,13 +1,16 @@
 ---
-title: 2024 summer quarterly
+title: 2024 Eastern Sierra trip
 date: 2024-09-21
-isDraft: false
+isDraft: true
+createdAt: 2024-10-25
+modifiedAt: 2024-11-03
 ---
 
 Did some stuff
 
-<p>Tufte emphasizes tight integration of graphics with text. Data, graphs, and figures are kept with the text that discusses them. In print, this means they are not relegated to a separate page. On the web, that means readability of graphics and their accompanying text without extra clicks, tab-switching, or scrolling.</p>
-<p>Figures should try to use the <code>figure</code> element, which by default are constrained to the main column. Don’t wrap figures in a paragraph tag. Any label or margin note goes in a regular margin note inside the figure. For example, most of the time one should introduce a figure directly into the main flow of discussion, like so:</p>
+Tufte emphasizes tight integration of graphics with text. Data, graphs, and figures are kept with the text that discusses them. In print, this means they are not relegated to a separate page. On the web, that means readability of graphics and their accompanying text without extra clicks, tab-switching, or scrolling.
+
+Figures should try to use the `figure` element, which by default are constrained to the main column. Don’t wrap figures in a paragraph tag. Any label or margin note goes in a regular margin note inside the figure. For example, most of the time one should introduce a figure directly into the main flow of discussion, like so:
 
 <figure>
   <label for="mn-exports-imports" class="margin-toggle">&#8853;</label>
@@ -26,9 +29,7 @@ Did some stuff
   But tight integration of graphics with text is central to Tufte’s work even when those graphics are ancillary to the main body of a text. In many of those cases, a margin figure may be most appropriate. To place figures in the margin, just wrap an image (or whatever) in a margin note inside a <code>p</code> tag, as seen to the right of this paragraph.
 </p>
 
-<p>
-  If you need a full-width figure, give it the <code>fullwidth</code> class. Make sure that’s inside an <code>article</code>, and it will take up (almost) the full width of the screen. This approach is demonstrated below using Edward Tufte’s English translation of the Napoleon’s March data visualization. From <em>Beautiful Evidence</em>, page 122-124.
-</p>
+If you need a full-width figure, give it the `fullwidth` class. Make sure that’s inside an `article`, and it will take up (almost) the full width of the screen. This approach is demonstrated below using Edward Tufte’s English translation of the Napoleon’s March data visualization. From *Beautiful Evidence*, page 122-124.
 
 <figure class="fullwidth">
   <img src="https://edwardtufte.github.io/tufte-css/img/napoleons-march.png" alt="Figurative map of the successive losses of the French Army in the Russian campaign, 1812-1813" />
