@@ -133,6 +133,11 @@ pre > code {
   font-size: 0.9rem;
 }
 
+figure {
+  display: flow-root;
+  /* Creates a new block formatting context */
+}
+
 @media screen and (max-width: 760px) {
   section>dl { width: 90%; }
   section>ul { width: 90%; }
