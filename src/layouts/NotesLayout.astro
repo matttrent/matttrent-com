@@ -1,13 +1,9 @@
 ---
+import type { Note } from '../types/note';
 import Layout from "./Layout.astro";
 
 interface Props {
-  content: {
-    title: string;
-    date?: Date;
-    isDraft?: boolean;
-    [key: string]: any;
-  }
+  content: Note;
 }
 
 const { content } = Astro.props;

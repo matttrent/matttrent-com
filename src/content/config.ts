@@ -1,14 +1,11 @@
 // 1. Import utilities from `astro:content`
-import { z, defineCollection } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { noteSchema } from '../types/note';
 
 // 2. Define your collection(s)
 const noteCollection = defineCollection({ 
   type: 'content',
-  schema: z.object({
-    title: z.string(),
-    date: z.date(),
-    isDraft: z.boolean().optional(),
-  }),
+  schema: noteSchema,
  });
 
 // 3. Export a single `collections` object to register your collection(s)
