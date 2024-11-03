@@ -1,15 +1,17 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { groupAndSortByDate } from "../utils/dateGrouping";
 
+type Note = CollectionEntry<"notes">;
+
 // Get all non-draft notes
-const allNotes = await getCollection("notes", ({ data }) => {
-  return import.meta.env.PROD ? data.draft !== true : true;
+const allNotes = await getCollection("notes", ({ data }: Note) => {
+  return import.meta.env.PROD ? data.isDraft !== true : true;
 });
 
 const sortedYearGroups = groupAndSortByDate(allNotes, {
-  groupKey: (note) => note.data.date.getFullYear(),
-  sortKey: (note) => note.data.date,
+  groupKey: (note: Note) => note.data.date.getFullYear(),
+  sortKey: (note: Note) => note.data.date,
 });
 ---
 
