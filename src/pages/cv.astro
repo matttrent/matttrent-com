@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import ArtifactsList from "../components/ArtifactsList.astro";
 import CVList from "../components/CVList.astro";
 
-import { professionalExperience, education, journalArticles, patents, talksAndMisc } from "../data/cv";
+import * as cv from "../data/cv";
 
 // importing all styles here to ensure they're loaded in correct order
 import "../css/tufte.css";
@@ -32,19 +32,19 @@ const pageTitle = "Matthew Trentacoste";
 
   <section>
     <h2>Professional experience</h2>
-    <CVList items={professionalExperience} />
+    <CVList items={cv.professionalExperience} />
 
     <h2>Education</h2>
-    <CVList items={education} />
+    <CVList items={cv.education} />
 
     <h2>Journal articles & papers</h2>
-    <ArtifactsList items={journalArticles} />
+    <ArtifactsList items={cv.journalArticles} />
 
     <h2>Patents</h2>
-    <ArtifactsList items={patents} />
+    <ArtifactsList items={cv.patents} />
 
     <h2>Talks & miscellany</h2>
-    <ArtifactsList items={talksAndMisc} />
+    <ArtifactsList items={cv.talksAndMisc} />
   </section>
 
   <section>
