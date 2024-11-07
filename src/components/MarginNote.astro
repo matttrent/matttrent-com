@@ -4,11 +4,11 @@ interface Props {
 }
 
 const { name } = Astro.props;
-
 ---
 
+<slot name="content" />
 <label for={`mn-${name}`} class="margin-toggle">&#8853;</label>
-<input type="checkbox" id={`mn-${name}`} class="margin-toggle"/>
+<input type="checkbox" id={`mn-${name}`} class="margin-toggle" />
 <span class="marginnote">
   <slot />
 </span>
