@@ -6,7 +6,18 @@ interface Props {
 const { name } = Astro.props;
 ---
 
-<div style="width: 55%;">
-  <slot />
+<div class="container">
   <slot name="marginnote" />
+  <slot />
 </div>
+
+<style is:global>
+  .container {
+    width: 55%;
+  }
+
+  span.marginnote > p {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+</style>
