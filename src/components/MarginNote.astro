@@ -6,16 +6,26 @@ interface Props {
 const { name } = Astro.props;
 ---
 
-<label for={`mn-${name}`} class="margin-toggle">&#8853;</label>
-<input type="checkbox" id={`mn-${name}`} class="margin-toggle" />
-<span class="marginnote">
-  <slot />
-</span>
+<aside>
+  <label for={`mn-${name}`} class="margin-toggle">&#8853;</label>
+  <input type="checkbox" id={`mn-${name}`} class="margin-toggle" />
+  <span class="marginnote">
+    <slot />
+  </span>
+</aside>
 
 <style is:global>
+  aside {
+    display: inline;
+    vertical-align: baseline;
+    position: relative;
+  }
+
   /* set <p> styling to be the same as marginnote styling, to handle marginnotes generated
     by MDX that will be wrapped in <p> */
   span.marginnote > p {
+    margin-top: 0;
+    margin-bottom: 0;
     font-size: 1.1rem;
     line-height: 1.3;
   }
