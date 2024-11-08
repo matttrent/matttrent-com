@@ -58,6 +58,17 @@ a:link {
   background-position: 0% 93%, 100% 93%, 0% 93%; 
 }
 
+header {
+  position: relative;
+  padding-top: 5rem;
+  padding-bottom: 0rem;
+}
+
+article {
+  position: relative;
+  padding: 0rem 0rem;
+}
+
 section>dl {
   font-size: 1.4rem;
   width: 50%;

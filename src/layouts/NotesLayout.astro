@@ -10,7 +10,9 @@ const { content } = Astro.props;
 ---
 
 <Layout title={content.title}>
-  <h1>{content.title}{content.isDraft && " (draft)"}</h1>
+  <header slot="header">
+    <h1>{content.title}{content.isDraft && " (draft)"}</h1>
+  </header>
   <section>
     <slot />
   </section>

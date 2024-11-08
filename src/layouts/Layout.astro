@@ -1,12 +1,13 @@
 ---
 import GoogleAnalytics from "../components/GoogleAnalytics.astro";
+import HTMLHeader from "../components/HTMLHeader.astro";
 
 import "../css/tufte.css";
 import "../css/latex.css";
 import "../css/custom.css";
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -14,23 +15,14 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<GoogleAnalytics />
-		
-		<meta charset="utf-8" />
-		<title>{title}</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<slot name="head" />
-	</head>
+	<HTMLHeader title={title} />
 
-	<body>
-		<slot name="header" />
-		<main>
-			<article>
-				<slot />
-			</article>
-		</main>
-	</body>
+  <body>
+    <slot name="header" />
+    <main>
+      <article>
+        <slot />
+      </article>
+    </main>
+  </body>
 </html>
