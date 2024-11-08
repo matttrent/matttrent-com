@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 
 import ArtifactsList from "../components/ArtifactsList.astro";
 import CVList from "../components/CVList.astro";
@@ -13,42 +13,59 @@ import "../css/custom.css";
 import "../css/cv.css";
 
 const pageTitle = "Matthew Trentacoste";
-
-
 ---
 
-<Layout title={pageTitle}>
-  <h1>{pageTitle}</h1>
-  <p>
-    [my-intials]@matttrent.com<br />
-    +1.415.326.3226
-  </p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <GoogleAnalytics />
 
-  <section class="print-hide">
-    <p>
-      <strong>Need a PDF?</strong> Just print me and save. I format correctly.
-    </p>
-  </section>
+    <meta charset="utf-8" />
+    <title>{pageTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <slot name="head" />
+  </head>
 
-  <section>
-    <h2>Professional experience</h2>
-    <CVList items={cv.professionalExperience} />
+  <body>
+    <slot name="header" />
+    <main>
+      <article>
+        <h1>{pageTitle}</h1><p>
+          [my-intials]@matttrent.com<br />
+          +1.415.326.3226
+        </p>
 
-    <h2>Education</h2>
-    <CVList items={cv.education} />
+        <section class="print-hide">
+          <p>
+            <strong>Need a PDF?</strong> Just print me and save. I format correctly.
+          </p>
+        </section>
 
-    <h2>Journal articles & papers</h2>
-    <ArtifactsList items={cv.journalArticles} />
+        <section>
+          <h2>Professional experience</h2>
+          <CVList items={cv.professionalExperience} />
 
-    <h2>Patents</h2>
-    <ArtifactsList items={cv.patents} />
+          <h2>Education</h2>
+          <CVList items={cv.education} />
 
-    <h2>Talks & miscellany</h2>
-    <ArtifactsList items={cv.talksAndMisc} />
-  </section>
+          <h2>Journal articles & papers</h2>
+          <ArtifactsList items={cv.journalArticles} />
 
-  <section>
-    <h2>References</h2>
-    <p>Ask and ye shall receive.</p>
-  </section>
-</Layout>
+          <h2>Patents</h2>
+          <ArtifactsList items={cv.patents} />
+
+          <h2>Talks & miscellany</h2>
+          <ArtifactsList items={cv.talksAndMisc} />
+        </section>
+
+        <section>
+          <h2>References</h2>
+          <p>Ask and ye shall receive.</p>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
+
