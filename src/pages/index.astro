@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import NotesList from "../components/NotesList.astro";
 import ArtifactsList from "../components/ArtifactsList.astro";
 import artifacts from "../data/artifacts";
+import Epigraph from "../components/Epigraph.astro";
 
 const pageTitle = "Matthew Trentacoste";
 ---
@@ -63,7 +64,10 @@ const pageTitle = "Matthew Trentacoste";
     </p>
   </section>
 
-  <NotesList />
+  <section>
+    <h2>Notes</h2>
+    <NotesList />
+  </section>
 
   <section>
     <h2>Random artifacts</h2>
@@ -71,17 +75,12 @@ const pageTitle = "Matthew Trentacoste";
   </section>
 
   <section>
-    <div class="epigraph">
-      <blockquote>
-        <p>
-          What information consumes is rather obvious: it consumes the attention
-          of its recipients. Hence a wealth of information creates a poverty of
-          attention and a need to allocate that attention efficiently among the
-          overabundance of information...
-        </p>
-        <footer>Herbert Simon, 1970</footer>
-      </blockquote>
-    </div>
+    <Epigraph>
+      What information consumes is rather obvious: it consumes the attention
+      of its recipients. Hence a wealth of information creates a poverty of
+      attention and a need to allocate that attention efficiently among the
+      overabundance of information...
+      <footer slot="footer">Herbert Simon, 1970</footer>
+    </Epigraph>
   </section>
-  
 </Layout>

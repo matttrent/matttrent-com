@@ -15,23 +15,16 @@ const sortedYearGroups = groupAndSortByDate(allNotes, {
 });
 ---
 
-{
-  allNotes.length > 0 && (
-    <section>
-      <h2>Notes</h2>
-      <dl class="dl-horizontal">
-        {sortedYearGroups.map(([year, notes]) => (
-          <>
-            <dt>{year}</dt>
-            {notes.map((note) => (
-              <dd>
-                <a href={`/notes/${note.slug}`}>{note.data.title}</a>
-                {note.data.isDraft && " (draft)"}
-              </dd>
-            ))}
-          </>
-        ))}
-      </dl>
-    </section>
-  )
-}
+<dl class="dl-horizontal">
+  {sortedYearGroups.map(([year, notes]) => (
+    <>
+      <dt>{year}</dt>
+      {notes.map((note) => (
+        <dd>
+          <a href={`/notes/${note.slug}`}>{note.data.title}</a>
+          {note.data.isDraft && " (draft)"}
+        </dd>
+      ))}
+    </>
+  ))}
+</dl>

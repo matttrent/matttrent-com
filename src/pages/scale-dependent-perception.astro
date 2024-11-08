@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import BasicImage from "../components/BasicImage.astro";
 import MarginNote from "../components/MarginNote.astro";
 
 const pageTitle = "Manipulating Scale-Dependent Perception of Images";
@@ -10,15 +11,13 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
     <h1>{pageTitle}</h1>
   </header>
   <section>
-  <figure>
-    <MarginNote name="caption">
-      <Fragment slot="content">
-        <img src="/attachments/research/chuckclose_full.png" alt="" width="35.5%" />
-        <img src="/attachments/research/chuckclose_crop.png" alt="" width="61.5%" />
-      </Fragment>
+  <BasicImage>
+    <img src="/attachments/research/chuckclose_full.png" alt="" width="35.5%" />
+    <img src="/attachments/research/chuckclose_crop.png" alt="" width="61.5%" />
+    <MarginNote slot="marginnote" name="caption">
       Self-portrait of Chuck Close viewed at 2 scales. The left image is clearly recognizable as a portrait, even thought it contains the same diamond-shaped artifacts as the right. However, without having first seen the left, the right image is difficult to distinguish as an eye and glasses. Changing the scale (in this case zooming in) shifts the dominant interpretation from a portrait in the left image to artifacts in the right image.
     </MarginNote>
-  </figure>
+  </BasicImage>
 
   <p>
     The purpose of most images is to effectively convey information. Implicit in
