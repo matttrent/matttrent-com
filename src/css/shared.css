@@ -45,7 +45,7 @@
 }
 
 :root {
-  --column-gap: 16px;
+  --column-gap: 0px;
   --outer-margin: 20px;
 
   --color: #111;
@@ -78,7 +78,7 @@ body {
 /* For screens larger than 1300px */
 @media (min-width: 1300px) {
   :root {
-    --column-width: 90px;
+    --column-width: 106px;
     --outer-margin: minmax(20px, 1fr);
   }
 }

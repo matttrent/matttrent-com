@@ -7,12 +7,27 @@ const { name } = Astro.props;
 ---
 
 <div class="sidenote-container">
-  <slot name="sidenote" />
-  <slot />
+  <div class="sidenote-content">
+    <slot name="sidenote" />
+  </div>
+  <div class="main-content">
+    <slot />
+  </div>
 </div>
 
 <style>
   .sidenote-container {
+    position: relative;
+  }
 
-}
+  .sidenote-content {
+    position: absolute;
+    float: right;
+    clear: right;
+  }
+
+  .main-content {
+    position: relative;
+    width: 100%;
+  }
 </style>
