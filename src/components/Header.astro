@@ -10,6 +10,9 @@ const { title, subtitle } = Astro.props;
 ---
 
 <div class="gridContainer">
+  <nav>
+    <a href="/">MT</a>
+  </nav>
   <header>
     <h1>{title}</h1>
     {subtitle && <h2 class="subtitle">{subtitle}</h2>}
@@ -17,8 +20,23 @@ const { title, subtitle } = Astro.props;
 </div>
 
 <style>
+  nav {
+    grid-column: 1 / 13;
+
+    padding: 1.5rem;
+
+    font-size: 1.4rem;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+
+    a {
+      text-decoration: none;
+      background: none !important; /* Override the gradient background */
+      text-shadow: none !important; /* Remove text shadow */
+    }
+  }
+
   header {
-    padding-top: 5rem;
+    padding-top: 2rem;
     padding-bottom: 1rem;
     grid-column: text-start / margin-end;
   }
