@@ -93,9 +93,15 @@ body {
   margin: 0 auto;
   grid-template-columns:
     var(--outer-margin) 
-    [page-start text-start] repeat(7, var(--column-width)) [text-end] 
+    [page-start left-kickout] 
+    var(--column-width)
+    [text-start]
+    repeat(7, var(--column-width)) [text-end] 
     var(--column-width) 
-    [margin-start] repeat(4, var(--column-width)) [page-end margin-end] 
+    [margin-start] 
+    var(--column-width)
+    [right-kickout]
+    repeat(2, var(--column-width)) [page-end margin-end] 
     var(--outer-margin);
   /* column-gap: var(--column-gap); */
 }
