@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import ProseWrapper from "../components/ProseWrapper.astro";
 import BasicImage from "../components/BasicImage.astro";
 import MarginNote from "../components/MarginNote.astro";
 
@@ -7,10 +9,9 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
 ---
 
 <Layout title={pageTitle}>
-  <header slot="header">
-    <h1>{pageTitle}</h1>
-  </header>
-  <section>
+  <Header title={pageTitle} slot="header" />
+
+  <ProseWrapper>
     <BasicImage>
       <img
         src="/attachments/research/photometric-processing-1.png"
@@ -29,25 +30,26 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
       />
       <MarginNote slot="sidenote" name="caption">
         Left: original HDR image, tone mapped for display. Center: high
-        contrast, low frequency image representing the LED backlight. Right: LCD
-        image corresponding to backlight. The combination of the backlight and
-        LCD image will reconstruct the original image.
+        contrast, low frequency image representing the LED backlight. Right:
+        LCD image corresponding to backlight. The combination of the backlight
+        and LCD image will reconstruct the original image.
       </MarginNote>
     </BasicImage>
 
     <p>
       Many real-world scenes contain a dynamic range that exceeds conventional
-      display technology by several orders of magnitude. Through the combination
-      of several existing technologies, new high dynamic range displays, capable
-      of reproducing a range of intensities much closer to that of real
-      environments, have been constructed. These benefits come at the cost of
-      more optically complex devices; involving two image modulators, controlled
-      in unison, to display images. We present several methods of rendering
-      images to this new class of devices for reproducing photometrically
-      accurate images. We discuss the process of calibrating a display, matching
-      the response of the device with our ideal model. We then derive series of
-      methods for efficiently displaying images, optimized for different
-      criteria and evaluate them in a perceptual framework.
+      display technology by several orders of magnitude. Through the
+      combination of several existing technologies, new high dynamic range
+      displays, capable of reproducing a range of intensities much closer to
+      that of real environments, have been constructed. These benefits come at
+      the cost of more optically complex devices; involving two image
+      modulators, controlled in unison, to display images. We present several
+      methods of rendering images to this new class of devices for reproducing
+      photometrically accurate images. We discuss the process of calibrating a
+      display, matching the response of the device with our ideal model. We
+      then derive series of methods for efficiently displaying images,
+      optimized for different criteria and evaluate them in a perceptual
+      framework.
     </p>
 
     <h2 id="publications">Publications</h2>
@@ -88,5 +90,5 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
         data-ratio="1.29456384323641"
         src="//speakerdeck.com/assets/embed.js"></script>
     </figure>
-  </section>
+  </ProseWrapper>
 </Layout>

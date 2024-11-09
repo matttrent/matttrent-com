@@ -1,19 +1,24 @@
 ---
-import type { Note } from '../types/note';
+import type { Note } from "../types/note";
+
 import Layout from "./Layout.astro";
+import Header from "../components/Header.astro";
+import ProseWrapper from "../components/ProseWrapper.astro";
 
 interface Props {
   content: Note;
 }
 
 const { content } = Astro.props;
+var title = content.title + (content.isDraft ? " (draft)" : "");
 ---
 
-<Layout title={content.title}>
-  <header slot="header">
-    <h1>{content.title}{content.isDraft && " (draft)"}</h1>
-  </header>
-  <section>
-    <slot />
-  </section>
-</Layout> 
+<Layout title={title}>
+  <Header title={title} slot="header" />
+
+  <ProseWrapper>
+    <section>
+      <slot />
+    </section>
+  </ProseWrapper>
+</Layout>

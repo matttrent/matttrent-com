@@ -1,10 +1,12 @@
 ---
-import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 import HTMLHeader from "../components/HTMLHeader.astro";
 
-import "../css/tufte.css";
-import "../css/latex.css";
-import "../css/custom.css";
+// import "../css/tufte.css";
+// import "../css/latex.css";
+// import "../css/custom.css";
+
+import "../css/reset.css";
+// import "../css/shared.css";
 
 interface Props {
   title: string;
@@ -15,14 +17,12 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<HTMLHeader title={title} />
+  <HTMLHeader title={title} />
 
   <body>
     <slot name="header" />
     <main>
-      <article>
-        <slot />
-      </article>
+      <slot />
     </main>
   </body>
 </html>
