@@ -104,10 +104,8 @@ body {
     [text-start]
     repeat(7, var(--column-width)) [text-end] 
     var(--column-width) 
-    [margin-start] 
-    var(--column-width)
-    [right-kickout]
-    repeat(2, var(--column-width)) [page-end margin-end] 
+    [right-kickout margin-start] 
+    repeat(3, var(--column-width)) [page-end margin-end] 
     var(--outer-margin);
   /* column-gap: var(--column-gap); */
 }
