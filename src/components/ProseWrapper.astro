@@ -8,7 +8,6 @@ import "../css/shared.css";
 
 <style is:global>
   article {
-    
   }
 
   article > *,
@@ -84,5 +83,33 @@ import "../css/shared.css";
 
   li:not(:first-child) {
     margin-top: 0.25rem;
+  }
+
+  .sans {
+    font-family: var(--sans-fonts);
+    letter-spacing: 0.03em;
+  }
+
+  code {
+    font-family: var(--mono-fonts);
+    font-size: 1rem;
+    line-height: 1.42;
+  }
+
+  .sans > code {
+    font-size: 1.2rem;
+  }
+
+  h1 > code,
+  h2 > code,
+  h3 > code {
+    font-size: 0.8em;
+  }
+
+  pre.code {
+    font-size: 0.9rem;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    overflow-x: auto;
   }
 </style>

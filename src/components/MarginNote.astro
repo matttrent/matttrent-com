@@ -33,6 +33,17 @@ const { name } = Astro.props;
     position: relative;
   }
 
+  /* Repeated text styling for MDX files which generate notes with <p> tags. */
+  .marginnote > p {
+    font-size: 1.1rem;
+    line-height: 1.3 !important;
+  }
+
+  .marginnote > code,
+  .sidenote > code {
+    font-size: 1rem;
+  }
+
   .sidenote-number {
     counter-increment: sidenote-counter;
   }
