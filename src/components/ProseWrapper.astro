@@ -21,7 +21,7 @@ import "../css/shared.css";
     display: contents;
   }
 
-  h1 {
+  article h1 {
     font-weight: 400;
     margin-top: 4rem;
     margin-bottom: 1.5rem;
@@ -29,7 +29,7 @@ import "../css/shared.css";
     line-height: 1;
   }
 
-  h2 {
+  article h2 {
     font-style: italic;
     font-weight: 400;
     margin-top: 2.1rem;
@@ -38,11 +38,11 @@ import "../css/shared.css";
     line-height: 1;
   }
 
-  h2.newsection {
+  article h2.newsection {
     margin-top: 4.1rem;
   }
 
-  h3 {
+  article h3 {
     font-style: italic;
     font-weight: 400;
     font-size: 1.7rem;
@@ -51,7 +51,7 @@ import "../css/shared.css";
     line-height: 1;
   }
 
-  hr {
+  article hr {
     display: block;
     height: 1px;
     width: 100%;
@@ -61,52 +61,51 @@ import "../css/shared.css";
     padding: 0;
   }
 
-  section {
+  article section {
     padding-top: 1rem;
     padding-bottom: 1rem;
   }
 
-  p {
+  article p {
     font-size: 1.4rem;
     line-height: 2rem;
-    /* margin-top: 1.4rem; */
     margin-bottom: 1.4rem;
     padding-right: 0;
     vertical-align: baseline;
   }
 
-  ol,
-  ul {
+  article ol,
+  article ul {
     font-size: 1.4rem;
     line-height: 2rem;
   }
 
-  li:not(:first-child) {
+  article li:not(:first-child) {
     margin-top: 0.25rem;
   }
 
-  .sans {
+  article .sans {
     font-family: var(--sans-fonts);
     letter-spacing: 0.03em;
   }
 
-  code {
+  article code {
     font-family: var(--mono-fonts);
     font-size: 1rem;
     line-height: 1.42;
   }
 
-  .sans > code {
+  article .sans > code {
     font-size: 1.2rem;
   }
 
-  h1 > code,
-  h2 > code,
-  h3 > code {
+  article h1 > code,
+  article h2 > code,
+  article h3 > code {
     font-size: 0.8em;
   }
 
-  pre.code {
+  article pre.code {
     font-size: 0.9rem;
     margin-left: 2.5%;
     margin-right: 2.5%;
