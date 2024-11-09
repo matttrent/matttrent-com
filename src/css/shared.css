@@ -97,7 +97,7 @@ body {
     var(--column-width) 
     [margin-start] repeat(4, var(--column-width)) [page-end margin-end] 
     var(--outer-margin);
-  column-gap: var(--column-gap);
+  /* column-gap: var(--column-gap); */
 }
 
 /* Inline rendering of media elements 
