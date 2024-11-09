@@ -6,16 +6,16 @@ interface Props {
 const { name } = Astro.props;
 ---
 
-<aside>
+<span class="margin-note-wrapper">
   <label for={`mn-${name}`} class="margin-toggle">&#8853;</label>
   <input type="checkbox" id={`mn-${name}`} class="margin-toggle" />
   <span class="marginnote">
     <slot />
   </span>
-</aside>
+</span>
 
 <style is:global>
-  aside {
+  .margin-note-wrapper {
     float: right;
     clear: right;
     margin-right: -57.3%; /* TODO: This is a hack to make the margin note look better. */
