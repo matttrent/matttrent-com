@@ -7,7 +7,9 @@
     <p>
       <slot />
     </p>
-    <slot name="footer" />
+    <div class="footer-wrapper">
+      <slot name="footer" />
+    </div>
   </blockquote>
 </div>
 
@@ -30,13 +32,14 @@
     font-style: italic;
   }
 
-  :global(div.epigraph > blockquote > footer) {
+  div.epigraph > blockquote > .footer-wrapper {
     font-style: normal;
     font-size: 1.1rem;
     text-align: right;
   }
 
-  :global(div.epigraph > blockquote > footer > cite) {
+  /* cite may need to be :global to get around scope styling.  seems to work for now.
+  div.epigraph > blockquote > .footer-wrapper > cite {
     font-style: italic;
   }
 </style>
