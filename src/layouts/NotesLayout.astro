@@ -11,12 +11,46 @@ interface Props {
 
 const { content } = Astro.props;
 var title = content.title + (content.isDraft ? " (draft)" : "");
+
+// Process content into formatted key-value pairs
+const processedContent = Object.entries(content).map(([key, value]) => {
+  let processedValue = value;
+  
+  // Format dates if the value is a Date object
+  if (value instanceof Date) {
+    processedValue = value.toLocaleDateString('en-CA', { 
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }); // Outputs YYYY-MM-DD format
+  } else if (typeof value === 'boolean') {
+    processedValue = value.toString();
+  }
+  
+  return {
+    key,
+    value: processedValue
+  };
+});
 ---
 
 <Layout title={title}>
   <Header title={title} slot="header" />
 
   <ProseWrapper>
+    {content.isDraft && (
+      <table>
+        <tbody>
+          {processedContent.map(({ key, value }) => (
+            <tr>
+              <td>{key}</td>
+              <td>{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+    
     <slot />
   </ProseWrapper>
 </Layout>
