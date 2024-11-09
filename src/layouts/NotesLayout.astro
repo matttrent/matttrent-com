@@ -17,8 +17,6 @@ var title = content.title + (content.isDraft ? " (draft)" : "");
   <Header title={title} slot="header" />
 
   <ProseWrapper>
-    <section>
-      <slot />
-    </section>
+    <slot />
   </ProseWrapper>
 </Layout>

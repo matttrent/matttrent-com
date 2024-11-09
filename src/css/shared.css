@@ -44,21 +44,72 @@
   font-style: normal;
 }
 
+:root {
+  --column-gap: 16px;
+  --outer-margin: 20px;
+
+  --color: #111;
+  --background-color: rgb(246, 245, 241);
+
+  --standard-fonts: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+}
+
 html {
   font-size: 15px;
 }
 
 body {
-  --color: #111;
-  --background-color: rgb(246, 245, 241);
-  --standard-fonts: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-
   color: var(--color);
   font-family: var(--standard-fonts);
   background-color: var(--background-color);
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
+
+
+/* For screens smaller than 1300px */
+@media (max-width: 1299px) {
+  :root {
+    --column-width: 1fr;
+    --outer-margin: 20px;
+  }
+}
+
+/* For screens larger than 1300px */
+@media (min-width: 1300px) {
+  :root {
+    --column-width: 90px;
+    --outer-margin: minmax(20px, 1fr);
+  }
+}
+
+.gridContainer {
+  display: grid;
+  grid-auto-flow: columns;
+  margin: 0 auto;
+  grid-template-columns:
+    var(--outer-margin) 
+    [page-start text-start] repeat(7, var(--column-width)) [text-end] 
+    var(--column-width) 
+    [margin-start] repeat(4, var(--column-width)) [page-end margin-end] 
+    var(--outer-margin);
+  column-gap: var(--column-gap);
+}
+
+/* Inline rendering of media elements 
+   TODO: Remove this once we have marginnotes worknig correctly, then can figure out 
+   where to apply appropriately.
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: inline;
+  max-width: 100%;
+}
+
+/* link decoration */
 a:link {
   text-decoration: none;
   background: -webkit-linear-gradient(var(--background-color), var(--background-color)),
@@ -86,39 +137,8 @@ a:link {
   background-position: 0% 93%, 100% 93%, 0% 93%;
 }
 
+/* link color */
 a:link,
 a:visited {
   color: inherit;
 }
-
-.gridContainer {
-  display: grid;
-  grid-auto-flow: columns;
-  margin: 0 auto;
-}
-
-/* For screens smaller than 1300px */
-@media (max-width: 1299px) {
-  .gridContainer {
-    grid-template-columns:
-      /* Fixed left margin */
-      20px
-      /* 12 flexible columns */
-      [page-start text-start] repeat(7, 1fr) [text-end] 1fr [margin-start] repeat(4, 1fr) [page-end margin-end]
-      /* Fixed right margin */
-      20px;
-    gap: 16px;
-  }
-}
-
-/* For screens larger than 1300px */
-@media (min-width: 1300px) {
-  .gridContainer {
-    grid-template-columns:
-      minmax(20px, 1fr)
-      [page-start text-start] repeat(7, 90px) [text-end] 90px [margin-start] repeat(4, 90px) [page-end margin-end]
-      minmax(20px, 1fr);
-    gap: 16px;
-  }
-}
-
