@@ -10,3 +10,33 @@
     <slot name="footer" />
   </blockquote>
 </div>
+
+<style>
+  div.epigraph {
+    margin: 5em 0;
+    margin-left: 2.6rem;
+    margin-right: 2.6rem;
+  }
+
+  div.epigraph > blockquote {
+    margin-top: 3em;
+    margin-bottom: 3em;
+
+    font-size: 1.4rem;
+  }
+
+  div.epigraph > blockquote,
+  div.epigraph > blockquote > p {
+    font-style: italic;
+  }
+
+  :global(div.epigraph > blockquote > footer) {
+    font-style: normal;
+    font-size: 1.1rem;
+    text-align: right;
+  }
+
+  :global(div.epigraph > blockquote > footer > cite) {
+    font-style: italic;
+  }
+</style>
