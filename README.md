@@ -8,7 +8,7 @@ Personal website website built with Astro deployed to GitHub Pages.
 New design
 
 - [ ] Single style defition for `<dl>` shared across list components
-- [ ] Single component for sidenotes and margin notes, correct rendering of notes within paragraphs
+- [x] Single component for sidenotes and margin notes, correct rendering of notes within paragraphs
 - [ ] Full width content
 - [ ] Figure and figcaption styling
 - [ ] Styling for blockquotes, tables, iframes, newthoughts
