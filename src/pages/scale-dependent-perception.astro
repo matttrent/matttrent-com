@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ProseWrapper from "../components/ProseWrapper.astro";
 import BasicImage from "../components/BasicImage.astro";
-import MarginNote from "../components/MarginNote.astro";
+import Sidenote from "../components/Sidenote.astro";
 
 const pageTitle = "Manipulating Scale-Dependent Perception of Images";
 ---
@@ -23,7 +23,7 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
         alt=""
         width="61.5%"
       />
-      <MarginNote slot="sidenote" name="caption" num={false}>
+      <Sidenote slot="sidenote" name="caption" num={false}>
         Self-portrait of Chuck Close viewed at 2 scales. The left image is
         clearly recognizable as a portrait, even thought it contains the same
         diamond-shaped artifacts as the right. However, without having first
@@ -31,7 +31,7 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
         and glasses. Changing the scale (in this case zooming in) shifts the
         dominant interpretation from a portrait in the left image to artifacts
         in the right image.
-      </MarginNote>
+      </Sidenote>
     </BasicImage>
 
     <p>
