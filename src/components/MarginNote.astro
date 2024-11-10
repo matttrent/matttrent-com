@@ -1,39 +1,72 @@
 ---
 interface Props {
   name: string;
+  num?: boolean;
 }
 
-const { name } = Astro.props;
+const { name, num = true } = Astro.props;
+
+const fullname = `${num ? "sn" : "mn"}-${name}`;
+
+const classes = num ? "margin-toggle sidenote-number" : "margin-toggle";
+
 ---
 
-<span class="margin-note-wrapper">
-  <label for={`mn-${name}`} class="margin-toggle">&#8853;</label>
-  <input type="checkbox" id={`mn-${name}`} class="margin-toggle" />
-  <span class="marginnote">
-    <slot />
-  </span>
+<!-- <span class="margin-note-wrapper"> -->
+
+{num ? (
+  <label for={fullname} class={classes}></label>
+) : (
+  <label for={fullname} class={classes}>&#8853;</label>
+)}
+<input type="checkbox" id={fullname} class="margin-toggle" />
+<span class={num ? "sidenote" : "marginnote"}>
+  <slot />
 </span>
 
+<!-- </span> -->
+
 <style is:global>
+  body {
+    counter-reset: sidenote-counter;
+  }
+
   .margin-note-wrapper {
+    /* position: relative;
     float: right;
     clear: right;
-    margin-right: -57.3%; /* TODO: This is a hack to make the margin note look better. */
+    margin-right: -57.3%; TODO: This is a hack to make the margin note look better.
     width: 50%;
-    position: relative;
     font-size: 1.1rem;
-    line-height: 1.3 !important;
+    line-height: 1.3 !important; */
   }
 
   .sidenote,
   .marginnote {
-    margin-top: 0;
+    /* margin-top: 0;
     margin-bottom: 0;
     vertical-align: baseline;
+    position: relative; */
+    float: right;
+    clear: right;
+    margin-right: -57.3%;
+    width: 50%;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    vertical-align: baseline;
     position: relative;
+    /* overflow: visible;
+    height: 1rem; */
   }
 
+  /* to reflow text below, use the default marginnote definition.
+    to avoid reflowing, add overflow: visible; height: 1rem; 
+  */
+
   /* Repeated text styling for MDX files which generate notes with <p> tags. */
+  .sidenote > p,
   .marginnote > p {
     font-size: 1.1rem;
     line-height: 1.3 !important;
@@ -76,7 +109,32 @@ const { name } = Astro.props;
   }
 
   label.margin-toggle:not(.sidenote-number) {
-    font-size: 1.4em; /* TODO: This is a hack to make the margin toggle look better. */
+    /* font-size: 1.4em; TODO: This is a hack to make the margin toggle look better. */
     display: none;
+  }
+
+  @media (max-width: 760px) {
+    label.margin-toggle:not(.sidenote-number) {
+      display: inline;
+    }
+    .sidenote,
+    .marginnote {
+      display: none;
+    }
+    .margin-toggle:checked + .sidenote,
+    .margin-toggle:checked + .marginnote {
+      display: block;
+      float: left;
+      left: 1rem;
+      clear: both;
+      width: 95%;
+      margin: 1rem 2.5%;
+      vertical-align: baseline;
+      position: relative;
+    }
+
+    label {
+      cursor: pointer;
+    }
   }
 </style>
