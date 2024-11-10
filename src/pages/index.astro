@@ -5,25 +5,25 @@ import ProseWrapper from "../components/ProseWrapper.astro";
 import NotesList from "../components/NotesList.astro";
 import ArtifactsList from "../components/ArtifactsList.astro";
 import artifacts from "../data/artifacts";
-import Epigraph from "../components/Epigraph.astro";
+
+const isProd = import.meta.env.PROD;
 
 const pageTitle = "Matthew Trentacoste";
 ---
 
 <Layout title={pageTitle}>
   <Header title={pageTitle} slot="header" />
-  
+
   <ProseWrapper>
-    
     <h2 class="newsection">Now</h2>
     <p>
       I work on Generative AI at <a href="/cv#meta">Meta</a>, where I spend a
       lot of time thinking about training data.
     </p>
     <p>
-      When I'm not doing that, I'm usually trying to get lost in the
-      wilderness. I camp, hike, find things to drive over, and spend a fair
-      amount of time getting to out of the way places to <a
+      When I'm not doing that, I'm usually trying to get lost in the wilderness.
+      I camp, hike, find things to drive over, and spend a fair amount of time
+      getting to out of the way places to <a
         href="http://instagram.com/matttrent">photograph them</a
       >.
     </p>
@@ -55,12 +55,14 @@ const pageTitle = "Matthew Trentacoste";
       at University of British Columbia, from 2003-2012.
     </p>
 
-    <h2 class="newsection">Notes</h2>
-    <NotesList />
+    {!isProd && (
+      <>
+        <h2 class="newsection">Notes</h2>
+        <NotesList />
+      </>
+    )}
 
     <h2 class="newsection">Random artifacts</h2>
     <ArtifactsList items={artifacts} />
-
   </ProseWrapper>
-
 </Layout>
