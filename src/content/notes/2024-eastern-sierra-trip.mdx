@@ -11,17 +11,20 @@ import Sidenote from "../../components/Sidenote.astro";
 import MDSidenote from "../../components/MDSidenote.astro";
 import DSCF1631 from '../../assets/DSCF1631.jpg'
 
+{/* Resizes incorrectly */}
 <figure>
   <Image src={DSCF1631} alt="cloud 1" width="800"/>
 </figure>
 
 Did some stuff
 
+{/* Resizes correctly */}
 <figure class="fullwidth">
 	<img src="/images/DSCF1631.jpg" alt="" width="48%" />
 	<img src="/images/DSCF1634.jpg" alt="" width="48%" />
 </figure>
 
+{/* Resizes correctly */}
 ![](/images/DSCF1631.jpg)
 ![](/images/DSCF1634.jpg)
 

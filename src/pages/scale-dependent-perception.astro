@@ -5,6 +5,24 @@ import ProseWrapper from "../components/ProseWrapper.astro";
 import BasicImage from "../components/BasicImage.astro";
 import Sidenote from "../components/Sidenote.astro";
 
+// TODO: Need to figure out how I want to handle images.
+//
+// The default Image behavior is to scale in the x-axis only with screen resizing.  That's
+// not what I want.  The responsive-image class changes the behavior as I'd like.  But
+// I'm not certain whether that's correct to use here as I have multiple images in a row,
+// which probably means it's not actually BasicImage, and there's a second component for
+// more general figures that expects more customization of its inputs.
+//
+// Leaving the original code as-is for now.  Will probably refactor my learnings into
+// another component.
+//
+// Also check 2024-eastern-sierra-trip.mdx for comments on which image approaches work
+// in MDX.
+
+import { Image } from "astro:assets";
+import ChuckCloseFull from "../assets/chuckclose_full.png";
+import ChuckCloseCrop from "../assets/chuckclose_crop.png";
+
 const pageTitle = "Manipulating Scale-Dependent Perception of Images";
 ---
 
@@ -23,34 +41,37 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
         alt=""
         width="61.5%"
       />
+      <!-- 
+      <Image src={ChuckCloseFull} alt="" class="responsive-image" style="width: 35.5%;" />
+      <Image src={ChuckCloseCrop} alt="" class="responsive-image" style="width: 61.5%;" /> 
+      -->
       <Sidenote slot="sidenote" name="caption" num={false}>
         Self-portrait of Chuck Close viewed at 2 scales. The left image is
         clearly recognizable as a portrait, even thought it contains the same
         diamond-shaped artifacts as the right. However, without having first
-        seen the left, the right image is difficult to distinguish as an eye
-        and glasses. Changing the scale (in this case zooming in) shifts the
+        seen the left, the right image is difficult to distinguish as an eye and
+        glasses. Changing the scale (in this case zooming in) shifts the
         dominant interpretation from a portrait in the left image to artifacts
         in the right image.
       </Sidenote>
     </BasicImage>
 
     <p>
-      The purpose of most images is to effectively convey information.
-      Implicit in this assumption is the fact that the recipient of that
-      information is a human observer, with a visual system responsible for
-      converting raw sensory inputs into the perceived appearance. The
-      appearance of an image not only depends on the image itself, but the
-      conditions under which it is viewed as well as the response of human
-      visual system to those inputs.
+      The purpose of most images is to effectively convey information. Implicit
+      in this assumption is the fact that the recipient of that information is a
+      human observer, with a visual system responsible for converting raw
+      sensory inputs into the perceived appearance. The appearance of an image
+      not only depends on the image itself, but the conditions under which it is
+      viewed as well as the response of human visual system to those inputs.
     </p>
     <p>
-      This thesis examines the scale-dependent nature of image appearance,
-      where the same stimulus can appear different when viewed at varying
-      scales, that arises from the mechanisms responsible for processing
-      spatial vision in the brain. In particular, this work investigates
-      changes in the perception of blur and contrast resulting from the image
-      being represented by different portions of the viewer’s visual system
-      due to changes in image scale.
+      This thesis examines the scale-dependent nature of image appearance, where
+      the same stimulus can appear different when viewed at varying scales, that
+      arises from the mechanisms responsible for processing spatial vision in
+      the brain. In particular, this work investigates changes in the perception
+      of blur and contrast resulting from the image being represented by
+      different portions of the viewer’s visual system due to changes in image
+      scale.
     </p>
     <p>
       These methods take inspiration from the fundamental organization of
@@ -71,8 +92,7 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
       </li>
       <li>
         <a href="http://www.cs.ubc.ca/labs/imager/tr/2012/Countershading/"
-          >Unsharp Masking, Countershading and Halos: Enhancements or
-          Artifacts?</a
+          >Unsharp Masking, Countershading and Halos: Enhancements or Artifacts?</a
         >
       </li>
       <li>
@@ -99,3 +119,19 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
     </figure>
   </ProseWrapper>
 </Layout>
+
+<style>
+  .responsive-image {
+    height: auto;
+    aspect-ratio: attr(width) / attr(height);
+    object-fit: cover;
+    /* 
+    These are useful for single images, but don't work with multiple images in a row,
+    at least how I'm using them above.  But there's probably a better solution to do so,
+    but what I'm doing here is pretty custom as I want 2 images to be resized such that
+    they have the same height and fill the width of the containing element.
+    */
+    /* width: 100%;
+    display: block; */
+  }
+</style>
