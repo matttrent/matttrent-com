@@ -4,7 +4,7 @@ import type { Note } from "../types/note";
 import Layout from "./Layout.astro";
 import Header from "../components/Header.astro";
 import ProseWrapper from "../components/ProseWrapper.astro";
-
+import DevOnly from "../components/DevOnly.astro";
 interface Props {
   content: Note;
 }
@@ -34,7 +34,7 @@ const processedContent = Object.entries(content).map(([key, value]) => {
   <Header title={title} slot="header" />
 
   <ProseWrapper>
-    {content.isDraft && (
+    <DevOnly>
       <table>
         <tbody>
           {processedContent.map(({ key, value }) => (
@@ -45,8 +45,7 @@ const processedContent = Object.entries(content).map(([key, value]) => {
           ))}
         </tbody>
       </table>
-    )}
-    
+    </DevOnly>
     <slot />
   </ProseWrapper>
 </Layout>

@@ -1,0 +1,30 @@
+---
+const isProd = import.meta.env.PROD;
+---
+
+{
+  !isProd && (
+    <div class="devonly">
+      <slot />
+    </div>
+  )
+}
+
+<style>
+  .devonly {
+    border: 2px solid color-mix(in srgb, var(--background-color) 80%, black);
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .devonly::before {
+    content: "dev only";
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2px 6px;
+    font-size: 0.8em;
+    color: color-mix(in srgb, var(--background-color) 60%, black);
+    background-color: var(--background-color);
+  }
+</style>

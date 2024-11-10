@@ -4,9 +4,9 @@ import Header from "../components/Header.astro";
 import ProseWrapper from "../components/ProseWrapper.astro";
 import NotesList from "../components/NotesList.astro";
 import ArtifactsList from "../components/ArtifactsList.astro";
-import artifacts from "../data/artifacts";
+import DevOnly from "../components/DevOnly.astro";
 
-const isProd = import.meta.env.PROD;
+import artifacts from "../data/artifacts";
 
 const pageTitle = "Matthew Trentacoste";
 ---
@@ -55,12 +55,10 @@ const pageTitle = "Matthew Trentacoste";
       at University of British Columbia, from 2003-2012.
     </p>
 
-    {!isProd && (
-      <>
-        <h2 class="newsection">Notes</h2>
-        <NotesList />
-      </>
-    )}
+    <DevOnly>
+      <h2 class="newsection">Notes</h2>
+      <NotesList />
+    </DevOnly>
 
     <h2 class="newsection">Random artifacts</h2>
     <ArtifactsList items={artifacts} />
