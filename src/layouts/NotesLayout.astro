@@ -18,11 +18,7 @@ const processedContent = Object.entries(content).map(([key, value]) => {
   
   // Format dates if the value is a Date object
   if (value instanceof Date) {
-    processedValue = value.toLocaleDateString('en-CA', { 
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    }); // Outputs YYYY-MM-DD format
+    processedValue = value.toISOString().split('T')[0]; // Gets just the YYYY-MM-DD part
   } else if (typeof value === 'boolean') {
     processedValue = value.toString();
   }
