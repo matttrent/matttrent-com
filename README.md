@@ -7,6 +7,7 @@ Personal website website built with Astro deployed to GitHub Pages.
 
 New design
 
+- [x] Match element spacing with original tufte-css
 - [ ] Single style defition for `<dl>` shared across list components
 - [x] Single component for sidenotes and margin notes, correct rendering of notes within paragraphs
 - [ ] Full width content
