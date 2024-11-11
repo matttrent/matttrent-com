@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import ProseWrapper from "../../components/ProseWrapper.astro";
+import NotesList from "../../components/NotesList.astro";
+
+const pageTitle = "Notes";
+---
+
+<Layout title={pageTitle}>
+  <Header
+    title={pageTitle}
+    subtitle="Writings, thoughts, and in-progress explorations I'm exploring via prose."
+    slot="header"
+  />
+
+  <ProseWrapper>
+    <NotesList />
+  </ProseWrapper>
+</Layout>
