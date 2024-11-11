@@ -10,6 +10,11 @@
   margin: 0;
 }
 
+/* Prevent layout shift when showing scrollbar */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   /* 3. Add accessible line-height */
   line-height: 1.5;
