@@ -92,7 +92,7 @@ body {
 
 
 /* For screens smaller than 1400px */
-@media (max-width: 1399px) {
+@media (max-width: 1359px) {
   :root {
     --column-width: 1fr;
     --outer-margin: 20px;
@@ -100,7 +100,7 @@ body {
 }
 
 /* For screens larger than 1400px */
-@media (min-width: 1400px) {
+@media (min-width: 1360px) {
   :root {
     --column-width: 110px;
     --outer-margin: minmax(20px, 1fr);
