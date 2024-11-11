@@ -1,0 +1,26 @@
+---
+title: Colophon
+date: 2024-11-09
+isDraft: false
+createdAt: 2024-11-09
+modifiedAt: 2024-11-10
+---
+import Sidenote from "../../components/Sidenote.astro";
+
+The publishing term *colophon* is a statement in a containing information about the publication of the book.  In the early days of personal websites, and most sites were custom built or assembled from the parts bin, the term was used for the "how I made this" section of someone's website.  
+
+And so that tradition continues here.  I've always built my own website.  Partly because I want control over how the things I create are both presented and distributed.  And partly because it's a good motivator to learn things I wouldn't encounter in my normal line of work, such as the Javascript ecosystem.
+
+### Build
+
+The site is built using the [Astro](https://astro.build/) framework.  I'm not really qualified to weight its pros and cons.  My go-to guy for everything frontend, [Sam Breed](https://sambreed.dev/), uses it for his site and that's good enough reason for me.  While I'm not versed in frontend frameworks, it does seem sensibly put together and connects a number of ideas I'm vaguely aware of into a single package.
+
+Astro [Components](https://docs.astro.build/en/basics/astro-components/) have allowed be to build the site out of self-contained chunks that serve one purpose, and reuse them across both the HTML and Markdown portions of the site.  And Astro's separation of framework and content is another huge selling point.  The majority of the site content is Markdown files, which frees me from having to create them in my coding editor.  I'm actually typing this in [Obsidian](https://obsidian.md/), which is much more amenable to writing than VS Code.
+
+### Styling
+
+The site style is borrowed from [tufte-css](https://edwardtufte.github.io/tufte-css/), which I carried over from the previous iteration of this website.  I've been a fan of his books and their layout and typography since I first encountered them.  The aesthetic feels like modernization of that of the classic academic texts like *Principia Mathematica*, *On the Origin of Species*, and similar.
+
+I'm a huge fan of the [sidenotes](https://edwardtufte.github.io/tufte-css/#sidenotes) in particular.  I think parenthetically and often want to say something about or related to thing I'm actually saying.  Sidenotes accomplish this in a way much more elegant than footnotes, which hardly work on printed pages and not at all on lengthy webpages.
+
+While the site retains the appearance, it's been disassembled and reassembled under the hood.  While building the site components, I pulled the CSS apart and distributed the pieces.  In the process I based the overall layout on a CSS grid, which gives me much more latitude to create interesting layouts for photo-heavy pages.
