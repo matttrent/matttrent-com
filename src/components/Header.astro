@@ -17,6 +17,9 @@ const { title, subtitle } = Astro.props;
     <h1>{title}</h1>
     {subtitle && <h2 class="subtitle">{subtitle}</h2>}
   </header>
+  <div class="extra">
+    <slot />
+  </div>
 </div>
 
 <style>
@@ -60,5 +63,9 @@ const { title, subtitle } = Astro.props;
     line-height: 1;
     font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD",
       "Book Antiqua", Georgia, serif;
+  }
+
+  .extra {
+    grid-column: text-start / text-end;
   }
 </style>

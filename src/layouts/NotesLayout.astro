@@ -15,37 +15,40 @@ var title = content.title + (content.isDraft ? " (draft)" : "");
 // Process content into formatted key-value pairs
 const processedContent = Object.entries(content).map(([key, value]) => {
   let processedValue = value;
-  
+
   // Format dates if the value is a Date object
   if (value instanceof Date) {
-    processedValue = value.toISOString().split('T')[0]; // Gets just the YYYY-MM-DD part
-  } else if (typeof value === 'boolean') {
+    processedValue = value.toISOString().split("T")[0]; // Gets just the YYYY-MM-DD part
+  } else if (typeof value === "boolean") {
     processedValue = value.toString();
   }
-  
+
   return {
     key,
-    value: processedValue
+    value: processedValue,
   };
 });
 ---
 
 <Layout title={title}>
-  <Header title={title} slot="header" />
-
-  <ProseWrapper>
+  <Header title={title} slot="header">
     <DevOnly>
       <table>
         <tbody>
-          {processedContent.map(({ key, value }) => (
-            <tr>
-              <td>{key}</td>
-              <td>{value}</td>
-            </tr>
-          ))}
+          {
+            processedContent.map(({ key, value }) => (
+              <tr>
+                <td>{key}</td>
+                <td>{value}</td>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </DevOnly>
+  </Header>
+
+  <ProseWrapper>
     <slot />
   </ProseWrapper>
 </Layout>
