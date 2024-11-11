@@ -7,29 +7,28 @@ interface Props {
 
 const { name: providedName, num = true, inflow = true } = Astro.props;
 
-const name = providedName ?? Array.from(crypto.getRandomValues(new Uint8Array(8)))
-  .map(b => b.toString(16).padStart(2, '0'))
-  .join('')
-  .slice(0, 10);
+const name =
+  providedName ??
+  Array.from(crypto.getRandomValues(new Uint8Array(8)))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("")
+    .slice(0, 10);
 
 const fullname = `${num ? "sn" : "mn"}-${name}`;
 
 const labelClass = `margin-toggle${num ? " sidenote-number" : ""}`;
 
 const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-flow"}`;
-
 ---
 
-<span class="sidenote-wrapper">
-  {num ? (
-    <label for={fullname} class={labelClass}></label>
-  ) : (
-    <label for={fullname} class={labelClass}>&#8853;</label>
-  )}
-  <input type="checkbox" id={fullname} class="margin-toggle" />
-  <span class={spanClass}>
-    <slot />
-  </span>
+<span class="sidenote-wrapper">{
+  num ? (<label for={fullname} class={labelClass} />) 
+  : (<label for={fullname} class={labelClass}>&#8853;</label>)
+}
+<input type="checkbox" id={fullname} class="margin-toggle" />
+<span class={spanClass}>
+  <slot />
+</span>
 </span>
 
 <style is:global>
@@ -38,7 +37,6 @@ const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-f
   }
 
   .sidenote-wrapper {
-
   }
 
   .sidenote,
@@ -47,7 +45,7 @@ const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-f
     clear: right;
     margin-right: -57.3%;
     width: 50%;
-    margin-top: 0;
+    margin-top: 0.3rem;
     margin-bottom: 0;
     font-size: 1.1rem;
     line-height: 1.3;
@@ -92,6 +90,7 @@ const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-f
 
   .sidenote:before {
     content: counter(sidenote-counter) " ";
+    font-size: 1rem;
     top: -0.5rem;
   }
 
@@ -100,10 +99,12 @@ const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-f
   }
 
   label.sidenote-number {
-    display: inline;
+    display: inline-block;
+    /* should be less than or equal to paragraph line-height */
+    max-height: 2rem;
   }
 
-  /* TODO: figure out how to get consistent sizing both in text and in figures */  
+  /* TODO: figure out how to get consistent sizing both in text and in figures */
   label.margin-toggle:not(.sidenote-number) {
     display: none;
   }
