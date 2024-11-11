@@ -61,6 +61,9 @@
   --sans-fonts: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
   --mono-fonts: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
+  --main-margin-extra: 1.4rem;
+  --prose-h2-margin: 2.1rem;
+  --prose-h2-margin-extra: 1.98rem;
 }
 
 html {

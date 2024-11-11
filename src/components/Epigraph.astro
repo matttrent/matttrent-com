@@ -3,43 +3,40 @@
 ---
 
 <div class="epigraph">
-  <blockquote>
-    <p>
-      <slot />
-    </p>
-    <div class="footer-wrapper">
-      <slot name="footer" />
-    </div>
-  </blockquote>
+  <slot />
 </div>
 
 <style>
   div.epigraph {
-    margin: 5em 0;
+    margin: 3.6em 0;
     margin-left: 2.6rem;
     margin-right: 2.6rem;
   }
 
-  div.epigraph > blockquote {
-    margin-top: 3em;
+  div.epigraph > :global(blockquote) {
+    /* margin-top: 3em; */
     margin-bottom: 3em;
 
     font-size: 1.4rem;
   }
 
-  div.epigraph > blockquote,
-  div.epigraph > blockquote > p {
+  div.epigraph > :global(blockquote:last-child) {
+    margin-bottom: 0em;
+  }
+
+  div.epigraph > :global(blockquote),
+  div.epigraph > :global(blockquote > p) {
     font-style: italic;
   }
 
-  div.epigraph > blockquote > .footer-wrapper {
+  div.epigraph > :global(blockquote > footer) {
     font-style: normal;
     font-size: 1.1rem;
     text-align: right;
   }
 
   /* cite may need to be :global to get around scope styling.  seems to work for now. */
-  div.epigraph > blockquote > .footer-wrapper > cite {
+  div.epigraph > :global(blockquote > footer > cite) {
     font-style: italic;
   }
 </style>
