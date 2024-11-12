@@ -51,8 +51,7 @@ Creating a grid of images with 2 per row
     { src: DSCF1631, alt: "cloud 1" },
     { src: DSCF1634, alt: "cloud 2" },
     { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" }
+    { src: DSCF1634, alt: "cloud 2" }
   ]}
 >
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
@@ -91,11 +90,11 @@ Creating a fullwidth grid of images with 3 per row
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 
-Creating a fullpage grid of images with 3 per row
+Creating a fullscreen grid of images with 3 per row
 
 <ImageGrid 
   columns={3} 
-  width="fullpage"
+  width="fullscreen"
   images={[
     { src: DSCF1631, alt: "cloud 1" },
     { src: DSCF1634, alt: "cloud 2" },
@@ -108,7 +107,7 @@ Creating a fullpage grid of images with 3 per row
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 
-Creating a grid of images with 3 per row, with different aspect ratios
+Creating a grid of images with 3 per row, with different aspect ratios.  1:1
 
 <ImageGrid 
   columns={3} 
@@ -125,6 +124,8 @@ Creating a grid of images with 3 per row, with different aspect ratios
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 
+16:9
+
 <ImageGrid 
   columns={3} 
   aspectRatio={16/9}
@@ -137,6 +138,8 @@ Creating a grid of images with 3 per row, with different aspect ratios
     { src: DSCF1634, alt: "cloud 2" }
   ]}
 />
+
+9:16
 
 <ImageGrid 
   columns={3} 

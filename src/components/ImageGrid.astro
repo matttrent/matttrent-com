@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 
 interface Props {
   columns: number;
-  width?: 'normal' | 'full' | 'fullpage';
+  width?: 'normal' | 'full' | 'fullscreen';
   aspectRatio?: string | number;
   images: {
     src: ImageMetadata;
@@ -49,14 +49,14 @@ const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
     grid-column: text-start / margin-end;
   }
 
-  figure.width-fullpage {
+  figure.width-fullscreen {
     grid-column: screen-start / screen-end;
   }
 
   @media (max-width: 760px) {
     figure.width-normal,
     figure.width-full,
-    figure.width-fullpage {
+    figure.width-fullscreen {
       grid-column: page-start / page-end;
     }
   }
