@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 
 interface Props {
   columns: number;
-  width?: 'normal' | 'full' | 'fullscreen';
+  width?: "normal" | "full" | "fullscreen";
   aspectRatio?: string | number;
   images: {
     src: ImageMetadata;
@@ -11,17 +11,15 @@ interface Props {
   }[];
 }
 
-const { columns = 3, width = 'normal', aspectRatio, images } = Astro.props;
+const { columns = 3, width = "normal", aspectRatio, images } = Astro.props;
 const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
 ---
 
 <figure class:list={[`width-${width}`, "ImageGrid"]}>
-  {width === 'normal' && <slot name="sidenote" />}
   <div class="ImageGrid-grid">
-    {images.map(({ src, alt }) => (
-      <Image src={src} alt={alt} />
-    ))}
+    {images.map(({ src, alt }) => <Image src={src} alt={alt} />)}
   </div>
+  {width === "normal" && <slot name="sidenote" />}
   <slot name="figcaption" />
 </figure>
 
@@ -78,6 +76,7 @@ const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
     grid-template-columns: repeat(var(--columns), 1fr);
     gap: var(--image-grid-gap);
     width: 100%;
+    float: left;
   }
 
   /* Style direct image children */
