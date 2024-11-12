@@ -7,6 +7,7 @@ modifiedAt: 2024-11-09
 ---
 import { Image } from 'astro:assets';
 import BasicImage from "../../components/BasicImage.astro";
+import ImageGrid from "../../components/ImageGrid.astro";
 import CustomFigure from "../../components/CustomFigure.astro";
 import Sidenote from "../../components/Sidenote.astro";
 
@@ -41,6 +42,72 @@ Using Markdown image syntax
 
 {/* Resizes correctly */}
 ![](/images/DSCF1634.jpg)
+
+Creating a grid of images with 2 per row
+
+<ImageGrid columns={2}>
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
+</ImageGrid>
+
+Creating a grid of images with 3 per row
+
+<ImageGrid columns={3}>
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
+</ImageGrid>
+
+Creating a fullwidth grid of images with 3 per row
+
+<ImageGrid columns={3} fullwidth={true}>
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
+</ImageGrid>
+
+Creating a grid of images with 3 per row, with different aspect ratios
+
+<ImageGrid columns={3} aspectRatio={1}>
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
+</ImageGrid>
+
+<ImageGrid columns={3} aspectRatio={16/9}>
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+</ImageGrid>
+
+<ImageGrid columns={3} aspectRatio={9/16}>
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Image src={DSCF1631} alt="cloud 1" />
+  <Image src={DSCF1634} alt="cloud 2" />
+  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
+</ImageGrid>
 
 <Sidenote name="other" num={false}><img src="/images/DSCF1631.jpg"/>This is a caption</Sidenote>
 Tufte emphasizes tight integration of graphics with text. Data, graphs, and figures are kept with the text that discusses them. In print, this means they are not relegated to a separate page. On the web, that means readability of graphics and their accompanying text without extra clicks, tab-switching, or scrolling.

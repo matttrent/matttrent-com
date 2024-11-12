@@ -1,0 +1,73 @@
+---
+interface Props {
+  columns: number;
+  fullwidth?: boolean;
+  aspectRatio?: string | number;
+}
+
+const { columns = 3, fullwidth = false, aspectRatio } = Astro.props;
+const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
+---
+
+<figure class:list={[{ fullwidth }]}>
+  {!fullwidth && <slot name="sidenote" />}
+  <div class="ImageGrid">
+    <slot />
+  </div>
+  <slot name="figcaption" />
+</figure>
+
+<style define:vars={{ columns, cssAspectRatio }}>
+  :root {
+    --image-grid-gap: 0.5rem;
+  }
+
+  figure {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 0 0 3em 0;
+  }
+
+  figure.fullwidth {
+    grid-column: text-start / margin-end;
+  }
+
+  @media (max-width: 760px) {
+    figure.fullwidth {
+      grid-column: page-start / page-end;
+    }
+  }
+
+  :global(article > figure > figcaption) {
+    float: right;
+    clear: right;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: baseline;
+    position: relative;
+    max-width: calc(4 * var(--column-width));
+  }
+
+  .ImageGrid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    gap: var(--image-grid-gap);
+    width: 100%;
+  }
+
+  /* Style direct image children */
+  :global(.ImageGrid > img),
+  :global(.ImageGrid > :is(astro-island, *) > img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: var(--cssAspectRatio, auto);
+  }
+</style>
