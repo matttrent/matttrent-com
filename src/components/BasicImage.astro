@@ -8,12 +8,12 @@ interface Props {
   [key: string]: any;
 }
 
-const { ...props } = Astro.props;
+const { fullwidth = false, ...props } = Astro.props;
 ---
 
-<figure class={props.fullwidth ? "fullwidth" : ""}>
+<figure class:list={[{ fullwidth }]}>
   <Image {...props} class="responsive-image" />
-  {!props.fullwidth && <slot name="sidenote" />}
+  {!fullwidth && <slot name="sidenote" />}
 </figure>
 
 <style>
