@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 
 interface Props {
   columns: number;
-  fullwidth?: boolean;
+  width?: 'normal' | 'full' | 'fullpage';
   aspectRatio?: string | number;
   images: {
     src: ImageMetadata;
@@ -11,14 +11,13 @@ interface Props {
   }[];
 }
 
-const { columns = 3, fullwidth = false, aspectRatio, images } = Astro.props;
+const { columns = 3, width = 'normal', aspectRatio, images } = Astro.props;
 const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
 ---
 
-<figure class:list={[{ fullwidth }]}>
-  {!fullwidth && <slot name="sidenote" />}
+<figure class:list={[`width-${width}`]}>
+  {width === 'normal' && <slot name="sidenote" />}
   <div class="ImageGrid">
-    <!-- --slot /-- -->
     {images.map(({ src, alt }) => (
       <Image src={src} alt={alt} />
     ))}
@@ -42,12 +41,22 @@ const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
     margin: 0 0 3em 0;
   }
 
-  figure.fullwidth {
+  figure.width-normal {
+    grid-column: text-start / text-end;
+  }
+
+  figure.width-full {
     grid-column: text-start / margin-end;
   }
 
+  figure.width-fullpage {
+    grid-column: screen-start / screen-end;
+  }
+
   @media (max-width: 760px) {
-    figure.fullwidth {
+    figure.width-normal,
+    figure.width-full,
+    figure.width-fullpage {
       grid-column: page-start / page-end;
     }
   }

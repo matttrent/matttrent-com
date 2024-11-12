@@ -78,7 +78,24 @@ Creating a fullwidth grid of images with 3 per row
 
 <ImageGrid 
   columns={3} 
-  fullwidth={true}
+  width="full"
+  images={[
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" }
+  ]}
+>
+  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
+</ImageGrid>
+
+Creating a fullpage grid of images with 3 per row
+
+<ImageGrid 
+  columns={3} 
+  width="fullpage"
   images={[
     { src: DSCF1631, alt: "cloud 1" },
     { src: DSCF1634, alt: "cloud 2" },

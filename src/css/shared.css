@@ -112,6 +112,7 @@ body {
   grid-auto-flow: columns;
   margin: 0 auto;
   grid-template-columns:
+    [screen-start]
     var(--outer-margin) 
     [page-start left-kickout] 
     var(--column-width)
@@ -120,7 +121,8 @@ body {
     var(--column-width) 
     [right-kickout margin-start] 
     repeat(3, var(--column-width)) [page-end margin-end] 
-    var(--outer-margin);
+    var(--outer-margin)
+    [screen-end];
   /* column-gap: var(--column-gap); */
 }
 
