@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ProseWrapper from "../components/ProseWrapper.astro";
-import BasicImage from "../components/BasicImage.astro";
+import CustomFigure from "../components/CustomFigure.astro";
 import Sidenote from "../components/Sidenote.astro";
 
 // TODO: Need to figure out how I want to handle images.
@@ -30,7 +30,7 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
   <Header title={pageTitle} slot="header" />
 
   <ProseWrapper>
-    <BasicImage>
+    <CustomFigure>
       <img
         src="/attachments/research/chuckclose_full.png"
         alt=""
@@ -54,7 +54,7 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
         dominant interpretation from a portrait in the left image to artifacts
         in the right image.
       </Sidenote>
-    </BasicImage>
+    </CustomFigure>
 
     <p>
       The purpose of most images is to effectively convey information. Implicit

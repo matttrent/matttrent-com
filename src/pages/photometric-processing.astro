@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ProseWrapper from "../components/ProseWrapper.astro";
-import BasicImage from "../components/BasicImage.astro";
+import CustomFigure from "../components/CustomFigure.astro";
 import Sidenote from "../components/Sidenote.astro";
 
 const pageTitle = "Photometric Image Processing for HDR Displays";
@@ -12,7 +12,7 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
   <Header title={pageTitle} slot="header" />
 
   <ProseWrapper>
-    <BasicImage>
+    <CustomFigure>
       <img
         src="/attachments/research/photometric-processing-1.png"
         alt=""
@@ -34,7 +34,7 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
         LCD image corresponding to backlight. The combination of the backlight
         and LCD image will reconstruct the original image.
       </Sidenote>
-    </BasicImage>
+    </CustomFigure>
 
     <p>
       Many real-world scenes contain a dynamic range that exceeds conventional
