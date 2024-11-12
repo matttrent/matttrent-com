@@ -1,14 +1,34 @@
 ---
+import { Image } from "astro:assets";
 
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  fullwidth?: boolean;
+  [key: string]: any;
+}
+
+const { ...props } = Astro.props;
 ---
 
-<figure>
-  <slot />
-  <slot name="sidenote" />
+<figure class={props.fullwidth ? "fullwidth" : ""}>
+  <Image {...props} class="responsive-image" />
+  {!props.fullwidth && <slot name="sidenote" />}
 </figure>
 
 <style>
   figure {
     margin-bottom: 3rem;
+  }
+
+  figure.fullwidth {
+    grid-column: text-start / margin-end;
+  }
+
+  .responsive-image {
+    height: auto;
+    aspect-ratio: attr(width) / attr(height);
+    object-fit: cover;
+    width: 100%;
   }
 </style>

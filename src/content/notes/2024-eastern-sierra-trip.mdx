@@ -5,8 +5,9 @@ isDraft: true
 createdAt: 2024-10-25
 modifiedAt: 2024-11-09
 ---
-import { Image, Picture } from 'astro:assets';
+import { Image } from 'astro:assets';
 import BasicImage from "../../components/BasicImage.astro";
+import CustomFigure from "../../components/CustomFigure.astro";
 import Sidenote from "../../components/Sidenote.astro";
 import MDSidenote from "../../components/MDSidenote.astro";
 import DSCF1631 from '../../assets/DSCF1631.jpg'
@@ -15,6 +16,12 @@ import DSCF1631 from '../../assets/DSCF1631.jpg'
 <figure>
   <Image src={DSCF1631} alt="cloud 1" width="800"/>
 </figure>
+
+something something someting here
+
+<BasicImage src={DSCF1631} alt="cloud 1" />
+
+
 
 Did some stuff
 
@@ -63,3 +70,16 @@ If you need a full-width figure, give it the `fullwidth` class. Make sure thatâ€
 <figure class="fullwidth">
   <img src="https://edwardtufte.github.io/tufte-css/img/napoleons-march.png" alt="Figurative map of the successive losses of the French Army in the Russian campaign, 1812-1813" />
 </figure>
+
+<BasicImage 
+  src="https://edwardtufte.github.io/tufte-css/img/napoleons-march.png" 
+  alt="Figurative map of the successive losses of the French Army in the Russian campaign, 1812-1813" 
+  width="2000"
+  height="2000"
+  fullwidth={true} 
+/>
+
+<BasicImage src={DSCF1631} alt="cloud 1" fullwidth={true}>
+  <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
+</BasicImage>
+
