@@ -45,67 +45,94 @@ Using Markdown image syntax
 
 Creating a grid of images with 2 per row
 
-<ImageGrid columns={2}>
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
+<ImageGrid 
+  columns={2} 
+  images={[
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" }
+  ]}
+>
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 
 Creating a grid of images with 3 per row
 
-<ImageGrid columns={3}>
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
+<ImageGrid 
+  columns={3} 
+  images={[
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" }
+  ]}
+>
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 
 Creating a fullwidth grid of images with 3 per row
 
-<ImageGrid columns={3} fullwidth={true}>
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
+<ImageGrid 
+  columns={3} 
+  fullwidth={true}
+  images={[
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" }
+  ]}
+>
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 
 Creating a grid of images with 3 per row, with different aspect ratios
 
-<ImageGrid columns={3} aspectRatio={1}>
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
+<ImageGrid 
+  columns={3} 
+  aspectRatio={1}
+  images={[
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" }
+  ]}
+>
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 
-<ImageGrid columns={3} aspectRatio={16/9}>
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-</ImageGrid>
+<ImageGrid 
+  columns={3} 
+  aspectRatio={16/9}
+  images={[
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" }
+  ]}
+/>
 
-<ImageGrid columns={3} aspectRatio={9/16}>
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
-  <Image src={DSCF1631} alt="cloud 1" />
-  <Image src={DSCF1634} alt="cloud 2" />
+<ImageGrid 
+  columns={3} 
+  aspectRatio={9/16}
+  images={[
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" },
+    { src: DSCF1631, alt: "cloud 1" },
+    { src: DSCF1634, alt: "cloud 2" }
+  ]}
+>
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
 </ImageGrid>
 

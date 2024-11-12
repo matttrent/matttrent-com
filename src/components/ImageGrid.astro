@@ -1,18 +1,27 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   columns: number;
   fullwidth?: boolean;
   aspectRatio?: string | number;
+  images: {
+    src: ImageMetadata;
+    alt: string;
+  }[];
 }
 
-const { columns = 3, fullwidth = false, aspectRatio } = Astro.props;
+const { columns = 3, fullwidth = false, aspectRatio, images } = Astro.props;
 const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
 ---
 
 <figure class:list={[{ fullwidth }]}>
   {!fullwidth && <slot name="sidenote" />}
   <div class="ImageGrid">
-    <slot />
+    <!-- --slot /-- -->
+    {images.map(({ src, alt }) => (
+      <Image src={src} alt={alt} />
+    ))}
   </div>
   <slot name="figcaption" />
 </figure>
