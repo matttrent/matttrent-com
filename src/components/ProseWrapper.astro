@@ -15,6 +15,13 @@ import "../css/shared.css";
     grid-column: text-start / text-end;
   }
 
+  @media (max-width: 760px) {
+    article > *,
+    article > section > * {
+      grid-column: page-start / page-end;
+    }
+  }
+
   /* section is not currently used in layouts.  
   but if reintroduced, this will preserve the grid */
   article section {

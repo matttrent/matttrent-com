@@ -48,6 +48,16 @@ const { title, subtitle } = Astro.props;
     grid-column: text-start / text-end;
   }
 
+  @media (max-width: 760px) {
+    header {
+      grid-column: page-start / page-end;
+    }
+
+    .extra {
+      grid-column: page-start / page-end;
+    }
+  }
+
   h1 {
     font-weight: 400;
     margin-top: 4rem;

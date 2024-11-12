@@ -25,6 +25,12 @@ const { ...props } = Astro.props;
     grid-column: text-start / margin-end;
   }
 
+  @media (max-width: 760px) {
+    figure.fullwidth {
+      grid-column: page-start / page-end;
+    }
+  }
+
   .responsive-image {
     height: auto;
     aspect-ratio: attr(width) / attr(height);
