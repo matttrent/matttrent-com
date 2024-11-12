@@ -11,7 +11,7 @@ interface Props {
 const { fullwidth = false, ...props } = Astro.props;
 ---
 
-<figure class:list={[{ fullwidth }]}>
+<figure class:list={[{ fullwidth }, "BasicImage"]}>
   <Image {...props} class="responsive-image" />
   {!fullwidth && <slot name="sidenote" />}
   <slot />
@@ -46,7 +46,7 @@ const { fullwidth = false, ...props } = Astro.props;
     width: 100%;
   }
 
-  :global(article > figure > figcaption) {
+  :global(article > figure.BasicImage > figcaption) {
     float: right;
     clear: right;
     margin-top: 0;

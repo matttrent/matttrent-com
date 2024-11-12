@@ -2,7 +2,7 @@
 
 ---
 
-<figure>
+<figure class="CustomFigure">
   <slot />
   <slot name="sidenote" />
 </figure>
@@ -17,5 +17,17 @@
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
     margin: 0 0 3em 0;
+  }
+
+  :global(article > figure.CustomFigure > figcaption) {
+    float: right;
+    clear: right;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: baseline;
+    position: relative;
+    max-width: calc(4 * var(--column-width));
   }
 </style>

@@ -15,9 +15,9 @@ const { columns = 3, width = 'normal', aspectRatio, images } = Astro.props;
 const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
 ---
 
-<figure class:list={[`width-${width}`]}>
+<figure class:list={[`width-${width}`, "ImageGrid"]}>
   {width === 'normal' && <slot name="sidenote" />}
-  <div class="ImageGrid">
+  <div class="ImageGrid-grid">
     {images.map(({ src, alt }) => (
       <Image src={src} alt={alt} />
     ))}
@@ -61,7 +61,7 @@ const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
     }
   }
 
-  :global(article > figure > figcaption) {
+  :global(article > figure.ImageGrid > figcaption) {
     float: right;
     clear: right;
     margin-top: 0;
@@ -73,7 +73,7 @@ const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
     max-width: calc(4 * var(--column-width));
   }
 
-  .ImageGrid {
+  .ImageGrid-grid {
     display: grid;
     grid-template-columns: repeat(var(--columns), 1fr);
     gap: var(--image-grid-gap);
@@ -81,8 +81,8 @@ const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
   }
 
   /* Style direct image children */
-  :global(.ImageGrid > img),
-  :global(.ImageGrid > :is(astro-island, *) > img) {
+  :global(.ImageGrid-grid > img),
+  :global(.ImageGrid-grid > :is(astro-island, *) > img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
