@@ -104,9 +104,10 @@ const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-f
     max-height: 2rem;
   }
 
-  /* TODO: figure out how to get consistent sizing both in text and in figures */
+  /* TODO: move font size to somewhere better */
   label.margin-toggle:not(.sidenote-number) {
     display: none;
+    font-size: 1.4rem;
   }
 
   @media (max-width: 760px) {
