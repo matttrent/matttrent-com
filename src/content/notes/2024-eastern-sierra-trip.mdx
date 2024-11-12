@@ -9,27 +9,25 @@ import { Image } from 'astro:assets';
 import BasicImage from "../../components/BasicImage.astro";
 import CustomFigure from "../../components/CustomFigure.astro";
 import Sidenote from "../../components/Sidenote.astro";
-import MDSidenote from "../../components/MDSidenote.astro";
-import DSCF1631 from '../../assets/DSCF1631.jpg'
 
-{/* Resizes incorrectly */}
-<figure>
-  <Image src={DSCF1631} alt="cloud 1" width="800"/>
-</figure>
+import DSCF1631 from '../../assets/DSCF1631.jpg'
+import DSCF1634 from '../../assets/DSCF1634.jpg'
+
 
 something something someting here
 
 <BasicImage src={DSCF1631} alt="cloud 1" />
 
+<BasicImage src={DSCF1634} alt="cloud 1" fullwidth={false}>
+  <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
+</BasicImage>
+
+<BasicImage src={DSCF1631} alt="cloud 1" fullwidth={true}>
+  <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
+</BasicImage>
 
 
 Did some stuff
-
-{/* Resizes correctly */}
-<figure class="fullwidth">
-	<img src="/images/DSCF1631.jpg" alt="" width="48%" />
-	<img src="/images/DSCF1634.jpg" alt="" width="48%" />
-</figure>
 
 {/* Resizes correctly */}
 ![](/images/DSCF1631.jpg)
@@ -37,8 +35,6 @@ Did some stuff
 
 <Sidenote name="other" num={false}><img src="/images/DSCF1631.jpg"/>This is a caption</Sidenote>
 Tufte emphasizes tight integration of graphics with text. Data, graphs, and figures are kept with the text that discusses them. In print, this means they are not relegated to a separate page. On the web, that means readability of graphics and their accompanying text without extra clicks, tab-switching, or scrolling.
-
-
 
 <Sidenote name="testing" num={false} >Adding some text inside of here. but what happens if this text is much much longer than the body element it matches how do theings </Sidenote>
 Figures should try to use the `figure` element, which by default are constrained to the main column. Don’t wrap figures in a paragraph tag. Any label or margin note goes in a regular margin note inside the figure. For example, most of the time one should introduce a figure directly into the main flow of discussion, like so:
@@ -59,11 +55,8 @@ Something here. tnoeuntheo  otnehu<Sidenote>Adding some text inside of here. but
 
 Hello.
 
-
 <Sidenote num={false}><img src="https://edwardtufte.github.io/tufte-css/img/rhino.png" alt="Image of a Rhinoceros"/> F.J. Cole, “The History of Albrecht Dürer’s Rhinoceros in Zooological Literature,” <em>Science, Medicine, and History: Essays on the Evolution of Scientific Thought and Medical Practice</em> (London, 1953), ed. E. Ashworth Underwood, 337-356. From page 71 of Edward Tufte’s <em>Visual Explanations</em>.</Sidenote>
 But tight integration of graphics with text is central to Tufte's work even when those graphics are ancillary to the main body of a text. In many of those cases, a margin figure may be most appropriate. To place figures in the margin, just wrap an image (or whatever) in a margin note inside a `p` tag, as seen to the right of this paragraph.
-
-
 
 If you need a full-width figure, give it the `fullwidth` class. Make sure that’s inside an `article`, and it will take up (almost) the full width of the screen. This approach is demonstrated below using Edward Tufte’s English translation of the Napoleon’s March data visualization. From *Beautiful Evidence*, page 122-124.
 
@@ -74,8 +67,3 @@ If you need a full-width figure, give it the `fullwidth` class. Make sure that�
   height="2000"
   fullwidth={true} 
 />
-
-<BasicImage src={DSCF1631} alt="cloud 1" fullwidth={true}>
-  <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
-</BasicImage>
-
