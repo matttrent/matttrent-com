@@ -14,23 +14,31 @@ import DSCF1631 from '../../assets/DSCF1631.jpg'
 import DSCF1634 from '../../assets/DSCF1634.jpg'
 
 
-something something someting here
+Basic image
 
 <BasicImage src={DSCF1631} alt="cloud 1" />
+
+Basic image with caption
+
+<BasicImage src={DSCF1631} alt="cloud 1">
+  <figcaption>This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes</figcaption>
+</BasicImage>
+
+Basic image with sidenote
 
 <BasicImage src={DSCF1634} alt="cloud 1" fullwidth={false}>
   <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
 </BasicImage>
 
+Basic image fullwidth with sidenote in code but hidden
+
 <BasicImage src={DSCF1631} alt="cloud 1" fullwidth={true}>
   <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
 </BasicImage>
 
-
-Did some stuff
+Using Markdown image syntax
 
 {/* Resizes correctly */}
-![](/images/DSCF1631.jpg)
 ![](/images/DSCF1634.jpg)
 
 <Sidenote name="other" num={false}><img src="/images/DSCF1631.jpg"/>This is a caption</Sidenote>

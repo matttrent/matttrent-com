@@ -14,11 +14,19 @@ const { fullwidth = false, ...props } = Astro.props;
 <figure class:list={[{ fullwidth }]}>
   <Image {...props} class="responsive-image" />
   {!fullwidth && <slot name="sidenote" />}
+  <slot />
 </figure>
 
 <style>
   figure {
-    margin-bottom: 3rem;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 0 0 3em 0;
   }
 
   figure.fullwidth {
@@ -36,5 +44,17 @@ const { fullwidth = false, ...props } = Astro.props;
     aspect-ratio: attr(width) / attr(height);
     object-fit: cover;
     width: 100%;
+  }
+
+  :global(article > figure > figcaption) {
+    float: right;
+    clear: right;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: baseline;
+    position: relative;
+    max-width: calc(4/7 * 100%);
   }
 </style>
