@@ -8,16 +8,63 @@ interface Props {
   images: {
     src: ImageMetadata;
     alt: string;
+    xoff?: number;
+    yoff?: number;
   }[];
 }
 
 const { columns = 3, width = "normal", aspectRatio, images } = Astro.props;
 const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
+
+// Helper to clamp and compute position
+const computePosition = (xoff = 0, yoff = 0) => {
+  const x = 50 - Math.max(-50, Math.min(50, xoff));
+  const y = 50 - Math.max(-50, Math.min(50, yoff));
+  return `${x}% ${y}%`;
+};
+
+// Define widths based on layout type
+const getImageSizes = (src: ImageMetadata, layoutWidth: typeof width) => {
+  switch (layoutWidth) {
+    case "normal":
+      return "(max-width: 500px) 500px, (max-width: 800px) 800px, 800px";
+    case "full":
+      return "(max-width: 500px) 500px, (max-width: 800px) 800px, 1220px";
+    case "fullscreen":
+      return `(max-width: 500px) 500px, (max-width: 800px) 800px, (max-width: 1400px) 1600px, ${src.width}px`;
+    default:
+      return "800px";
+  }
+};
+
+// Define widths for image optimization
+const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
+  switch (layoutWidth) {
+    case "normal":
+      return [500, 800];
+    case "full":
+      return [500, 800, 1220];
+    case "fullscreen":
+      return [500, 800, 1600, src.width];
+    default:
+      return [800];
+  }
+};
 ---
 
 <figure class:list={[`width-${width}`, "ImageGrid"]}>
   <div class="ImageGrid-grid">
-    {images.map(({ src, alt }) => <Image src={src} alt={alt} />)}
+    {
+      images.map(({ src, alt, xoff, yoff }) => (
+        <Image
+          src={src}
+          alt={alt}
+          style={{ objectPosition: computePosition(xoff, yoff) }}
+          sizes={getImageSizes(src, width)}
+          widths={getImageWidths(src, width)}
+        />
+      ))
+    }
   </div>
   {width === "normal" && <slot name="sidenote" />}
   <slot name="figcaption" />
