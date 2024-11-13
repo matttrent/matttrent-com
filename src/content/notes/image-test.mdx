@@ -1,12 +1,14 @@
 ---
-title: 2024 Eastern Sierra trip
+title: Image test
 date: 2024-09-21
 isDraft: true
 createdAt: 2024-10-25
 modifiedAt: 2024-11-09
 ---
+import { Image } from 'astro:assets';
 import BasicImage from "../../components/BasicImage.astro";
 import ImageGrid from "../../components/ImageGrid.astro";
+import CustomFigure from "../../components/CustomFigure.astro";
 import Sidenote from "../../components/Sidenote.astro";
 
 import iPhonePhoto from '../../assets/2024-eastern-sierra-trip/2024-09-22 13.27.08.jpg'
@@ -38,58 +40,9 @@ import DSCF2074 from '../../assets/2024-eastern-sierra-trip/DSCF2074.jpg'
 import DSCF2160 from '../../assets/2024-eastern-sierra-trip/DSCF2160.jpg'
 import DSCF3598 from '../../assets/2024-eastern-sierra-trip/DSCF3598.jpg'
 
-<ImageGrid
-   columns={5}
-   aspectRatio={4/3}
-   width="full"
-   images={[
-    { src:iPhonePhoto, alt:"" },
-    { src:DSCF1572, alt:"" },
-    { src:DSCF1578, alt:"" },
-    { src:DSCF1583, alt:"" },
-    { src:DSCF1598, alt:"" },
-    { src:DSCF1605, alt:"" },
-    { src:DSCF1631, alt:"" },
-    { src:DSCF1634, alt:"" },
-    { src:DSCF1648, alt:"" },
-    { src:DSCF1654, alt:"" },
-    { src:DSCF1716, alt:"" },
-    { src:DSCF1757, alt:"" },
-    { src:DSCF1772, alt:"" },
-    { src:DSCF1778, alt:"" },
-    { src:DSCF1807, alt:"" },
-    { src:DSCF1819, alt:"" },
-    { src:DSCF1821, alt:"" },
-    { src:DSCF1828, alt:"" },
-    { src:DSCF1849, alt:"" },
-    { src:DSCF1863, alt:"" },
-    { src:DSCF1872, alt:"" },
-    { src:DSCF2007, alt:"" },
-    { src:DSCF2021, alt:"" },
-    { src:DSCF2053, alt:"" },
-    { src:DSCF2055, alt:"" },
-    { src:DSCF2074, alt:"" },
-    { src:DSCF2160, alt:"" },
-    { src:DSCF3598, alt:"" },
-   ]}
-/>
-
-
-
-
-
-<ImageGrid
-   columns={2}
-   width="full"
-   images={[
-	   { src:DSCF1572, alt: "start 1"},
-	   { src:DSCF1583, alt: "start 3"},
-   ]}
-/>
-
 Basic image
 
-<BasicImage src={DSCF1583} alt="cloud 1" />
+<BasicImage src={DSCF1631} alt="cloud 1" />
 
 Basic image with caption
 
@@ -242,13 +195,13 @@ Hi there.  why isn't modified date changing when I update this.  Trying again.  
 
 Something here. tnoeuntheo  otnehu<Sidenote>Adding some text inside of here. but what happens if this text is much much longer than the body element it matches how do theings coubs neohneh uoehunthoeu nhoenuth oenuth oentuhoen uhnoethu noethu noehu euhonuhenuhounh      aoe uoenu honteuh oenuh noeh nitnue to flow as we add more and more and more and more text MORE AND MORE AND MOR and more am ndo and mo.  so so so so so so so so much more text</Sidenote>  sonetu hoe u nstoehu  soeuh ntsoeh u htnsoehu  tnhsoedhu htnsoe hu  onshteuh osenthu shth MORE AND MORE AND MOR and more am ndo and mo
 
-<BasicImage src="https://edwardtufte.github.io/tufte-css/img/exports-imports.png" 
-    alt="Exports and Imports to and from Denmark & Norway from 1700 to 1780"
-    width="1000" height="1000">
+<CustomFigure>
+  <img src="https://edwardtufte.github.io/tufte-css/img/exports-imports.png" 
+    alt="Exports and Imports to and from Denmark & Norway from 1700 to 1780" />
   <Sidenote slot="sidenote" num={false}>
     From Edward Tufte, <em>Visual Display of Quantitative Information</em>, page 92.
   </Sidenote>
-</BasicImage>
+</CustomFigure>
 
 Hello.
 
