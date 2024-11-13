@@ -5,6 +5,11 @@ import ProseWrapper from "../components/ProseWrapper.astro";
 import CustomFigure from "../components/CustomFigure.astro";
 import Sidenote from "../components/Sidenote.astro";
 
+import { Image } from "astro:assets";
+import Image1 from "../assets/research/photometric-processing-1.png";
+import Image2 from "../assets/research/photometric-processing-2.png";
+import Image3 from "../assets/research/photometric-processing-3.png";
+
 const pageTitle = "Photometric Image Processing for HDR Displays";
 ---
 
@@ -13,43 +18,30 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
 
   <ProseWrapper>
     <CustomFigure>
-      <img
-        src="/attachments/research/photometric-processing-1.png"
-        alt=""
-        width="32%"
-      />
-      <img
-        src="/attachments/research/photometric-processing-2.png"
-        alt=""
-        width="32%"
-      />
-      <img
-        src="/attachments/research/photometric-processing-3.png"
-        alt=""
-        width="32%"
-      />
+      <Image src={Image1} alt="" class="responsive-image" style="width: 32%;" />
+      <Image src={Image2} alt="" class="responsive-image" style="width: 32%;" />
+      <Image src={Image3} alt="" class="responsive-image" style="width: 32%;" />
       <Sidenote slot="sidenote" name="caption" num={false}>
         Left: original HDR image, tone mapped for display. Center: high
-        contrast, low frequency image representing the LED backlight. Right:
-        LCD image corresponding to backlight. The combination of the backlight
-        and LCD image will reconstruct the original image.
+        contrast, low frequency image representing the LED backlight. Right: LCD
+        image corresponding to backlight. The combination of the backlight and
+        LCD image will reconstruct the original image.
       </Sidenote>
     </CustomFigure>
 
     <p>
       Many real-world scenes contain a dynamic range that exceeds conventional
-      display technology by several orders of magnitude. Through the
-      combination of several existing technologies, new high dynamic range
-      displays, capable of reproducing a range of intensities much closer to
-      that of real environments, have been constructed. These benefits come at
-      the cost of more optically complex devices; involving two image
-      modulators, controlled in unison, to display images. We present several
-      methods of rendering images to this new class of devices for reproducing
-      photometrically accurate images. We discuss the process of calibrating a
-      display, matching the response of the device with our ideal model. We
-      then derive series of methods for efficiently displaying images,
-      optimized for different criteria and evaluate them in a perceptual
-      framework.
+      display technology by several orders of magnitude. Through the combination
+      of several existing technologies, new high dynamic range displays, capable
+      of reproducing a range of intensities much closer to that of real
+      environments, have been constructed. These benefits come at the cost of
+      more optically complex devices; involving two image modulators, controlled
+      in unison, to display images. We present several methods of rendering
+      images to this new class of devices for reproducing photometrically
+      accurate images. We discuss the process of calibrating a display, matching
+      the response of the device with our ideal model. We then derive series of
+      methods for efficiently displaying images, optimized for different
+      criteria and evaluate them in a perceptual framework.
     </p>
 
     <h2 id="publications" class="newsection">Publications</h2>
@@ -92,3 +84,19 @@ const pageTitle = "Photometric Image Processing for HDR Displays";
     </figure>
   </ProseWrapper>
 </Layout>
+
+<style>
+  .responsive-image {
+    height: auto;
+    aspect-ratio: attr(width) / attr(height);
+    object-fit: cover;
+    /* 
+    These are useful for single images, but don't work with multiple images in a row,
+    at least how I'm using them above.  But there's probably a better solution to do so,
+    but what I'm doing here is pretty custom as I want 2 images to be resized such that
+    they have the same height and fill the width of the containing element.
+    */
+    /* width: 100%;
+    display: block; */
+  }
+</style>

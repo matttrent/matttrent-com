@@ -5,23 +5,9 @@ import ProseWrapper from "../components/ProseWrapper.astro";
 import CustomFigure from "../components/CustomFigure.astro";
 import Sidenote from "../components/Sidenote.astro";
 
-// TODO: Need to figure out how I want to handle images.
-//
-// The default Image behavior is to scale in the x-axis only with screen resizing.  That's
-// not what I want.  The responsive-image class changes the behavior as I'd like.  But
-// I'm not certain whether that's correct to use here as I have multiple images in a row,
-// which probably means it's not actually BasicImage, and there's a second component for
-// more general figures that expects more customization of its inputs.
-//
-// Leaving the original code as-is for now.  Will probably refactor my learnings into
-// another component.
-//
-// Also check 2024-eastern-sierra-trip.mdx for comments on which image approaches work
-// in MDX.
-
 import { Image } from "astro:assets";
-import ChuckCloseFull from "../assets/chuckclose_full.png";
-import ChuckCloseCrop from "../assets/chuckclose_crop.png";
+import ChuckCloseFull from "../assets/research/chuckclose_full.png";
+import ChuckCloseCrop from "../assets/research/chuckclose_crop.png";
 
 const pageTitle = "Manipulating Scale-Dependent Perception of Images";
 ---
@@ -31,20 +17,8 @@ const pageTitle = "Manipulating Scale-Dependent Perception of Images";
 
   <ProseWrapper>
     <CustomFigure>
-      <img
-        src="/attachments/research/chuckclose_full.png"
-        alt=""
-        width="35.5%"
-      />
-      <img
-        src="/attachments/research/chuckclose_crop.png"
-        alt=""
-        width="61.5%"
-      />
-      <!-- 
       <Image src={ChuckCloseFull} alt="" class="responsive-image" style="width: 35.5%;" />
       <Image src={ChuckCloseCrop} alt="" class="responsive-image" style="width: 61.5%;" /> 
-      -->
       <Sidenote slot="sidenote" name="caption" num={false}>
         Self-portrait of Chuck Close viewed at 2 scales. The left image is
         clearly recognizable as a portrait, even thought it contains the same

@@ -15,18 +15,19 @@ New design
 - [x] iframes styling
 - [x] Mobile styling
 - [ ] Single style defition for `<dl>` shared across list components
+- [ ] Single style definition for `<figure>` shared across components
 - [ ] Tables styling
 - [ ] Full width content (table, code, div, etc.)
 - [ ] Newthought styling
+- [ ] Even cooler photo grids
 - [ ] Migrate CV to new design
 
 Other 
 
 - [x] Add a notes root page
-- [x] Use astro image components
+- [ ] Use astro image components (migrate PhD and MSc pages)
 - [ ] Transition notes from date to createdAt
 - [ ] Create canonical notes URL method rather than needing `notes/{slug}` in components
-- [ ] Think about improvements to obsidian integration
 - [ ] Add type to notes and allow grouping/filtering by type
 - [ ] Add a notes RSS feed
 - [ ] Migrate to server-side rendering provider

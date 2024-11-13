@@ -26,4 +26,3 @@ pnpm-debug.log*
 # obsidian vault config
 .obsidian
 public/images
-src/assets
