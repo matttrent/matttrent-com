@@ -10,12 +10,12 @@ interface Props {
 const { ...props } = Astro.props;
 
 // Define widths based on layout type
-const getImageSizes = (src: ImageMetadata) => {
+const getImageSizes = () => {
   return "(max-width: 500px) 500px, (max-width: 800px) 800px, 800px";
 };
 
 // Define widths for image optimization
-const getImageWidths = (src: ImageMetadata) => {
+const getImageWidths = () => {
   return [500, 800];
 };
 ---
@@ -23,8 +23,8 @@ const getImageWidths = (src: ImageMetadata) => {
 <Image
   {...props}
   class="responsive-image"
-  sizes={getImageSizes(props.src)}
-  widths={getImageWidths(props.src)}
+  sizes={getImageSizes()}
+  widths={getImageWidths()}
 />
 
 <style>
