@@ -5,11 +5,13 @@ isDraft: true
 createdAt: 2024-10-25
 modifiedAt: 2024-11-09
 ---
+import { Image } from "astro:assets";
 import BasicImage from "../../components/BasicImage.astro";
 import ImageGrid from "../../components/ImageGrid.astro";
 import Sidenote from "../../components/Sidenote.astro";
+import SidenoteImage from "../../components/SidenoteImage.astro";
 
-import iPhonePhoto from '../../assets/2024-eastern-sierra-trip/2024-09-22 13.27.08.jpg'
+import iPhonePhoto from '../../assets/2024-eastern-sierra-trip/2024-09-22-13.27.08.jpg'
 import DSCF1572 from '../../assets/2024-eastern-sierra-trip/DSCF1572.jpg'
 import DSCF1578 from '../../assets/2024-eastern-sierra-trip/DSCF1578.jpg'
 import DSCF1583 from '../../assets/2024-eastern-sierra-trip/DSCF1583.jpg'
@@ -38,24 +40,110 @@ import DSCF2074 from '../../assets/2024-eastern-sierra-trip/DSCF2074.jpg'
 import DSCF2160 from '../../assets/2024-eastern-sierra-trip/DSCF2160.jpg'
 import DSCF3598 from '../../assets/2024-eastern-sierra-trip/DSCF3598.jpg'
 
+
+## To Bishop
+
 <ImageGrid
    columns={5}
-   aspectRatio={4/3}
+   aspectRatio={1}
    width="full"
    images={[
-    { src:iPhonePhoto, alt:"" },
     { src:DSCF1572, alt:"" },
     { src:DSCF1578, alt:"" },
     { src:DSCF1583, alt:"" },
     { src:DSCF1598, alt:"" },
+    { src:DSCF3598, alt:"" },
     { src:DSCF1605, alt:"" },
     { src:DSCF1631, alt:"" },
     { src:DSCF1634, alt:"" },
+   ]}
+/>
+
+Eastern gate of Yosemite.  Entering Basin and Range country
+
+<ImageGrid
+   columns={2}
+   width="full"
+   images={[
+	   { src:DSCF1572, alt: "start 1"},
+	   { src:DSCF1583, alt: "start 3"},
+   ]}
+/>
+
+Made it to Bishop.  Spent some time searching BLM land for dispersed campsites.  Eventually go lazy and decided get a spot in a BLM campground for simplicity.
+
+<BasicImage src={DSCF1598} alt="" />
+
+Watching the slight creep behind the Sierra crest
+
+<BasicImage src={DSCF1605} alt="" />
+
+Last light illuminated the clouds.  I happen to find some complementary ones 
+
+<ImageGrid
+   columns={2}
+   width="full"
+   images={[
+    { src:DSCF1631, alt:"" },
+    { src:DSCF1634, alt:"" },
+   ]}
+/>
+
+<BasicImage src={DSCF1648} alt="" />
+
+## Alabama Hills
+
+<ImageGrid
+   columns={5}
+   aspectRatio={1}
+   width="full"
+   images={[
     { src:DSCF1648, alt:"" },
     { src:DSCF1654, alt:"" },
     { src:DSCF1716, alt:"" },
     { src:DSCF1757, alt:"" },
     { src:DSCF1772, alt:"" },
+   ]}
+/>
+
+<BasicImage src={DSCF1654} alt="" />
+
+<ImageGrid
+   columns={2}
+   aspectRatio={4/3}
+   width="fullscreen"
+   images={[
+    { src:DSCF1716, alt:"" },
+    { src:DSCF1757, alt:"" },
+   ]}
+/>
+
+<BasicImage src={DSCF1772} alt="" />
+
+## Cottonwood Lakes
+
+<ImageGrid
+   columns={5}
+   aspectRatio={1}
+   width="full"
+   images={[
+    { src:iPhonePhoto, alt:"" },
+   ]}
+/>
+
+I wanted to get at least one proper hike in on this trip
+
+<Sidenote num={false}>
+	<SidenoteImage src={iPhonePhoto} alt="" />
+</Sidenote>
+
+## Alabama Hills again
+
+<ImageGrid
+   columns={5}
+   aspectRatio={1}
+   width="full"
+   images={[
     { src:DSCF1778, alt:"" },
     { src:DSCF1807, alt:"" },
     { src:DSCF1819, alt:"" },
@@ -68,199 +156,70 @@ import DSCF3598 from '../../assets/2024-eastern-sierra-trip/DSCF3598.jpg'
     { src:DSCF2021, alt:"" },
     { src:DSCF2053, alt:"" },
     { src:DSCF2055, alt:"" },
-    { src:DSCF2074, alt:"" },
-    { src:DSCF2160, alt:"" },
-    { src:DSCF3598, alt:"" },
    ]}
 />
 
+<BasicImage src={DSCF1778} alt="Alabama Hills sunrise">
+	<Sidenote num={false}>Got myself up to photograph sunrise.</Sidenote>
+</BasicImage>
+
+<ImageGrid
+   columns={3}
+   aspectRatio={4/3}
+   width="fullscreen"
+   images={[
+    { src:DSCF1807, alt:"" },
+    { src:DSCF1819, alt:"" },
+    { src:DSCF1821, alt:"" },
+    { src:DSCF1849, alt:"" },
+    { src:DSCF1863, alt:"" },
+   ]}
+/>
+
+<Sidenote num={false}>
+	<SidenoteImage src={DSCF1828} alt="" />
+</Sidenote>
 
 
+<BasicImage src={DSCF1872} alt="Rocks" />
 
+
+## Lake Crowley
 
 <ImageGrid
    columns={2}
+   aspectRatio={4/3}
    width="full"
    images={[
-	   { src:DSCF1572, alt: "start 1"},
-	   { src:DSCF1583, alt: "start 3"},
+    { src:DSCF2007, alt:"" },
+    { src:DSCF2021, alt:"" },
    ]}
 />
 
-Basic image
-
-<BasicImage src={DSCF1583} alt="cloud 1" />
-
-Basic image with caption
-
-<BasicImage src={DSCF1631} alt="cloud 1">
-  <figcaption>This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes</figcaption>
-</BasicImage>
-
-Basic image with sidenote
-
-<BasicImage src={DSCF1634} alt="cloud 1" fullwidth={false}>
-  <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
-</BasicImage>
-
-----
-
-Basic image fullwidth with sidenote in code but hidden.  I've added a figcaption to show you can caption fullwidth images below.
-
-<BasicImage src={DSCF1631} alt="cloud 1" fullwidth={true}>
-  <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
-  <figcaption>This is a caption that can be showen because it's not renderering as a sidenote</figcaption>
-</BasicImage>
-
-Using Markdown image syntax
-
-{/* Resizes correctly */}
-![](/images/DSCF1634.jpg)
-
-Creating a grid of images with 2 per row
-
-<ImageGrid 
-  columns={2} 
-  images={[
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" }
-  ]}
->
-  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
-</ImageGrid>
-
-Creating a grid of images with 3 per row
-
-<ImageGrid 
-  columns={3} 
-  images={[
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" }
-  ]}
->
-  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
-</ImageGrid>
-
-Creating a fullwidth grid of images with 3 per row
-
-<ImageGrid 
-  columns={3} 
-  width="full"
-  images={[
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" }
-  ]}
->
-  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
-</ImageGrid>
-
-Creating a fullscreen grid of images with 3 per row
-
-<ImageGrid 
-  columns={3} 
-  width="fullscreen"
-  images={[
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" }
-  ]}
->
-  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
-</ImageGrid>
-
-Creating a grid of images with 3 per row, with different aspect ratios.  1:1
-
-<ImageGrid 
-  columns={3} 
-  aspectRatio={1}
-  images={[
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" }
-  ]}
->
-  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
-</ImageGrid>
-
-16:9
-
-<ImageGrid 
-  columns={3} 
-  aspectRatio={16/9}
-  images={[
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" }
-  ]}
+<ImageGrid
+   columns={2}
+   aspectRatio={4/3}
+   width="full"
+   images={[
+    { src:DSCF2053, alt:"" },
+    { src:DSCF2055, alt:"" },
+   ]}
 />
 
-9:16
+## Mono Lake
 
-<ImageGrid 
-  columns={3} 
-  aspectRatio={9/16}
-  images={[
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" },
-    { src: DSCF1631, alt: "cloud 1" },
-    { src: DSCF1634, alt: "cloud 2" }
-  ]}
->
-  <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
-</ImageGrid>
-
-<Sidenote name="other" num={false}><img src="/images/DSCF1631.jpg"/>This is a caption</Sidenote>
-Tufte emphasizes tight integration of graphics with text. Data, graphs, and figures are kept with the text that discusses them. In print, this means they are not relegated to a separate page. On the web, that means readability of graphics and their accompanying text without extra clicks, tab-switching, or scrolling.
-
-<Sidenote name="testing" num={false} >Adding some text inside of here. but what happens if this text is much much longer than the body element it matches how do theings </Sidenote>
-Figures should try to use the `figure` element, which by default are constrained to the main column. Don’t wrap figures in a paragraph tag. Any label or margin note goes in a regular margin note inside the figure. For example, most of the time one should introduce a figure directly into the main flow of discussion, like so:
-
-Going to add some extra text here to test the margin note.  Making space so that one note doesn't overlap with the next.
-
-Hi there.  why isn't modified date changing when I update this.  Trying again.  And again.  One more update.
-
-Something here. tnoeuntheo  otnehu<Sidenote>Adding some text inside of here. but what happens if this text is much much longer than the body element it matches how do theings coubs neohneh uoehunthoeu nhoenuth oenuth oentuhoen uhnoethu noethu noehu euhonuhenuhounh      aoe uoenu honteuh oenuh noeh nitnue to flow as we add more and more and more and more text MORE AND MORE AND MOR and more am ndo and mo.  so so so so so so so so much more text</Sidenote>  sonetu hoe u nstoehu  soeuh ntsoeh u htnsoehu  tnhsoedhu htnsoe hu  onshteuh osenthu shth MORE AND MORE AND MOR and more am ndo and mo
-
-<BasicImage src="https://edwardtufte.github.io/tufte-css/img/exports-imports.png" 
-    alt="Exports and Imports to and from Denmark & Norway from 1700 to 1780"
-    width="1000" height="1000">
-  <Sidenote slot="sidenote" num={false}>
-    From Edward Tufte, <em>Visual Display of Quantitative Information</em>, page 92.
-  </Sidenote>
-</BasicImage>
-
-Hello.
-
-<Sidenote num={false}><img src="https://edwardtufte.github.io/tufte-css/img/rhino.png" alt="Image of a Rhinoceros"/> F.J. Cole, “The History of Albrecht Dürer’s Rhinoceros in Zooological Literature,” <em>Science, Medicine, and History: Essays on the Evolution of Scientific Thought and Medical Practice</em> (London, 1953), ed. E. Ashworth Underwood, 337-356. From page 71 of Edward Tufte’s <em>Visual Explanations</em>.</Sidenote>
-But tight integration of graphics with text is central to Tufte's work even when those graphics are ancillary to the main body of a text. In many of those cases, a margin figure may be most appropriate. To place figures in the margin, just wrap an image (or whatever) in a margin note inside a `p` tag, as seen to the right of this paragraph.
-
-If you need a full-width figure, give it the `fullwidth` class. Make sure that’s inside an `article`, and it will take up (almost) the full width of the screen. This approach is demonstrated below using Edward Tufte’s English translation of the Napoleon’s March data visualization. From *Beautiful Evidence*, page 122-124.
-
-<BasicImage 
-  src="https://edwardtufte.github.io/tufte-css/img/napoleons-march.png" 
-  alt="Figurative map of the successive losses of the French Army in the Russian campaign, 1812-1813" 
-  width="2000"
-  height="2000"
-  fullwidth={true} 
+<ImageGrid
+   columns={5}
+   aspectRatio={1}
+   width="full"
+   images={[
+    { src:DSCF2074, alt:"" },
+    { src:DSCF2160, alt:"" },
+   ]}
 />
+
+
+<BasicImage src={DSCF2074} alt="tuffa" />
+
+<BasicImage src={DSCF2160} alt="lake dusk" />
+
