@@ -53,11 +53,6 @@ const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-f
     position: relative;
   }
 
-  .outside-flow {
-    overflow: visible;
-    height: 1rem;
-  }
-
   /* Repeated text styling for MDX files which generate notes with <p> tags. */
   .sidenote > p,
   .marginnote > p {
@@ -110,7 +105,16 @@ const spanClass = `${num ? "sidenote" : "marginnote"}${inflow ? "" : " outside-f
     font-size: 1.4rem;
   }
 
-  @media (max-width: 760px) {
+  /* Sidenotes that overflow their boxes and don't reflow the text in the main 
+  column need to disable that behavior when the screen is narrow enough. */
+  @media (min-width: 760px) {
+    .outside-flow {
+      overflow: visible;
+      height: 1rem;
+    }
+  }
+
+  @media (max-width: 759px) {
     label.margin-toggle:not(.sidenote-number) {
       display: inline;
     }
