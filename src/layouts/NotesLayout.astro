@@ -1,10 +1,10 @@
 ---
-import type { Note } from "../types/note";
+import type { Note } from "@mttypes/note";
 
-import Layout from "./Layout.astro";
-import Header from "../components/Header.astro";
-import ProseWrapper from "../components/ProseWrapper.astro";
-import DevOnly from "../components/DevOnly.astro";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import ProseWrapper from "@components/ProseWrapper.astro";
+import DevOnly from "@components/DevOnly.astro";
 interface Props {
   content: Note;
 }
