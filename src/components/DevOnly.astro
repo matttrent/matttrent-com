@@ -13,6 +13,7 @@ const isProd = import.meta.env.PROD;
 <style>
   .devonly {
     border: 2px solid color-mix(in srgb, var(--background-color) 80%, black);
+    background-color: color-mix(in srgb, var(--background-color) 95%, black);
     box-sizing: border-box;
     position: relative;
   }
@@ -24,8 +25,13 @@ const isProd = import.meta.env.PROD;
     right: 0;
     padding: 2px 6px;
     font-size: 0.8em;
+
     color: color-mix(in srgb, var(--background-color) 60%, black);
-    background-color: var(--background-color);
+    background-color: color-mix(in srgb, var(--background-color) 95%, black);
+
+    border: 2px solid color-mix(in srgb, var(--background-color) 80%, black);
+    border-top: none;
+    border-right: none;
   }
 
   /* Dark mode styles */
