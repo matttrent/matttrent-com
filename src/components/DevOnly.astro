@@ -27,4 +27,15 @@ const isProd = import.meta.env.PROD;
     color: color-mix(in srgb, var(--background-color) 60%, black);
     background-color: var(--background-color);
   }
+
+  /* Dark mode styles */
+  @media (prefers-color-scheme: dark) {
+    .devonly {
+      border-color: color-mix(in srgb, var(--background-color) 80%, white);
+    }
+
+    .devonly::before {
+      color: color-mix(in srgb, var(--background-color) 60%, white);
+    }
+  }
 </style>

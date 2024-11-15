@@ -85,8 +85,9 @@ body {
 /* Adds dark mode */
 @media (prefers-color-scheme: dark) {
   body {
-    --background-color: #151515;
-    --color: #ddd;
+    /* Scaled versions of original light mode background color */
+    --background-color: rgb(40, 40, 39);
+    --color: rgb(200, 199, 196);
   }
 }
 
