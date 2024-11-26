@@ -39,6 +39,7 @@ const getImageWidths = (isFullWidth: boolean) => {
 </figure>
 
 <style>
+  /* Base figure styles */
   figure {
     padding: 0;
     border: 0;
@@ -50,16 +51,12 @@ const getImageWidths = (isFullWidth: boolean) => {
     margin: 1.6em 0 3em 0;
   }
 
+  /* Layout variants */
   figure.fullwidth {
     grid-column: text-start / margin-end;
   }
 
-  @media (max-width: 760px) {
-    figure.fullwidth {
-      grid-column: page-start / page-end;
-    }
-  }
-
+  /* Image styles */
   .responsive-image {
     height: auto;
     aspect-ratio: attr(width) / attr(height);
@@ -67,6 +64,7 @@ const getImageWidths = (isFullWidth: boolean) => {
     width: 100%;
   }
 
+  /* Figcaption styles */
   :global(article > figure.BasicImage > figcaption) {
     float: right;
     clear: right;
@@ -77,5 +75,12 @@ const getImageWidths = (isFullWidth: boolean) => {
     vertical-align: baseline;
     position: relative;
     max-width: calc(4 * var(--column-width));
+  }
+
+  /* Responsive overrides */
+  @media (max-width: 760px) {
+    figure.fullwidth {
+      grid-column: page-start / page-end;
+    }
   }
 </style>

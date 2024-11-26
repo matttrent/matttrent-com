@@ -71,10 +71,12 @@ const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
 </figure>
 
 <style define:vars={{ columns, cssAspectRatio }}>
+  /* Root variables */
   :root {
     --image-grid-gap: 0.5rem;
   }
 
+  /* Base figure styles */
   figure {
     padding: 0;
     border: 0;
@@ -86,6 +88,7 @@ const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
     margin: 1.6em 0 3em 0;
   }
 
+  /* Layout variants */
   figure.width-normal {
     grid-column: text-start / text-end;
   }
@@ -100,14 +103,25 @@ const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
     margin-bottom: 9em;
   }
 
-  @media (max-width: 760px) {
-    figure.width-normal,
-    figure.width-full,
-    figure.width-fullscreen {
-      grid-column: page-start / page-end;
-    }
+  /* Grid container */
+  .ImageGrid-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    gap: var(--image-grid-gap);
+    width: 100%;
+    float: left;
   }
 
+  /* Image styles */
+  :global(.ImageGrid-grid > img),
+  :global(.ImageGrid-grid > :is(astro-island, *) > img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: var(--cssAspectRatio, auto);
+  }
+
+  /* Figcaption styles */
   :global(article > figure.ImageGrid > figcaption) {
     float: right;
     clear: right;
@@ -125,20 +139,12 @@ const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
     margin-right: 4em;
   }
 
-  .ImageGrid-grid {
-    display: grid;
-    grid-template-columns: repeat(var(--columns), 1fr);
-    gap: var(--image-grid-gap);
-    width: 100%;
-    float: left;
-  }
-
-  /* Style direct image children */
-  :global(.ImageGrid-grid > img),
-  :global(.ImageGrid-grid > :is(astro-island, *) > img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    aspect-ratio: var(--cssAspectRatio, auto);
+  /* Responsive overrides */
+  @media (max-width: 760px) {
+    figure.width-normal,
+    figure.width-full,
+    figure.width-fullscreen {
+      grid-column: page-start / page-end;
+    }
   }
 </style>
