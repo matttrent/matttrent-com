@@ -83,7 +83,7 @@ const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
     vertical-align: baseline;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
-    margin: 0 0 3em 0;
+    margin: 1.6em 0 3em 0;
   }
 
   figure.width-normal {
@@ -96,6 +96,8 @@ const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
 
   figure.width-fullscreen {
     grid-column: screen-start / screen-end;
+    margin-top: 6em;
+    margin-bottom: 9em;
   }
 
   @media (max-width: 760px) {
@@ -116,6 +118,11 @@ const getImageWidths = (src: ImageMetadata, layoutWidth: typeof width) => {
     vertical-align: baseline;
     position: relative;
     max-width: calc(4 * var(--column-width));
+  }
+
+  :global(article > figure.ImageGrid.width-fullscreen > figcaption) {
+    margin-top: 1em;
+    margin-right: 4em;
   }
 
   .ImageGrid-grid {
