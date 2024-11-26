@@ -43,7 +43,7 @@ Basic image fullwidth with sidenote in code but hidden.  I've added a figcaption
 Using Markdown image syntax
 
 {/* Resizes correctly */}
-![](/images/DSCF1634.jpg)
+{/* ![](../../assets/2024-eastern-sierra-trip/DSCF1634.jpg) */}
 
 Creating a grid of images with 2 per row
 
@@ -107,6 +107,7 @@ Creating a fullscreen grid of images with 3 per row
   ]}
 >
   <Sidenote slot="sidenote" num={false}>This is a caption for the image grid</Sidenote>
+  <figcaption slot="figcaption">This is a caption that can be shown because it's not rendered as a sidenote</figcaption>
 </ImageGrid>
 
 Creating a grid of images with 3 per row, with different aspect ratios.  1:1
