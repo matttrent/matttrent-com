@@ -26,7 +26,7 @@ Other
 
 - [x] Add a notes root page
 - [x] Use astro image components (migrate PhD and MSc pages)
-- [ ] Transition notes from date to createdAt
+- [x] Transition notes from date to createdAt
 - [ ] Create canonical notes URL method rather than needing `notes/{slug}` in components
 - [ ] Add type to notes and allow grouping/filtering by type
 - [ ] Add a notes RSS feed

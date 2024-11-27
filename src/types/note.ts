@@ -2,9 +2,8 @@ import { z } from "astro:content";
 
 export const noteSchema = z.object({
   title: z.string(),
-  date: z.date(),
   isDraft: z.boolean().optional(),
-  createdAt: z.date().optional(),
+  createdAt: z.date(),
   modifiedAt: z.date().optional(),
 });
 
