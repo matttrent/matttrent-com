@@ -21,12 +21,12 @@ Basic image
 Basic image with caption
 
 <BasicImage src={DSCF1631} alt="cloud 1">
-  <figcaption>This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes</figcaption>
+  <figcaption slot="figcaption">This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes This is a caption with more and more and more and more and more words to see where it goes</figcaption>
 </BasicImage>
 
 Basic image with sidenote
 
-<BasicImage src={DSCF1634} alt="cloud 1" fullwidth={false}>
+<BasicImage src={DSCF1634} alt="cloud 1">
   <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
 </BasicImage>
 
@@ -34,9 +34,9 @@ Basic image with sidenote
 
 Basic image fullwidth with sidenote in code but hidden.  I've added a figcaption to show you can caption fullwidth images below.
 
-<BasicImage src={DSCF1631} alt="cloud 1" fullwidth={true}>
+<BasicImage src={DSCF1631} alt="cloud 1" layout="full">
   <Sidenote slot="sidenote" num={false}>This is a caption</Sidenote>
-  <figcaption>This is a caption that can be showen because it's not renderering as a sidenote</figcaption>
+  <figcaption slot="figcaption">This is a caption that can be showen because it's not renderering as a sidenote</figcaption>
 </BasicImage>
 
 Using Markdown image syntax
@@ -78,7 +78,7 @@ Creating a fullwidth grid of images with 3 per row
 
 <ImageGrid 
   columns={3} 
-  width="full"
+  layout="full"
   images={[
     { src: DSCF1631, alt: "cloud 1" },
     { src: DSCF1634, alt: "cloud 2" },
@@ -95,7 +95,7 @@ Creating a fullscreen grid of images with 3 per row
 
 <ImageGrid 
   columns={3} 
-  width="fullscreen"
+  layout="fullscreen"
   images={[
     { src: DSCF1631, alt: "cloud 1" },
     { src: DSCF1634, alt: "cloud 2" },
@@ -190,5 +190,5 @@ If you need a full-width figure, give it the `fullwidth` class. Make sure thatâ€
   alt="Figurative map of the successive losses of the French Army in the Russian campaign, 1812-1813" 
   width="2000"
   height="2000"
-  fullwidth={true} 
+  layout="full"
 />

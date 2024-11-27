@@ -1,86 +1,50 @@
 ---
 import { Image } from "astro:assets";
+import BaseFigure from "@components/BaseFigure.astro";
 
 interface Props {
   src: ImageMetadata;
   alt: string;
-  fullwidth?: boolean;
+  layout?: "normal" | "full";
   [key: string]: any;
 }
 
-const { fullwidth = false, ...props } = Astro.props;
+const { layout = "normal", ...props } = Astro.props;
 
 // Define widths based on layout type
-const getImageSizes = (isFullWidth: boolean) => {
-  if (isFullWidth) {
+const getImageSizes = (layoutType: "normal" | "full") => {
+  if (layoutType === "full") {
     return "(max-width: 500px) 500px, (max-width: 800px) 800px, 1220px";
   }
   return "(max-width: 500px) 500px, (max-width: 800px) 800px, 800px";
 };
 
 // Define widths for image optimization
-const getImageWidths = (isFullWidth: boolean) => {
-  if (isFullWidth) {
+const getImageWidths = (layoutType: "normal" | "full") => {
+  if (layoutType === "full") {
     return [500, 800, 1220];
   }
   return [500, 800];
 };
 ---
 
-<figure class:list={[{ fullwidth }, "BasicImage"]}>
-  <Image 
-    {...props} 
-    class="responsive-image" 
-    sizes={getImageSizes(fullwidth)}
-    widths={getImageWidths(fullwidth)}
+<BaseFigure layout={layout} className="BasicImage">
+  <Image
+    {...props}
+    class="responsive-image"
+    sizes={getImageSizes(layout)}
+    widths={getImageWidths(layout)}
   />
-  {!fullwidth && <slot name="sidenote" />}
-  <slot />
-</figure>
+  {layout === "normal" && <slot name="sidenote" />}
+  <slot name="figcaption" />
+</BaseFigure>
 
 <style>
-  /* Base figure styles */
-  figure {
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    margin: 1.6em 0 3em 0;
-  }
-
-  /* Layout variants */
-  figure.fullwidth {
-    grid-column: text-start / margin-end;
-  }
-
-  /* Image styles */
+  /* Image-specific styles only */
   .responsive-image {
     height: auto;
     aspect-ratio: attr(width) / attr(height);
     object-fit: cover;
     width: 100%;
-  }
-
-  /* Figcaption styles */
-  :global(article > figure.BasicImage > figcaption) {
-    float: right;
-    clear: right;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    vertical-align: baseline;
-    position: relative;
-    max-width: calc(4 * var(--column-width));
-  }
-
-  /* Responsive overrides */
-  @media (max-width: 760px) {
-    figure.fullwidth {
-      grid-column: page-start / page-end;
-    }
   }
 </style>

@@ -1,35 +1,15 @@
 ---
+import BaseFigure from "@components/BaseFigure.astro";
 
+interface Props {
+  layout?: "normal" | "full";
+}
+
+const { layout = "normal" } = Astro.props;
 ---
 
-<figure class="CustomFigure">
+<BaseFigure layout={layout} className="CustomFigure">
   <slot />
-  <slot name="sidenote" />
-</figure>
-
-<style>
-  /* Base figure styles */
-  figure {
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    margin: 0 0 3em 0;
-  }
-
-  /* Figcaption styles */
-  :global(article > figure.CustomFigure > figcaption) {
-    float: right;
-    clear: right;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    vertical-align: baseline;
-    position: relative;
-    max-width: calc(4 * var(--column-width));
-  }
-</style>
+  {layout === "normal" && <slot name="sidenote" />}
+  <slot name="figcaption" />
+</BaseFigure>

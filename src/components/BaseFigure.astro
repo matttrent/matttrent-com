@@ -1,0 +1,69 @@
+---
+interface Props {
+  layout?: "normal" | "full" | "fullscreen";
+  className?: string;
+}
+
+const { layout = "normal", className } = Astro.props;
+---
+
+<figure class:list={[`BaseFigure`, `layout-${layout}`, className]}>
+  <slot />
+</figure>
+
+<style>
+  /* Base figure reset and spacing */
+  .BaseFigure {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 1.6em 0 3em 0;
+  }
+
+  /* Width variants */
+  .layout-normal {
+    grid-column: text-start / text-end;
+  }
+
+  .layout-full {
+    grid-column: text-start / margin-end;
+  }
+
+  .layout-fullscreen {
+    grid-column: screen-start / screen-end;
+    margin-top: 6em;
+    margin-bottom: 9em;
+  }
+
+  /* Figcaption styles - scoped to component context */
+  :global(.BaseFigure > figcaption) {
+    float: right;
+    clear: right;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: baseline;
+    position: relative;
+    max-width: calc(4 * var(--column-width));
+  }
+
+  /* Fullscreen caption adjustment */
+  :global(.BaseFigure.layout-fullscreen > figcaption) {
+    margin-top: 1em;
+    margin-right: 4em;
+  }
+
+  /* Responsive behavior */
+  @media (max-width: 760px) {
+    .layout-normal,
+    .layout-full,
+    .layout-fullscreen {
+      grid-column: page-start / page-end;
+    }
+  }
+</style> 

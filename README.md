@@ -15,7 +15,7 @@ New design
 - [x] iframes styling
 - [x] Mobile styling
 - [ ] Single style defition for `<dl>` shared across list components
-- [ ] Single style definition for `<figure>` shared across components
+- [x] Single style definition for `<figure>` shared across components
 - [ ] Tables styling
 - [ ] Full width content (table, code, div, etc.)
 - [ ] Newthought styling
