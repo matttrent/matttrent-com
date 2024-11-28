@@ -1,70 +1,125 @@
 ---
-import GoogleAnalytics from "@components/GoogleAnalytics.astro";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import ProseWrapper from "@components/ProseWrapper.astro";
 
 import ArtifactsList from "@components/ArtifactsList.astro";
 import CVList from "@components/CVList.astro";
 
 import * as cv from "@data/cv";
 
-// importing all styles here to ensure they're loaded in correct order
-import "@css/tufte.css";
-import "@css/latex.css";
-import "@css/custom.css";
-import "@css/cv.css";
+import "@css/shared.css";
 
 const pageTitle = "Matthew Trentacoste";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <GoogleAnalytics />
+<Layout title={pageTitle}>
+  <Header title={pageTitle} slot="header">
+    <p>
+      [my-intials]@matttrent.com<br />
+      +1.415.326.3226
+    </p>
+  </Header>
 
-    <meta charset="utf-8" />
-    <title>{pageTitle}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <slot name="head" />
-  </head>
+  <ProseWrapper>
+    <section class="print-hide">
+      <p>
+        <strong>Need a PDF?</strong> Just print me and save. I format correctly.
+      </p>
+    </section>
 
-  <body>
-    <main>
-      <article>
-        <h1>{pageTitle}</h1><p>
-          [my-intials]@matttrent.com<br />
-          +1.415.326.3226
-        </p>
+    <h2>Professional experience</h2>
+    <CVList items={cv.professionalExperience} />
 
-        <section class="print-hide">
-          <p>
-            <strong>Need a PDF?</strong> Just print me and save. I format correctly.
-          </p>
-        </section>
+    <h2>Education</h2>
+    <CVList items={cv.education} />
 
-        <section>
-          <h2>Professional experience</h2>
-          <CVList items={cv.professionalExperience} />
+    <h2 class="break-before">Journal articles & papers</h2>
+    <ArtifactsList items={cv.journalArticles} />
 
-          <h2>Education</h2>
-          <CVList items={cv.education} />
+    <h2>Patents</h2>
+    <ArtifactsList items={cv.patents} />
 
-          <h2>Journal articles & papers</h2>
-          <ArtifactsList items={cv.journalArticles} />
+    <h2>Talks & miscellany</h2>
+    <ArtifactsList items={cv.talksAndMisc} />
+  </ProseWrapper>
+</Layout>
 
-          <h2>Patents</h2>
-          <ArtifactsList items={cv.patents} />
+<style is:global>
+  /* custom size some spacing and fonts to better display cv */
+  @media screen {
+    article > *,
+    article > section > * {
+      grid-column: text-start / 12;
+    }
+    .experience,
+    .exp {
+      color: #777;
+    }
+  }
 
-          <h2>Talks & miscellany</h2>
-          <ArtifactsList items={cv.talksAndMisc} />
-        </section>
+  @media screen and (max-width: 760px) {
+    article > *,
+    article > section > * {
+      grid-column: page-start / page-end;
+    }
+  }
 
-        <section>
-          <h2>References</h2>
-          <p>Ask and ye shall receive.</p>
-        </section>
-      </article>
-    </main>
-  </body>
-</html>
+  header {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
 
+  p {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    /* margin-bottom: 1.4rem; */
+    padding-right: 0;
+    vertical-align: baseline;
+  }
+
+  /* customizations for printing */
+  @media print {
+    /* smaller font */
+    html {
+      font-size: 10px;
+    }
+
+    /* get rid of space above first title */
+    h1 {
+      margin-top: 2rem;
+    }
+
+    /* reduce vertical spacing */
+    article,
+    section {
+      padding: 0rem 0rem;
+    }
+
+    article h2 {
+      margin-top: 1.2rem !important;
+    }
+
+    /* reduce width of dl-horizontal dd elements */
+    .dl-horizontal dt {
+      width: 4rem; /* this should be moved to ArtifactsList */
+      padding-bottom: 0px;
+    }
+    .dl-horizontal dd {
+      margin-left: 5.333rem; /* this should be moved to ArtifactsList */
+      padding-bottom: 0px;
+    }
+
+    /* pagebreak before section */
+    .break-before {
+      page-break-before: always;
+      padding-top: 3rem;
+    }
+
+    /* print-specific hide */
+    .print-hide,
+    nav {
+      display: none !important;
+    }
+  }
+</style>

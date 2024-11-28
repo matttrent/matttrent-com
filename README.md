@@ -20,7 +20,7 @@ New design
 - [ ] Full width content (table, code, div, etc.)
 - [ ] Newthought styling
 - [ ] Even cooler photo grids
-- [ ] Migrate CV to new design
+- [x] Migrate CV to new design
 
 Other 
 
