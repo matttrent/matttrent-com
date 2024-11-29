@@ -46,15 +46,14 @@ const pageTitle = "Matthew Trentacoste";
 </Layout>
 
 <style is:global>
+  /* This is all rather messy and shouldn't necessarily be global, but it's only
+  for the CV page and not worth fiddling with. */
+
   /* custom size some spacing and fonts to better display cv */
   @media screen {
     article > *,
     article > section > * {
       grid-column: text-start / 12;
-    }
-    .experience,
-    .exp {
-      color: #777;
     }
   }
 
