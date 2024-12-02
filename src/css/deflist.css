@@ -1,13 +1,13 @@
   dl {
     font-size: 1.4rem;
     /* !imporant to override the value in ProseWrapper.astro */
-    line-height: 1.68rem !important;
+    line-height: 1.7rem !important;
     -webkit-padding-end: 5%;
   }
 
-  dt,
-  dd {
-    padding: 0.5rem 0;
+  dt:not(:first-of-type),
+  dd:not(:first-of-type) {
+      padding-top: 1rem !important;
   }
 
   dd {
