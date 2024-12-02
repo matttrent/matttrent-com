@@ -1,0 +1,33 @@
+  dl {
+    font-size: 1.4rem;
+    /* !imporant to override the value in ProseWrapper.astro */
+    line-height: 1.68rem !important;
+    -webkit-padding-end: 5%;
+  }
+
+  dt,
+  dd {
+    padding: 0.5rem 0;
+  }
+
+  dd {
+    margin-left: 0;
+  }
+
+  .dl-horizontal dt {
+    float: left;
+    width: 3.333rem;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.2rem;
+  }
+  .dl-horizontal dd {
+    margin-left: 4.667rem;
+  }
+
+  dl dt {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  }

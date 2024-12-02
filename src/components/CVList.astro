@@ -1,6 +1,7 @@
 ---
 import { groupAndSortByDate } from "@utils/dateGrouping";
 
+import "@css/deflist.css";
 export interface CVItem {
   dates: string;
   id?: string;
@@ -36,33 +37,8 @@ const sortedDateGroups = groupAndSortByDate(items, {
 </dl>
 
 <style>
-  dl {
-    font-size: 1.4rem;
-    line-height: 1.2em;
-    -webkit-padding-end: 5%;
-  }
-
-  dt,
-  dd {
-    padding: 0.5rem 0;
-  }
-
-  dt {
-  }
-
-  dd {
-    margin-left: 0;
-  }
-
   .dl-horizontal dt {
-    float: left;
     width: 6rem;
-    overflow: hidden;
-    clear: left;
-    text-align: right;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 1.2rem;
   }
   .dl-horizontal dd {
     margin-left: 7.333rem;
@@ -70,10 +46,6 @@ const sortedDateGroups = groupAndSortByDate(items, {
 
   .dl-small-text {
     font-size: 1.2rem;
-  }
-
-  dl dt {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
   }
 
   @media screen and (max-width: 760px) {
@@ -86,5 +58,4 @@ const sortedDateGroups = groupAndSortByDate(items, {
       margin-left: 0px;
     }
   }
-
 </style>
