@@ -62,6 +62,10 @@ const pageTitle = "Matthew Trentacoste";
     article > section > * {
       grid-column: page-start / page-end;
     }
+
+    .CVList dd {
+      padding-top: 1rem;
+    }
   }
 
   header {
@@ -102,12 +106,10 @@ const pageTitle = "Matthew Trentacoste";
 
     /* reduce width of dl-horizontal dd elements */
     .dl-horizontal dt {
-      width: 4rem; /* this should be moved to ArtifactsList */
-      padding-bottom: 0px;
+      padding-top: 0.5rem !important;
     }
     .dl-horizontal dd {
-      margin-left: 5.333rem; /* this should be moved to ArtifactsList */
-      padding-bottom: 0px;
+      padding-top: 0.5rem !important;
     }
 
     /* pagebreak before section */
