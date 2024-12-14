@@ -28,6 +28,7 @@ Other
 - [x] Use astro image components (migrate PhD and MSc pages)
 - [x] Transition notes from date to createdAt
 - [ ] Add type to notes and allow grouping/filtering by type
-- [ ] Add a notes RSS feed
+- [x] Add a notes RSS feed
+- [x] Add sitemap
 - [ ] Migrate to server-side rendering provider
 

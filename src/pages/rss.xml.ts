@@ -4,12 +4,13 @@ import type { CollectionEntry } from 'astro:content';
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
 import { loadRenderers } from "astro:container";
+import type { APIContext } from 'astro';
 
 
 type Note = CollectionEntry<"notes">;
 
 
-export async function GET(context) {
+export async function GET(context: APIContext) {
 
   const renderers = await loadRenderers([getMDXRenderer()]);
   const container = await AstroContainer.create({ renderers });
@@ -34,7 +35,7 @@ export async function GET(context) {
   return rss({
     title: "matttrent.com notes feed",
     description: "matttrent.com notes feed",
-    site: context.site,
+    site: context.site?.toString() ?? "",
     trailingSlash: false,
     items: items
   });
