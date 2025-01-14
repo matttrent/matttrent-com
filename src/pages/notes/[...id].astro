@@ -1,6 +1,6 @@
 ---
 import NotesLayout from "@layouts/NotesLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 type Note = CollectionEntry<"notes">;
@@ -11,7 +11,6 @@ type Props = {
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-
   // get published (non-draft) notes
   const noteEntries = await getCollection("notes", ({ data }: Note) => {
     return import.meta.env.PROD ? data.isDraft !== true : true;
@@ -19,7 +18,7 @@ export async function getStaticPaths() {
 
   return noteEntries.map((entry: Note) => ({
     params: {
-      slug: `${entry.slug}`,
+      id: entry.id,
     },
     props: { entry },
   }));
@@ -27,7 +26,7 @@ export async function getStaticPaths() {
 
 // 2. For your template, you can get the entry directly from the prop
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <NotesLayout content={entry.data}>

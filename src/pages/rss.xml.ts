@@ -1,5 +1,5 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
@@ -22,12 +22,12 @@ export async function GET(context: APIContext) {
   const items = [];
   for (const note of noteEntries) {
 
-    const { Content } = await note.render();
+    const { Content } = await render(note);
     const content = await container.renderToString(Content);
     items.push({   
       title: note.data.title,
       pubDate: note.data.createdAt,
-      link: `/notes/${note.slug}`,
+      link: `/notes/${note.id}`,
       content: content
     });
   }
