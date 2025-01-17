@@ -26,3 +26,9 @@ pnpm-debug.log*
 # obsidian vault config
 .obsidian
 public/images
+
+# photo heavy directories (use --force to add)
+src/assets/2024-eastern-sierra-trip
+
+# work in progress files so we don't reference photos that aren't checked in
+src/content/notes/2024-eastern-sierra-trip-wip.mdx
