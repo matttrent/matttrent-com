@@ -1,6 +1,6 @@
 ---
 import HTMLHeader from "@components/HTMLHeader.astro";
-
+import HTMLFooter from "@components/HTMLFooter.astro";
 // import "@css/tufte.css";
 // import "@css/latex.css";
 // import "@css/custom.css";
@@ -24,12 +24,12 @@ const { title } = Astro.props;
     <main>
       <slot />
     </main>
+    <HTMLFooter />
   </body>
 </html>
 
 <style>
   main {
     margin-top: var(--main-margin-extra);
-    margin-bottom: 30rem;
   }
 </style>
