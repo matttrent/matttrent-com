@@ -4,7 +4,7 @@ const professionalExperience = [
     id: "meta",
     subject: `<em>Research Scientist</em>, <a href="http://meta.com">Meta</a>, Menlo Park, CA.`,
     description:
-      "Since 2022, I've been focused on Generative AI for image and video. I lead the training data effort for the Monetization GenAI media org. Prior to that I worked on a number of applied AI projects related to computer vision, including detection for product recognition in the AI Commerce group, and synthetic training data.",
+      "Since 2022, I've been focused on Generative AI for image and video. I currently lead data for generative video, and Monetization GenAI media training data prior to that.  I worked on a number of applied AI/computer vision projects, including detection for product recognition and synthetic training data.",
   },
   {
     dates: "2017",
