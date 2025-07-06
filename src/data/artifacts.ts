@@ -1,5 +1,9 @@
 const artifacts = [
   {
+    date: "2025",
+    content: `Meta <a href="https://about.fb.com/news/2025/06/edit-videos-with-meta-ai/">generative AI video editing</a> in Meta.AI and Edits`,
+  },
+  {
     date: "2024",
     content: `Meta GenAI <a href="https://www.facebook.com/business/news/Introducing-Enhanced-Gen-AI-Features-and-Other-Tools-to-Help-Build-Your-Business">image</a> and <a href="https://www.facebook.com/business/news/Unlock-Video-Performance-with-GenAI-and-Creator-Marketing">video</a> tools for advertisers`,
   },
