@@ -26,16 +26,13 @@ const allImages = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true }
 );
 
-// Extract the actual gallery directory name (strip "/gallery" suffix from content collection ID)
-const galleryDirName = gallery.id.replace(/\/gallery$/, '');
-
 // Filter images that belong to this specific gallery
 const galleryImages: {
   src: ImageMetadata;
   alt: string;
   title?: string;
 }[] = Object.entries(allImages)
-  .filter(([path]) => path.includes(`/galleries/${galleryDirName}/`))
+  .filter(([path]) => path.includes(`/galleries/${gallery.id}/`))
   .filter(([path]) => !path.endsWith('gallery.yaml'))
   .map(([path, module]) => ({
     src: module.default,
