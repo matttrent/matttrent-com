@@ -112,3 +112,11 @@ Notes are the primary content type:
 ## Deployment
 
 Site deploys to GitHub Pages with custom domain configured via `public/CNAME`.
+
+## Implementation Plans
+
+The `plans/` directory contains detailed documentation for major features and architectural changes:
+
+- **PHOTOSWIPE_IMPLEMENTATION.md**: Complete documentation for the PhotoSwipe gallery system at `/photos/`, including architecture, content organization, custom loaders, and implementation decisions.
+
+These documents provide historical context and implementation details that may be useful when extending or modifying related features.
