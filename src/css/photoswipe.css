@@ -34,16 +34,14 @@
   opacity: 1;
 }
 
-/* Counter styling */
-.pswp__counter {
-  font-family: et-book, Palatino, "Palatino Linotype", Georgia, serif;
-  font-size: 0.875rem;
-  opacity: 0.85;
+/* Hide zoom button */
+.pswp__button--zoom {
+  display: none !important;
 }
 
-/* Zoom indicator */
-.pswp__zoom-wrap {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.22, 1);
+/* Hide counter (1 / N) */
+.pswp__counter {
+  display: none !important;
 }
 
 /* Mobile adjustments */

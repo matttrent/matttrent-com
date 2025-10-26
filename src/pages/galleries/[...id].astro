@@ -107,8 +107,10 @@ if (gallery.data.photos && gallery.data.photos.length > 0) {
         pswpModule: PhotoSwipe,
         showHideAnimationType: 'fade',
         initialZoomLevel: 'fit',
-        secondaryZoomLevel: 2,
-        maxZoomLevel: 4,
+        secondaryZoomLevel: 1,
+        maxZoomLevel: 1,
+        zoom: false,
+        clickToCloseNonZoomable: false,
       });
 
       // Add caption support
@@ -134,12 +136,8 @@ if (gallery.data.photos && gallery.data.photos.length > 0) {
                 const hiddenCaption = currSlideElement.querySelector('.hidden-caption');
                 if (hiddenCaption) {
                   captionHTML = hiddenCaption.innerHTML;
-                } else {
-                  const img = currSlideElement.querySelector('img');
-                  if (img && img.alt) {
-                    captionHTML = img.alt;
-                  }
                 }
+                // No fallback to alt text - only show captions when explicitly provided
               }
 
               el.innerHTML = captionHTML || '';
