@@ -13,23 +13,23 @@ const noteCollection = defineCollection({
   schema: noteSchema,
  });
 
-// Custom loader for galleries that sets ID to directory name
-const galleriesLoader = {
-  name: 'galleries-loader',
+// Custom loader for gallery that sets ID to directory name
+const galleryLoader = {
+  name: 'gallery-loader',
   load: async ({ store, logger }: any) => {
-    const galleriesDir = path.join(process.cwd(), 'src/assets/galleries');
+    const galleryDir = path.join(process.cwd(), 'src/assets/gallery');
 
-    // Check if galleries directory exists
-    if (!fs.existsSync(galleriesDir)) {
-      logger.warn('Galleries directory not found at src/assets/galleries');
+    // Check if gallery directory exists
+    if (!fs.existsSync(galleryDir)) {
+      logger.warn('Gallery directory not found at src/assets/gallery');
       return;
     }
 
-    const dirs = fs.readdirSync(galleriesDir, { withFileTypes: true })
+    const dirs = fs.readdirSync(galleryDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory());
 
     for (const dir of dirs) {
-      const yamlPath = path.join(galleriesDir, dir.name, 'gallery.yaml');
+      const yamlPath = path.join(galleryDir, dir.name, 'gallery.yaml');
 
       if (fs.existsSync(yamlPath)) {
         try {
@@ -62,7 +62,7 @@ const galleriesLoader = {
 };
 
 const galleryCollection = defineCollection({
-  loader: galleriesLoader,
+  loader: galleryLoader,
   schema: gallerySchema,
 });
 

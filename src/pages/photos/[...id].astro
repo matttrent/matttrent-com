@@ -26,15 +26,15 @@ const { gallery } = Astro.props;
 // Build title with draft indicator
 const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 
-// Glob all images from galleries directory
+// Glob all images from gallery directory
 const allImages = import.meta.glob<{ default: ImageMetadata }>(
-  "@assets/galleries/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}",
+  "@assets/gallery/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}",
   { eager: true }
 );
 
 // Filter images that belong to this specific gallery and create lookup by filename
 const galleryImageEntries = Object.entries(allImages)
-  .filter(([path]) => path.includes(`/galleries/${gallery.id}/`))
+  .filter(([path]) => path.includes(`/gallery/${gallery.id}/`))
   .filter(([path]) => !path.endsWith('gallery.yaml'));
 
 // Determine gallery images based on whether photos list exists

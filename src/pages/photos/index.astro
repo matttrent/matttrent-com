@@ -5,7 +5,7 @@ import Header from "@components/Header.astro";
 import ProseWrapper from "@components/ProseWrapper.astro";
 import "@css/deflist.css";
 
-const pageTitle = "Galleries";
+const pageTitle = "Photographs";
 
 // Get all non-draft galleries
 const allGalleries = await getCollection("galleries", ({ data }) => {
@@ -21,7 +21,7 @@ const sortedGalleries = allGalleries.sort((a, b) =>
 <Layout title={pageTitle}>
   <Header
     title={pageTitle}
-    subtitle="Photo galleries from travels and explorations."
+    subtitle="Photo collections from travels and explorations."
     slot="header"
   />
 
@@ -34,7 +34,7 @@ const sortedGalleries = allGalleries.sort((a, b) =>
               {gallery.data.createdAt.getFullYear()}
             </dt>
             <dd>
-              <a href={`/galleries/${gallery.id}`}>{gallery.data.title}</a>
+              <a href={`/photos/${gallery.id}`}>{gallery.data.title}</a>
               {gallery.data.isDraft && " (draft)"}
             </dd>
           </>

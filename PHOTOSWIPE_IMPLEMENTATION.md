@@ -6,18 +6,18 @@ A PhotoSwipe lightbox gallery system implemented as a separate section of the si
 ## Architecture
 
 ### Content Organization
-- **One directory = one gallery** in `src/assets/galleries/[gallery-name]/`
+- **One directory = one gallery** in `src/assets/gallery/[gallery-name]/`
 - Each gallery has a `gallery.yaml` file for metadata
 - Optional `photos` array for manual curation and ordering
 - Images globbed from directory when `photos` not specified
 
 ### Routing
-- **Gallery list**: `/galleries/`
-- **Individual gallery**: `/galleries/[gallery-name]` (e.g., `/galleries/eastern-sierra-test`)
+- **Gallery list**: `/photos/`
+- **Individual gallery**: `/photos/[gallery-name]` (e.g., `/photos/eastern-sierra-test`)
 - Uses `[...id].astro` pattern consistent with notes
 
 ### Custom Content Loader
-- Scans directories in `src/assets/galleries/`
+- Scans directories in `src/assets/gallery/`
 - Sets gallery ID to directory name (not file path)
 - Reads `gallery.yaml` from each directory
 - Provides clean URLs without `/gallery` suffix
@@ -33,7 +33,7 @@ A PhotoSwipe lightbox gallery system implemented as a separate section of the si
 src/
 ├── content.config.ts                    # Custom gallery loader
 ├── assets/
-│   └── galleries/                       # New directory
+│   └── gallery/                         # New directory
 │       └── [gallery-name]/              # e.g., "eastern-sierra-test"
 │           ├── gallery.yaml             # Gallery metadata
 │           ├── photo1.jpg
@@ -42,7 +42,7 @@ src/
 ├── components/
 │   └── PhotoSwipeGallery.astro         # Main gallery grid component
 ├── pages/
-│   └── galleries/
+│   └── photos/
 │       ├── index.astro                  # Gallery list page
 │       └── [...id].astro                # Individual gallery pages (inline script)
 ├── css/
@@ -72,7 +72,7 @@ export type Gallery = z.infer<typeof gallerySchema>;
 ```
 
 ### YAML Example
-`src/assets/galleries/eastern-sierra-test/gallery.yaml`:
+`src/assets/gallery/eastern-sierra-test/gallery.yaml`:
 
 ```yaml
 title: Eastern Sierra Test Gallery
@@ -113,22 +113,22 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse } from 'yaml';
 
-// Custom loader for galleries that sets ID to directory name
-const galleriesLoader = {
-  name: 'galleries-loader',
+// Custom loader for gallery that sets ID to directory name
+const galleryLoader = {
+  name: 'gallery-loader',
   load: async ({ store, logger }: any) => {
-    const galleriesDir = path.join(process.cwd(), 'src/assets/galleries');
+    const galleryDir = path.join(process.cwd(), 'src/assets/gallery');
 
-    if (!fs.existsSync(galleriesDir)) {
-      logger.warn('Galleries directory not found');
+    if (!fs.existsSync(galleryDir)) {
+      logger.warn('Gallery directory not found');
       return;
     }
 
-    const dirs = fs.readdirSync(galleriesDir, { withFileTypes: true })
+    const dirs = fs.readdirSync(galleryDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory());
 
     for (const dir of dirs) {
-      const yamlPath = path.join(galleriesDir, dir.name, 'gallery.yaml');
+      const yamlPath = path.join(galleryDir, dir.name, 'gallery.yaml');
 
       if (fs.existsSync(yamlPath)) {
         try {
@@ -161,14 +161,14 @@ const galleriesLoader = {
 };
 
 const galleryCollection = defineCollection({
-  loader: galleriesLoader,
+  loader: galleryLoader,
   schema: gallerySchema,
 });
 ```
 
 **Key Benefits:**
 - Gallery ID = directory name (e.g., `eastern-sierra-test`)
-- Clean URLs: `/galleries/eastern-sierra-test`
+- Clean URLs: `/photos/eastern-sierra-test`
 - No need to strip `/gallery` suffix throughout codebase
 - Proper Date object handling from YAML
 
@@ -224,7 +224,7 @@ const lightbox = new PhotoSwipeLightbox({
 
 ## Pages
 
-### Gallery Index (`/galleries/index.astro`)
+### Gallery Index (`/photos/index.astro`)
 
 **Features:**
 - Lists all galleries sorted by date (newest first)
@@ -240,7 +240,7 @@ const lightbox = new PhotoSwipeLightbox({
     <>
       <dt>{gallery.data.createdAt.getFullYear()}</dt>
       <dd>
-        <a href={`/galleries/${gallery.id}`}>{gallery.data.title}</a>
+        <a href={`/photos/${gallery.id}`}>{gallery.data.title}</a>
         {gallery.data.isDraft && " (draft)"}
       </dd>
     </>
@@ -248,10 +248,10 @@ const lightbox = new PhotoSwipeLightbox({
 </dl>
 ```
 
-### Gallery Detail (`/galleries/[...id].astro`)
+### Gallery Detail (`/photos/[...id].astro`)
 
 **Image Loading Strategy:**
-1. Glob all images: `import.meta.glob("@assets/galleries/**/*.{jpg,jpeg,png}")`
+1. Glob all images: `import.meta.glob("@assets/gallery/**/*.{jpg,jpeg,png}")`
 2. Filter by gallery ID
 3. If `photos` array exists: use it for ordering/filtering
 4. If `photos` absent: use all images sorted alphabetically
@@ -346,7 +346,7 @@ const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 ## Image Handling
 
 ### Path Alias Support
-- `@assets/galleries/**/*` works with `import.meta.glob`
+- `@assets/gallery/**/*` works with `import.meta.glob`
 - Vite respects TypeScript path aliases
 - No need for relative paths or `/src/` prefix
 
@@ -391,7 +391,7 @@ Using `photos` array in `gallery.yaml`:
 ✅ Navigation between images (arrows, keyboard)
 ✅ Responsive grid layout (3/2/1 columns)
 ✅ Image optimization (thumbnails vs full-size)
-✅ Clean URLs (`/galleries/[name]`)
+✅ Clean URLs (`/photos/[name]`)
 ✅ Draft filtering in production
 ✅ Manual photo curation with `photos` array
 ✅ Repeated photos support
@@ -399,7 +399,7 @@ Using `photos` array in `gallery.yaml`:
 ✅ No filename captions displayed
 
 ### Test Gallery
-`src/assets/galleries/eastern-sierra-test/`:
+`src/assets/gallery/eastern-sierra-test/`:
 - 6 images from Eastern Sierra trip
 - Demonstrates custom ordering via `photos` array
 - One photo repeated (shows at positions 1 and 4)
@@ -443,7 +443,7 @@ npm run preview
 
 All criteria met:
 
-✅ New `/galleries/` section independent from existing content
+✅ New `/photos/` section independent from existing content
 ✅ PhotoSwipe lightbox works on thumbnail click
 ✅ Responsive grid layout (3/2/1 columns)
 ✅ Clean URLs without `/gallery` suffix
@@ -478,9 +478,9 @@ After evaluation, could add:
 - `src/types/gallery.ts` - Gallery schema
 - `src/components/PhotoSwipeGallery.astro` - Gallery grid component
 - `src/css/photoswipe.css` - Custom PhotoSwipe styles
-- `src/pages/galleries/index.astro` - Gallery list page
-- `src/pages/galleries/[...id].astro` - Gallery detail page
-- `src/assets/galleries/eastern-sierra-test/` - Test gallery
+- `src/pages/photos/index.astro` - Gallery list page
+- `src/pages/photos/[...id].astro` - Gallery detail page
+- `src/assets/gallery/eastern-sierra-test/` - Test gallery
 - `PHOTOSWIPE_IMPLEMENTATION.md` - This document
 
 ### Modified
