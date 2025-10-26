@@ -4,7 +4,6 @@ import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import ProseWrapper from "@components/ProseWrapper.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
-import "@css/photoswipe-custom.css";
 
 export async function getStaticPaths() {
   const galleries = await getCollection("galleries");
@@ -90,6 +89,8 @@ const galleryImages: {
 
       // Add caption support
       lightbox.on('uiRegister', function() {
+        if (!lightbox.pswp || !lightbox.pswp.ui) return;
+
         lightbox.pswp.ui.registerElement({
           name: 'caption',
           order: 9,
@@ -97,7 +98,11 @@ const galleryImages: {
           appendTo: 'root',
           html: '',
           onInit: (el) => {
+            if (!lightbox.pswp) return;
+
             lightbox.pswp.on('change', () => {
+              if (!lightbox.pswp || !lightbox.pswp.currSlide) return;
+
               const currSlideElement = lightbox.pswp.currSlide.data.element;
               let captionHTML = '';
 
