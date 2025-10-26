@@ -1,0 +1,125 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import ProseWrapper from "@components/ProseWrapper.astro";
+import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
+import "@css/photoswipe-custom.css";
+
+export async function getStaticPaths() {
+  const galleries = await getCollection("galleries");
+
+  return galleries.map((gallery) => ({
+    params: { id: gallery.id },
+    props: { gallery },
+  }));
+}
+
+interface Props {
+  gallery: CollectionEntry<"galleries">;
+}
+
+const { gallery } = Astro.props;
+
+// Glob all images from galleries directory
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+  "@assets/galleries/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}",
+  { eager: true }
+);
+
+// Extract the actual gallery directory name (strip "/gallery" suffix from content collection ID)
+const galleryDirName = gallery.id.replace(/\/gallery$/, '');
+
+// Filter images that belong to this specific gallery
+const galleryImages: {
+  src: ImageMetadata;
+  alt: string;
+  title?: string;
+}[] = Object.entries(allImages)
+  .filter(([path]) => path.includes(`/galleries/${galleryDirName}/`))
+  .filter(([path]) => !path.endsWith('gallery.yaml'))
+  .map(([path, module]) => ({
+    src: module.default,
+    alt: path.split('/').pop()?.replace(/\.[^/.]+$/, '') || 'Gallery image',
+  }))
+  .sort((a, b) => a.alt.localeCompare(b.alt)); // Sort by filename
+---
+
+<Layout title={gallery.data.title}>
+  <Header
+    title={gallery.data.title}
+    subtitle={gallery.data.description}
+    slot="header"
+  />
+
+  <ProseWrapper>
+    {galleryImages.length > 0 ? (
+      <>
+        <PhotoSwipeGallery
+          images={galleryImages}
+          galleryId={gallery.id}
+          columns={3}
+        />
+      </>
+    ) : (
+      <p>No images found in this gallery.</p>
+    )}
+  </ProseWrapper>
+</Layout>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import PhotoSwipe from 'photoswipe';
+
+  // Initialize PhotoSwipe for all galleries on the page
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleries = document.querySelectorAll('[data-pswp-gallery]');
+
+    galleries.forEach((galleryEl) => {
+      const galleryId = galleryEl.getAttribute('data-pswp-gallery');
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: `[data-pswp-gallery="${galleryId}"]`,
+        children: 'a',
+        pswpModule: PhotoSwipe,
+        showHideAnimationType: 'fade',
+        initialZoomLevel: 'fit',
+        secondaryZoomLevel: 2,
+        maxZoomLevel: 4,
+      });
+
+      // Add caption support
+      lightbox.on('uiRegister', function() {
+        lightbox.pswp.ui.registerElement({
+          name: 'caption',
+          order: 9,
+          isButton: false,
+          appendTo: 'root',
+          html: '',
+          onInit: (el) => {
+            lightbox.pswp.on('change', () => {
+              const currSlideElement = lightbox.pswp.currSlide.data.element;
+              let captionHTML = '';
+
+              if (currSlideElement) {
+                const hiddenCaption = currSlideElement.querySelector('.hidden-caption');
+                if (hiddenCaption) {
+                  captionHTML = hiddenCaption.innerHTML;
+                } else {
+                  const img = currSlideElement.querySelector('img');
+                  if (img && img.alt) {
+                    captionHTML = img.alt;
+                  }
+                }
+              }
+
+              el.innerHTML = captionHTML || '';
+            });
+          }
+        });
+      });
+
+      lightbox.init();
+    });
+  });
+</script>

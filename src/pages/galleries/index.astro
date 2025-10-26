@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import ProseWrapper from "@components/ProseWrapper.astro";
+import "@css/deflist.css";
+
+const pageTitle = "Galleries";
+
+// Get all non-draft galleries
+const allGalleries = await getCollection("galleries", ({ data }) => {
+  return import.meta.env.PROD ? data.isDraft !== true : true;
+});
+
+// Sort by date, newest first
+const sortedGalleries = allGalleries.sort((a, b) =>
+  b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+---
+
+<Layout title={pageTitle}>
+  <Header
+    title={pageTitle}
+    subtitle="Photo galleries from travels and explorations."
+    slot="header"
+  />
+
+  <ProseWrapper>
+    <dl class="dl-horizontal">
+      {
+        sortedGalleries.map((gallery) => (
+          <>
+            <dt>
+              {gallery.data.createdAt.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })}
+            </dt>
+            <dd>
+              <a href={`/galleries/${gallery.id}`}>{gallery.data.title}</a>
+              {gallery.data.description && (
+                <span class="gallery-description"> — {gallery.data.description}</span>
+              )}
+              {gallery.data.isDraft && " (draft)"}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+  </ProseWrapper>
+</Layout>
+
+<style>
+  .gallery-description {
+    opacity: 0.7;
+  }
+</style>

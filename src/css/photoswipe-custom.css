@@ -1,0 +1,62 @@
+/* PhotoSwipe Custom Styles - Tufte-inspired */
+
+/* Override PhotoSwipe background to match site aesthetic */
+.pswp__bg {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+/* Caption styling */
+.pswp__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  font-family: et-book, Palatino, "Palatino Linotype", Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+}
+
+/* UI buttons - match site minimalism */
+.pswp__button {
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.pswp__button:hover {
+  opacity: 1;
+}
+
+/* Counter styling */
+.pswp__counter {
+  font-family: et-book, Palatino, "Palatino Linotype", Georgia, serif;
+  font-size: 0.875rem;
+  opacity: 0.85;
+}
+
+/* Zoom indicator */
+.pswp__zoom-wrap {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.22, 1);
+}
+
+/* Mobile adjustments */
+@media (max-width: 760px) {
+  .pswp__caption {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Dark mode considerations - PhotoSwipe already dark, but ensure consistency */
+@media (prefers-color-scheme: dark) {
+  .pswp__bg {
+    background: rgba(0, 0, 0, 0.98);
+  }
+}

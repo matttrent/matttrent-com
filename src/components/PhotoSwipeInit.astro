@@ -1,0 +1,75 @@
+---
+interface Props {
+  galleryId: string;
+}
+
+const { galleryId } = Astro.props;
+---
+
+<script is:inline define:vars={{ galleryId }}>
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhotoSwipe);
+  } else {
+    initPhotoSwipe();
+  }
+
+  async function initPhotoSwipe() {
+    // Dynamic imports for PhotoSwipe
+    const PhotoSwipeLightbox = (await import('photoswipe/lightbox')).default;
+    const PhotoSwipe = (await import('photoswipe')).default;
+
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: `[data-pswp-gallery="${galleryId}"]`,
+      children: 'a',
+      pswpModule: PhotoSwipe,
+
+      // UI options
+      showHideAnimationType: 'fade',
+
+      // Zoom and pan options
+      initialZoomLevel: 'fit',
+      secondaryZoomLevel: 2,
+      maxZoomLevel: 4,
+
+      // UI elements
+      closeTitle: 'Close (Esc)',
+      zoomTitle: 'Zoom',
+      arrowPrevTitle: 'Previous (arrow left)',
+      arrowNextTitle: 'Next (arrow right)',
+    });
+
+    // Add caption support if title is present
+    lightbox.on('uiRegister', function() {
+      lightbox.pswp.ui.registerElement({
+        name: 'caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'root',
+        html: '',
+        onInit: (el) => {
+          lightbox.pswp.on('change', () => {
+            const currSlideElement = lightbox.pswp.currSlide.data.element;
+            let captionHTML = '';
+
+            if (currSlideElement) {
+              const hiddenCaption = currSlideElement.querySelector('.hidden-caption');
+              if (hiddenCaption) {
+                captionHTML = hiddenCaption.innerHTML;
+              } else {
+                const img = currSlideElement.querySelector('img');
+                if (img && img.alt) {
+                  captionHTML = img.alt;
+                }
+              }
+            }
+
+            el.innerHTML = captionHTML || '';
+          });
+        }
+      });
+    });
+
+    lightbox.init();
+  }
+</script>
