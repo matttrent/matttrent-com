@@ -32,3 +32,9 @@ Other
 - [x] Add sitemap
 - [ ] Migrate to server-side rendering provider
 
+Gallery
+
+- [ ] Create GalleryLayout component and have better gallery styling on gallery pages
+- [ ] Refartor code in [..id].astro to have a cleaner component.  Figure out what nedes to be in helper method
+- [ ] Create GalleryList component to share with root page
+- [ ] Think about how I want to merge with ImageGrid
