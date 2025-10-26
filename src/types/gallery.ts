@@ -6,6 +6,7 @@ export const gallerySchema = z.object({
   createdAt: z.coerce.date(),
   modifiedAt: z.coerce.date().optional(),
   isDraft: z.boolean().default(false),
+  photos: z.array(z.string()).optional(),
 });
 
 export type Gallery = z.infer<typeof gallerySchema>;

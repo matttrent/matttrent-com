@@ -26,19 +26,46 @@ const allImages = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true }
 );
 
-// Filter images that belong to this specific gallery
-const galleryImages: {
+// Filter images that belong to this specific gallery and create lookup by filename
+const galleryImageEntries = Object.entries(allImages)
+  .filter(([path]) => path.includes(`/galleries/${gallery.id}/`))
+  .filter(([path]) => !path.endsWith('gallery.yaml'));
+
+// Determine gallery images based on whether photos list exists
+let galleryImages: {
   src: ImageMetadata;
   alt: string;
   title?: string;
-}[] = Object.entries(allImages)
-  .filter(([path]) => path.includes(`/galleries/${gallery.id}/`))
-  .filter(([path]) => !path.endsWith('gallery.yaml'))
-  .map(([path, module]) => ({
-    src: module.default,
-    alt: path.split('/').pop()?.replace(/\.[^/.]+$/, '') || 'Gallery image',
-  }))
-  .sort((a, b) => a.alt.localeCompare(b.alt)); // Sort by filename
+}[];
+
+if (gallery.data.photos && gallery.data.photos.length > 0) {
+  // Use specified photos list for ordering and filtering
+  const imagesByFilename = new Map(
+    galleryImageEntries.map(([path, module]) => [
+      path.split('/').pop() || '',
+      { path, module }
+    ])
+  );
+
+  galleryImages = gallery.data.photos
+    .map(filename => {
+      const entry = imagesByFilename.get(filename);
+      if (!entry) return null;
+      return {
+        src: entry.module.default,
+        alt: filename.replace(/\.[^/.]+$/, ''),
+      };
+    })
+    .filter((img): img is { src: ImageMetadata; alt: string } => img !== null);
+} else {
+  // Default behavior: all images sorted alphabetically by filename
+  galleryImages = galleryImageEntries
+    .map(([path, module]) => ({
+      src: module.default,
+      alt: path.split('/').pop()?.replace(/\.[^/.]+$/, '') || 'Gallery image',
+    }))
+    .sort((a, b) => a.alt.localeCompare(b.alt));
+}
 ---
 
 <Layout title={gallery.data.title}>
