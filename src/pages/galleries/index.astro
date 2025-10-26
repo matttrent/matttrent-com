@@ -35,9 +35,6 @@ const sortedGalleries = allGalleries.sort((a, b) =>
             </dt>
             <dd>
               <a href={`/galleries/${gallery.id}`}>{gallery.data.title}</a>
-              {gallery.data.description && (
-                <span class="gallery-description"> — {gallery.data.description}</span>
-              )}
               {gallery.data.isDraft && " (draft)"}
             </dd>
           </>
@@ -47,8 +44,3 @@ const sortedGalleries = allGalleries.sort((a, b) =>
   </ProseWrapper>
 </Layout>
 
-<style>
-  .gallery-description {
-    opacity: 0.7;
-  }
-</style>

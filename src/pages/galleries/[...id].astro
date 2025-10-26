@@ -6,7 +6,10 @@ import ProseWrapper from "@components/ProseWrapper.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
 
 export async function getStaticPaths() {
-  const galleries = await getCollection("galleries");
+  // Get published (non-draft) galleries in production
+  const galleries = await getCollection("galleries", ({ data }) => {
+    return import.meta.env.PROD ? data.isDraft !== true : true;
+  });
 
   return galleries.map((gallery) => ({
     params: { id: gallery.id },
@@ -19,6 +22,9 @@ interface Props {
 }
 
 const { gallery } = Astro.props;
+
+// Build title with draft indicator
+const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 
 // Glob all images from galleries directory
 const allImages = import.meta.glob<{ default: ImageMetadata }>(
@@ -68,9 +74,9 @@ if (gallery.data.photos && gallery.data.photos.length > 0) {
 }
 ---
 
-<Layout title={gallery.data.title}>
+<Layout title={title}>
   <Header
-    title={gallery.data.title}
+    title={title}
     subtitle={gallery.data.description}
     slot="header"
   />
