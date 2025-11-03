@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from "astro:content";
+import "@css/deflist.css";
+
+interface Props {
+  galleries: CollectionEntry<"galleries">[];
+}
+
+const { galleries } = Astro.props;
+
+// Sort by date, newest first
+const sortedGalleries = galleries.sort((a, b) =>
+  b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+---
+
+<dl class="dl-horizontal">
+  {
+    sortedGalleries.map((gallery) => (
+      <>
+        <dt>
+          {gallery.data.createdAt.getFullYear()}
+        </dt>
+        <dd>
+          <a href={`/photos/${gallery.id}`}>{gallery.data.title}</a>
+          {gallery.data.isDraft && " (draft)"}
+        </dd>
+      </>
+    ))
+  }
+</dl>

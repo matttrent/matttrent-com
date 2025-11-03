@@ -3,19 +3,14 @@ import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import ProseWrapper from "@components/ProseWrapper.astro";
+import GalleryList from "@components/GalleryList.astro";
 import { filterPublishedGalleries } from "@utils/gallery";
-import "@css/deflist.css";
 
 const pageTitle = "Photographs";
 
 // Get all galleries and filter by draft status
 const allGalleries = await getCollection("galleries");
 const publishedGalleries = filterPublishedGalleries(allGalleries);
-
-// Sort by date, newest first
-const sortedGalleries = publishedGalleries.sort((a, b) =>
-  b.data.createdAt.getTime() - a.data.createdAt.getTime()
-);
 ---
 
 <Layout title={pageTitle}>
@@ -26,21 +21,7 @@ const sortedGalleries = publishedGalleries.sort((a, b) =>
   />
 
   <ProseWrapper>
-    <dl class="dl-horizontal">
-      {
-        sortedGalleries.map((gallery) => (
-          <>
-            <dt>
-              {gallery.data.createdAt.getFullYear()}
-            </dt>
-            <dd>
-              <a href={`/photos/${gallery.id}`}>{gallery.data.title}</a>
-              {gallery.data.isDraft && " (draft)"}
-            </dd>
-          </>
-        ))
-      }
-    </dl>
+    <GalleryList galleries={publishedGalleries} />
   </ProseWrapper>
 </Layout>
 
