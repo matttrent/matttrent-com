@@ -1,8 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "@layouts/Layout.astro";
+import GalleryLayout from "@layouts/GalleryLayout.astro";
 import Header from "@components/Header.astro";
-import ProseWrapper from "@components/ProseWrapper.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
 
 export async function getStaticPaths() {
@@ -74,27 +73,25 @@ if (gallery.data.photos && gallery.data.photos.length > 0) {
 }
 ---
 
-<Layout title={title}>
+<GalleryLayout title={title}>
   <Header
     title={title}
     subtitle={gallery.data.description}
     slot="header"
   />
 
-  <ProseWrapper>
-    {galleryImages.length > 0 ? (
-      <>
-        <PhotoSwipeGallery
-          images={galleryImages}
-          galleryId={gallery.id}
-          columns={3}
-        />
-      </>
-    ) : (
-      <p>No images found in this gallery.</p>
-    )}
-  </ProseWrapper>
-</Layout>
+  {galleryImages.length > 0 ? (
+    <>
+      <PhotoSwipeGallery
+        images={galleryImages}
+        galleryId={gallery.id}
+        columns={3}
+      />
+    </>
+  ) : (
+    <p>No images found in this gallery.</p>
+  )}
+</GalleryLayout>
 
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
