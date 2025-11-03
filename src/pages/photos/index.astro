@@ -3,17 +3,17 @@ import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import ProseWrapper from "@components/ProseWrapper.astro";
+import { filterPublishedGalleries } from "@utils/gallery";
 import "@css/deflist.css";
 
 const pageTitle = "Photographs";
 
-// Get all non-draft galleries
-const allGalleries = await getCollection("galleries", ({ data }) => {
-  return import.meta.env.PROD ? data.isDraft !== true : true;
-});
+// Get all galleries and filter by draft status
+const allGalleries = await getCollection("galleries");
+const publishedGalleries = filterPublishedGalleries(allGalleries);
 
 // Sort by date, newest first
-const sortedGalleries = allGalleries.sort((a, b) =>
+const sortedGalleries = publishedGalleries.sort((a, b) =>
   b.data.createdAt.getTime() - a.data.createdAt.getTime()
 );
 ---

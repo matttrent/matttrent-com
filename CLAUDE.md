@@ -118,5 +118,8 @@ Site deploys to GitHub Pages with custom domain configured via `public/CNAME`.
 The `plans/` directory contains detailed documentation for major features and architectural changes:
 
 - **PHOTOSWIPE_IMPLEMENTATION.md**: Complete documentation for the PhotoSwipe gallery system at `/photos/`, including architecture, content organization, custom loaders, and implementation decisions.
+- **GALLERY_REFACTOR_PLAN.md**: Step-by-step plan for refactoring gallery components and data handling.
 
 These documents provide historical context and implementation details that may be useful when extending or modifying related features.
+
+**When working on multi-step plans**: Commit after completing each major step to preserve progress and make it easier to review changes incrementally.

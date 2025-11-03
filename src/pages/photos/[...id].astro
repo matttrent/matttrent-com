@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import GalleryLayout from "@layouts/GalleryLayout.astro";
 import Header from "@components/Header.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
+import { getGalleryImages } from "@utils/gallery";
 
 export async function getStaticPaths() {
   // Get published (non-draft) galleries in production
@@ -25,52 +26,11 @@ const { gallery } = Astro.props;
 // Build title with draft indicator
 const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 
-// Glob all images from gallery directory
-const allImages = import.meta.glob<{ default: ImageMetadata }>(
-  "@assets/gallery/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}",
-  { eager: true }
+// Get gallery images using utility function
+const galleryImages = await getGalleryImages(
+  gallery.id,
+  gallery.data.photos
 );
-
-// Filter images that belong to this specific gallery and create lookup by filename
-const galleryImageEntries = Object.entries(allImages)
-  .filter(([path]) => path.includes(`/gallery/${gallery.id}/`))
-  .filter(([path]) => !path.endsWith('gallery.yaml'));
-
-// Determine gallery images based on whether photos list exists
-let galleryImages: {
-  src: ImageMetadata;
-  alt: string;
-  title?: string;
-}[];
-
-if (gallery.data.photos && gallery.data.photos.length > 0) {
-  // Use specified photos list for ordering and filtering
-  const imagesByFilename = new Map(
-    galleryImageEntries.map(([path, module]) => [
-      path.split('/').pop() || '',
-      { path, module }
-    ])
-  );
-
-  galleryImages = gallery.data.photos
-    .map(filename => {
-      const entry = imagesByFilename.get(filename);
-      if (!entry) return null;
-      return {
-        src: entry.module.default,
-        alt: filename.replace(/\.[^/.]+$/, ''),
-      };
-    })
-    .filter((img): img is { src: ImageMetadata; alt: string } => img !== null);
-} else {
-  // Default behavior: all images sorted alphabetically by filename
-  galleryImages = galleryImageEntries
-    .map(([path, module]) => ({
-      src: module.default,
-      alt: path.split('/').pop()?.replace(/\.[^/.]+$/, '') || 'Gallery image',
-    }))
-    .sort((a, b) => a.alt.localeCompare(b.alt));
-}
 ---
 
 <GalleryLayout title={title}>
