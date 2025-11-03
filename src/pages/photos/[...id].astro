@@ -4,12 +4,11 @@ import GalleryLayout from "@layouts/GalleryLayout.astro";
 import Header from "@components/Header.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
 import { getGalleryImages } from "@utils/gallery";
+import { isPublished } from "@utils/content";
 
 export async function getStaticPaths() {
   // Get published (non-draft) galleries in production
-  const galleries = await getCollection("galleries", ({ data }) => {
-    return import.meta.env.PROD ? data.isDraft !== true : true;
-  });
+  const galleries = await getCollection("galleries", isPublished);
 
   return galleries.map((gallery) => ({
     params: { id: gallery.id },

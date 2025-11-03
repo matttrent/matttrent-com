@@ -1,5 +1,6 @@
 import type { ImageMetadata } from "astro";
 import type { CollectionEntry } from "astro:content";
+import { isPublished } from "@utils/content";
 
 /**
  * Image representation for gallery rendering
@@ -71,7 +72,5 @@ export async function getGalleryImages(
 export function filterPublishedGalleries<T extends CollectionEntry<"galleries">>(
   galleries: T[]
 ): T[] {
-  return import.meta.env.PROD
-    ? galleries.filter(g => g.data.isDraft !== true)
-    : galleries;
+  return galleries.filter(isPublished);
 }
