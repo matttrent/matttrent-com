@@ -23,7 +23,21 @@
 - Wrap long-form content in `ProseWrapper` to inherit the Tufte-inspired grid.
 - Margin notes use `@components/Sidenote.astro`; let it manage numbering and mobile toggles.
 - Figure components (`BaseFigure`, `SidenoteImage`, `ImageGrid`) rely on grid helper classes like `.kickout-left`. Keep captions succinct.
-- Research PDFs belong in `public/attachments/`; photography assets live under `src/assets/` for Astro’s image optimizer.
+- Research PDFs belong in `public/attachments/`; photography assets live under `src/assets/` for Astro's image optimizer.
+
+### Photo Grid Components
+
+**Use ImageGrid when**:
+- Embedding photos within notes/articles
+- Need captions, sidenotes, or figure semantics
+- Want responsive layout variants (normal/full/fullscreen)
+- Content is within ProseWrapper
+
+**Use PhotoSwipeGallery when**:
+- Creating dedicated gallery pages
+- Want full-screen lightbox browsing
+- Gallery is the primary content (not embedded)
+- Content is within GalleryLayout
 
 ## Testing Guidelines
 - `astro check` (triggered by `npm run build`) is the primary static test; run it on every branch.

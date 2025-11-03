@@ -510,3 +510,39 @@ After evaluation, could add:
 **Implementation completed on**: 2025-10-25
 **Branch**: `gallery`
 **Status**: Ready for merge to `dev`
+
+---
+
+## ImageGrid vs PhotoSwipeGallery
+
+### Decision: Keep Separate
+
+These components serve different purposes and should remain distinct:
+
+**ImageGrid** (`src/components/ImageGrid.astro`):
+- **Purpose**: Prose-embedded photo arrays
+- **Context**: Within ProseWrapper (notes, articles)
+- **Features**: BaseFigure integration, sidenote slots, layout variants, object positioning
+- **Example**: `src/content/notes/2024-eastern-sierra-trip.mdx`
+
+**PhotoSwipeGallery** (`src/components/PhotoSwipeGallery.astro`):
+- **Purpose**: Standalone gallery browsing
+- **Context**: Within GalleryLayout (dedicated gallery pages)
+- **Features**: PhotoSwipe lightbox, optimized thumbnails, fixed aspect ratio
+- **Example**: `src/pages/photos/[...id].astro`
+
+### Rationale
+
+Merging would introduce unnecessary conditional complexity:
+- `if (enableLightbox)` - Most prose grids don't need lightbox
+- `if (inProseWrapper)` - Different grid constraints
+- `if (hasBaseFigure)` - Gallery pages don't need figure semantics
+
+Current separation keeps each component focused and maintainable.
+
+### When to Reconsider
+
+Merge if these requirements emerge:
+- Prose-embedded galleries need lightbox browsing
+- Multiple gallery page types with different lightbox behavior
+- Shared responsive sizing logic becomes inconsistent (extract utility instead)
