@@ -860,6 +860,8 @@ Implementation is successful when:
 - `a3c4327` - Documentation workflow
 - `fea852e` - Complete justified layout implementation
 - `0889aa2` - Component encapsulation and constant extraction
+- `d124db9` - Plan documentation update
+- `529c41d` - CSS custom property for gap and error handling fallback
 
 ---
 
@@ -869,37 +871,14 @@ The core implementation is complete and working. The following cleanup tasks rem
 
 ### Completed Improvements
 
-✅ **Move justified-layout script into component** - Script is now encapsulated in PhotoSwipeGallery.astro
-✅ **Extract magic numbers to constants** - All configuration values are now named constants
+✅ **1. Move justified-layout script into component** - Script is now encapsulated in PhotoSwipeGallery.astro
+✅ **2. Extract magic numbers to constants** - All configuration values are now named constants
+✅ **3. Unify gap specification** - Added CSS custom property `--gallery-gap: 0.5rem`, JavaScript reads dynamically
+✅ **4. Add error handling with fallback** - Try-catch wraps layout calculation, fallback grid CSS on error
 
 ### Remaining Improvements (Optional)
 
-#### High Priority
-
-**3. Unify gap specification**
-- **Current**: CSS uses `0.5rem` implicitly, JavaScript uses `8px` constant
-- **Issue**: These might not match if root font size changes
-- **Recommendation**: Use CSS custom property pattern from ImageGrid.astro
-  ```css
-  :root {
-    --gallery-gap: 0.5rem;
-  }
-  ```
-  Then either read it in JavaScript or maintain consistent rem-to-px conversion
-
-**4. Add error handling with fallback**
-- **Current**: No try-catch around justified-layout calculations
-- **Risk**: If layout fails, all images stack at position 0,0
-- **Recommendation**: Wrap layout calculation in try-catch with fallback CSS:
-  ```typescript
-  try {
-    applyJustifiedLayout(gallery);
-  } catch (error) {
-    console.error('Justified layout failed, using fallback', error);
-    gallery.classList.add('gallery-fallback');
-  }
-  ```
-  Add `.gallery-fallback` CSS that uses simple flexbox or grid
+All high-priority improvements are now complete. The following are quality-of-life enhancements.
 
 #### Medium Priority
 
@@ -944,11 +923,15 @@ The current implementation is:
 - ✅ Better organized than initial version
 - ✅ Constants are extracted and named
 - ✅ Component is self-contained
+- ✅ Gap specification unified with CSS custom property
+- ✅ Error handling with graceful fallback
 
-Remaining improvements (#3-10) are **quality-of-life enhancements** rather than critical issues. They can be addressed incrementally as needs arise:
-- Add error handling if layout failures occur in production
-- Unify gap specification if CSS changes cause misalignment
+**All high-priority improvements are complete.**
+
+Remaining improvements (#5-10) are **quality-of-life enhancements** rather than critical issues. They can be addressed incrementally as needs arise:
 - Move interfaces to types file if reused elsewhere
+- Extract PhotoSwipe to separate file if needed elsewhere
+- Add JSDoc comments for better documentation
 - Other improvements as actual problems surface
 
 This follows the YAGNI principle: implement improvements when they solve real problems, not hypothetical ones.

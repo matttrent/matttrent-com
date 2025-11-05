@@ -1,16 +1,15 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import type { GalleryImage } from "@utils/gallery";
 import 'photoswipe/style.css';
 import '@css/photoswipe.css';
 
 interface Props {
   images: GalleryImage[];
-  fullSizeImages: Array<{ src: string; width: number; height: number }>;
   galleryId: string;
 }
 
-const { images, fullSizeImages, galleryId } = Astro.props;
+const { images, galleryId } = Astro.props;
 
 // Configuration constants
 const BREAKPOINTS = {
@@ -28,11 +27,28 @@ const TARGET_ROW_HEIGHTS = {
 
 const IMAGE_WIDTHS = [400, 600, 800, 1200];
 const EAGER_LOAD_COUNT = 8;
+const MAX_FULL_SIZE_WIDTH = 1600;
 
 // Helper functions
 const getImageSizes = () => {
   return `(max-width: ${BREAKPOINTS.mobile}px) ${IMAGE_WIDTHS[0]}px, (max-width: ${BREAKPOINTS.tablet}px) ${IMAGE_WIDTHS[1]}px, (max-width: ${BREAKPOINTS.desktop}px) ${IMAGE_WIDTHS[2]}px, ${IMAGE_WIDTHS[3]}px`;
 };
+
+// Generate full-size images for PhotoSwipe and justified layout
+const fullSizeImages = await Promise.all(
+  images.map(async (img) => {
+    const fullSize = await getImage({
+      src: img.src,
+      width: Math.min(MAX_FULL_SIZE_WIDTH, img.width), // Cap at 1600px or original
+      format: "webp",
+    });
+    return {
+      src: fullSize.src,
+      width: fullSize.attributes.width as number,
+      height: fullSize.attributes.height as number,
+    };
+  })
+);
 ---
 
 <div class="photoswipe-gallery" id={`gallery-${galleryId}`}>
@@ -253,6 +269,67 @@ const getImageSizes = () => {
           applyJustifiedLayout(gallery);
         });
       }, 150);
+    });
+  });
+</script>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import PhotoSwipe from 'photoswipe';
+
+  // Initialize PhotoSwipe for all galleries on the page
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleries = document.querySelectorAll('[data-pswp-gallery]');
+
+    galleries.forEach((galleryEl) => {
+      const galleryId = galleryEl.getAttribute('data-pswp-gallery');
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: `[data-pswp-gallery="${galleryId}"]`,
+        children: 'a',
+        pswpModule: PhotoSwipe,
+        showHideAnimationType: 'fade',
+        initialZoomLevel: 'fit',
+        secondaryZoomLevel: 1,
+        maxZoomLevel: 1,
+        zoom: false,
+        clickToCloseNonZoomable: false,
+      });
+
+      // Add caption support
+      lightbox.on('uiRegister', function() {
+        if (!lightbox.pswp || !lightbox.pswp.ui) return;
+
+        lightbox.pswp.ui.registerElement({
+          name: 'caption',
+          order: 9,
+          isButton: false,
+          appendTo: 'root',
+          html: '',
+          onInit: (el) => {
+            if (!lightbox.pswp) return;
+
+            lightbox.pswp.on('change', () => {
+              if (!lightbox.pswp || !lightbox.pswp.currSlide) return;
+
+              const currSlideElement = lightbox.pswp.currSlide.data.element;
+              let captionHTML = '';
+
+              if (currSlideElement) {
+                const hiddenCaption = currSlideElement.querySelector('.hidden-caption');
+                if (hiddenCaption) {
+                  captionHTML = hiddenCaption.innerHTML;
+                }
+                // No fallback to alt text - only show captions when explicitly provided
+              }
+
+              el.innerHTML = captionHTML || '';
+            });
+          }
+        });
+      });
+
+      lightbox.init();
     });
   });
 </script>

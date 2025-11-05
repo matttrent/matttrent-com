@@ -1,6 +1,5 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import { getImage } from "astro:assets";
 import GalleryLayout from "@layouts/GalleryLayout.astro";
 import Header from "@components/Header.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
@@ -23,9 +22,6 @@ interface Props {
 
 const { gallery } = Astro.props;
 
-// Configuration constants
-const MAX_FULL_SIZE_WIDTH = 1600;
-
 // Build title with draft indicator
 const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 
@@ -33,22 +29,6 @@ const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 const galleryImages = await getGalleryImages(
   gallery.id,
   gallery.data.photos
-);
-
-// Get full-size image metadata for PhotoSwipe and justified layout
-const fullSizeImages = await Promise.all(
-  galleryImages.map(async (img) => {
-    const fullSize = await getImage({
-      src: img.src,
-      width: Math.min(MAX_FULL_SIZE_WIDTH, img.width), // Cap at 1600px or original
-      format: "webp",
-    });
-    return {
-      src: fullSize.src,
-      width: fullSize.attributes.width as number,
-      height: fullSize.attributes.height as number,
-    };
-  })
 );
 ---
 
@@ -62,72 +42,9 @@ const fullSizeImages = await Promise.all(
   {galleryImages.length > 0 ? (
     <PhotoSwipeGallery
       images={galleryImages}
-      fullSizeImages={fullSizeImages}
       galleryId={gallery.id}
     />
   ) : (
     <p>No images found in this gallery.</p>
   )}
 </GalleryLayout>
-
-<!-- PhotoSwipe Script -->
-<script>
-  import PhotoSwipeLightbox from 'photoswipe/lightbox';
-  import PhotoSwipe from 'photoswipe';
-
-  // Initialize PhotoSwipe for all galleries on the page
-  document.addEventListener('DOMContentLoaded', () => {
-    const galleries = document.querySelectorAll('[data-pswp-gallery]');
-
-    galleries.forEach((galleryEl) => {
-      const galleryId = galleryEl.getAttribute('data-pswp-gallery');
-
-      const lightbox = new PhotoSwipeLightbox({
-        gallery: `[data-pswp-gallery="${galleryId}"]`,
-        children: 'a',
-        pswpModule: PhotoSwipe,
-        showHideAnimationType: 'fade',
-        initialZoomLevel: 'fit',
-        secondaryZoomLevel: 1,
-        maxZoomLevel: 1,
-        zoom: false,
-        clickToCloseNonZoomable: false,
-      });
-
-      // Add caption support
-      lightbox.on('uiRegister', function() {
-        if (!lightbox.pswp || !lightbox.pswp.ui) return;
-
-        lightbox.pswp.ui.registerElement({
-          name: 'caption',
-          order: 9,
-          isButton: false,
-          appendTo: 'root',
-          html: '',
-          onInit: (el) => {
-            if (!lightbox.pswp) return;
-
-            lightbox.pswp.on('change', () => {
-              if (!lightbox.pswp || !lightbox.pswp.currSlide) return;
-
-              const currSlideElement = lightbox.pswp.currSlide.data.element;
-              let captionHTML = '';
-
-              if (currSlideElement) {
-                const hiddenCaption = currSlideElement.querySelector('.hidden-caption');
-                if (hiddenCaption) {
-                  captionHTML = hiddenCaption.innerHTML;
-                }
-                // No fallback to alt text - only show captions when explicitly provided
-              }
-
-              el.innerHTML = captionHTML || '';
-            });
-          }
-        });
-      });
-
-      lightbox.init();
-    });
-  });
-</script>
