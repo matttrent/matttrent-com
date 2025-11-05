@@ -119,7 +119,23 @@ The `plans/` directory contains detailed documentation for major features and ar
 
 - **PHOTOSWIPE_IMPLEMENTATION.md**: Complete documentation for the PhotoSwipe gallery system at `/photos/`, including architecture, content organization, custom loaders, and implementation decisions.
 - **GALLERY_REFACTOR_PLAN.md**: Step-by-step plan for refactoring gallery components and data handling.
+- **JUSTIFIED_GALLERY_LAYOUT_PLAN.md**: Implementation plan for justified gallery layout that preserves natural image aspect ratios.
 
 These documents provide historical context and implementation details that may be useful when extending or modifying related features.
 
-**When working on multi-step plans**: Commit after completing each major step to preserve progress and make it easier to review changes incrementally.
+### Multi-Step Implementation Workflow
+
+When implementing multi-step plans, follow this workflow for each step:
+
+1. **Complete the implementation**: Make the code changes for the current step
+2. **Test the build**: Run `npm run build` to ensure the site builds without errors
+3. **Check for errors**: Verify there are no TypeScript errors or warnings
+4. **Review with user**: Present the changes and check in with the user before proceeding
+5. **Get approval**: Wait for user confirmation before moving to the next step
+6. **Commit incrementally**: Once approved, commit the step with a descriptive message
+
+This incremental approach:
+- Allows each step to be reviewed independently
+- Catches problems early in the process
+- Preserves progress with granular commits
+- Makes it easy to roll back to any previous step if needed

@@ -237,6 +237,22 @@ More conservative than ImageGrid's fullscreen mode (max 1600px) since justified 
 
 ## Implementation Plan
 
+### Implementation Workflow
+
+After completing each step:
+
+1. **Test the build**: Run `npm run build` to ensure the site builds without errors
+2. **Check for TypeScript errors**: Verify there are no type errors or warnings
+3. **Review changes**: Confirm the changes align with the plan
+4. **Get user approval**: Check in with the user before proceeding to the next step
+5. **Commit changes**: Once approved, commit the completed step with a descriptive message
+
+This incremental approach ensures:
+- Each step can be reviewed independently
+- Problems are caught early
+- Progress is preserved with granular commits
+- The implementation can be rolled back to any step if needed
+
 ### Step 1: Install justified-layout
 
 ```bash
