@@ -1,30 +1,34 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { groupAndSortByDate } from "@utils/dateGrouping";
+import { isPublished } from "@utils/content";
+
+// Get all galleries and filter by draft status
+
 import "@css/deflist.css";
 
-interface Props {
-  galleries: CollectionEntry<"galleries">[];
-}
+type Gallery = CollectionEntry<"galleries">;
 
-const { galleries } = Astro.props;
+// Get all non-draft notes
+const allGalleries = await getCollection("galleries", isPublished);
 
-// Sort by date, newest first
-const sortedGalleries = galleries.sort((a, b) =>
-  b.data.createdAt.getTime() - a.data.createdAt.getTime()
-);
+const sortedYearGroups = groupAndSortByDate(allGalleries, {
+  groupKey: (gallery: Gallery) => gallery.data.createdAt.getFullYear(),
+  sortKey: (gallery: Gallery) => gallery.data.createdAt,
+});
 ---
 
 <dl class="dl-horizontal">
   {
-    sortedGalleries.map((gallery) => (
+    sortedYearGroups.map(([year, galleries]) => (
       <>
-        <dt>
-          {gallery.data.createdAt.getFullYear()}
-        </dt>
-        <dd>
-          <a href={`/photos/${gallery.id}`}>{gallery.data.title}</a>
-          {gallery.data.isDraft && " (draft)"}
-        </dd>
+        <dt>{year}</dt>
+        {galleries.map((gallery) => (
+          <dd>
+            <a href={`/photos/${gallery.id}`}>{gallery.data.title}</a>
+            {gallery.data.isDraft && " (draft)"}
+          </dd>
+        ))}
       </>
     ))
   }

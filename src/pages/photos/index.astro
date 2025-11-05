@@ -1,16 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import ProseWrapper from "@components/ProseWrapper.astro";
 import GalleryList from "@components/GalleryList.astro";
-import { filterPublishedGalleries } from "@utils/gallery";
 
 const pageTitle = "Photographs";
 
-// Get all galleries and filter by draft status
-const allGalleries = await getCollection("galleries");
-const publishedGalleries = filterPublishedGalleries(allGalleries);
 ---
 
 <Layout title={pageTitle}>
@@ -21,7 +16,7 @@ const publishedGalleries = filterPublishedGalleries(allGalleries);
   />
 
   <ProseWrapper>
-    <GalleryList galleries={publishedGalleries} />
+    <GalleryList />
   </ProseWrapper>
 </Layout>
 
