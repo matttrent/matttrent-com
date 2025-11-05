@@ -1,4 +1,5 @@
 import { z } from 'astro:content';
+import type { ImageMetadata } from 'astro';
 
 export const gallerySchema = z.object({
   title: z.string(),
@@ -10,6 +11,17 @@ export const gallerySchema = z.object({
 });
 
 export type Gallery = z.infer<typeof gallerySchema>;
+
+/**
+ * Image representation for gallery rendering
+ */
+export interface GalleryImage {
+  src: ImageMetadata;
+  alt: string;
+  title?: string;
+  width: number;
+  height: number;
+}
 
 // Justified layout types
 export interface LayoutBox {

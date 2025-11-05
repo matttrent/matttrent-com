@@ -1,17 +1,7 @@
 import type { ImageMetadata } from "astro";
 import type { CollectionEntry } from "astro:content";
+import type { GalleryImage } from "@mttypes/gallery";
 import { isPublished } from "@utils/content";
-
-/**
- * Image representation for gallery rendering
- */
-export interface GalleryImage {
-  src: ImageMetadata;
-  alt: string;
-  title?: string;
-  width: number;
-  height: number;
-}
 
 /**
  * Get images for a specific gallery, respecting photos array if present
