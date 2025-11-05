@@ -1,25 +1,28 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import GalleryLayout from "@layouts/GalleryLayout.astro";
-import Header from "@components/Header.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
 import { getGalleryImages } from "@utils/gallery";
 import { isPublished } from "@utils/content";
 
+type Gallery = CollectionEntry<"galleries">;
+
+type Props = {
+  gallery: Gallery;
+};
+
+// Generate a new path for every collection entry
 export async function getStaticPaths() {
   // Get published (non-draft) galleries in production
   const galleries = await getCollection("galleries", isPublished);
 
-  return galleries.map((gallery) => ({
+  return galleries.map((gallery: Gallery) => ({
     params: { id: gallery.id },
     props: { gallery },
   }));
 }
 
-interface Props {
-  gallery: CollectionEntry<"galleries">;
-}
-
+// Get the gallery entry directly from the prop
 const { gallery } = Astro.props;
 
 // Build title with draft indicator
@@ -32,13 +35,10 @@ const galleryImages = await getGalleryImages(
 );
 ---
 
-<GalleryLayout title={title}>
-  <Header
-    title={title}
-    subtitle={gallery.data.description}
-    slot="header"
-  />
-
+<GalleryLayout
+  title={title}
+  subtitle={gallery.data.description}
+>
   {galleryImages.length > 0 ? (
     <PhotoSwipeGallery
       images={galleryImages}
