@@ -27,7 +27,6 @@ const TARGET_ROW_HEIGHTS = {
 } as const;
 
 const IMAGE_WIDTHS = [400, 600, 800, 1200];
-const GAP_SIZE = 8; // 0.5rem ≈ 8px
 const EAGER_LOAD_COUNT = 8;
 
 // Helper functions
@@ -43,7 +42,6 @@ const getImageSizes = () => {
     data-gallery-id={galleryId}
     data-breakpoints={JSON.stringify(BREAKPOINTS)}
     data-row-heights={JSON.stringify(TARGET_ROW_HEIGHTS)}
-    data-gap-size={GAP_SIZE}
   >
     {
       images.map((image, index) => {
@@ -79,6 +77,11 @@ const getImageSizes = () => {
 </div>
 
 <style>
+  /* CSS custom properties */
+  :root {
+    --gallery-gap: 0.5rem;
+  }
+
   .photoswipe-gallery {
     width: 100%;
     margin: 2rem 0;
@@ -88,6 +91,28 @@ const getImageSizes = () => {
     position: relative;
     width: 100%;
     /* height will be set dynamically by JavaScript */
+  }
+
+  /* Fallback layout if JavaScript fails */
+  .gallery-fallback {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--gallery-gap);
+    position: static;
+  }
+
+  .gallery-fallback .gallery-item {
+    position: static;
+    width: 100% !important;
+    height: auto !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  .gallery-fallback .gallery-item :global(img) {
+    aspect-ratio: auto;
+    width: 100%;
+    height: auto;
   }
 
   .gallery-item {
@@ -150,56 +175,65 @@ const getImageSizes = () => {
   }
 
   function applyJustifiedLayout(gallery: HTMLElement) {
-    const items = Array.from(gallery.querySelectorAll('.gallery-item')) as HTMLAnchorElement[];
-    if (items.length === 0) return;
+    try {
+      const items = Array.from(gallery.querySelectorAll('.gallery-item')) as HTMLAnchorElement[];
+      if (items.length === 0) return;
 
-    // Read configuration from data attributes
-    const breakpoints: Breakpoints = JSON.parse(gallery.dataset.breakpoints || '{}');
-    const rowHeights: RowHeights = JSON.parse(gallery.dataset.rowHeights || '{}');
-    const gapSize = parseInt(gallery.dataset.gapSize || '8', 10);
+      // Read configuration from data attributes
+      const breakpoints: Breakpoints = JSON.parse(gallery.dataset.breakpoints || '{}');
+      const rowHeights: RowHeights = JSON.parse(gallery.dataset.rowHeights || '{}');
 
-    // Extract image dimensions
-    const imageDimensions = items.map(item => ({
-      width: parseInt(item.dataset.width || '1', 10),
-      height: parseInt(item.dataset.height || '1', 10),
-    }));
+      // Read gap from CSS custom property
+      const computedStyle = getComputedStyle(document.documentElement);
+      const gapRem = computedStyle.getPropertyValue('--gallery-gap').trim();
+      const gapSize = parseFloat(gapRem) * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
-    // Get container width
-    const containerWidth = gallery.offsetWidth;
+      // Extract image dimensions
+      const imageDimensions = items.map(item => ({
+        width: parseInt(item.dataset.width || '1', 10),
+        height: parseInt(item.dataset.height || '1', 10),
+      }));
 
-    // Determine target row height based on viewport
-    const viewportWidth = window.innerWidth;
-    let targetRowHeight: number;
-    if (viewportWidth < breakpoints.mobile) {
-      targetRowHeight = rowHeights.mobile;
-    } else if (viewportWidth < breakpoints.tablet) {
-      targetRowHeight = rowHeights.tablet;
-    } else if (viewportWidth < breakpoints.desktop) {
-      targetRowHeight = rowHeights.medium;
-    } else {
-      targetRowHeight = rowHeights.desktop;
+      // Get container width
+      const containerWidth = gallery.offsetWidth;
+
+      // Determine target row height based on viewport
+      const viewportWidth = window.innerWidth;
+      let targetRowHeight: number;
+      if (viewportWidth < breakpoints.mobile) {
+        targetRowHeight = rowHeights.mobile;
+      } else if (viewportWidth < breakpoints.tablet) {
+        targetRowHeight = rowHeights.tablet;
+      } else if (viewportWidth < breakpoints.desktop) {
+        targetRowHeight = rowHeights.medium;
+      } else {
+        targetRowHeight = rowHeights.desktop;
+      }
+
+      // Calculate layout
+      const layoutGeometry = justifiedLayout(imageDimensions, {
+        containerWidth,
+        targetRowHeight,
+        targetRowHeightTolerance: 0.25,
+        boxSpacing: gapSize,
+        containerPadding: 0,
+      }) as LayoutGeometry;
+
+      // Apply positions to items
+      items.forEach((item, index) => {
+        const box = layoutGeometry.boxes[index];
+        item.style.left = `${box.left}px`;
+        item.style.top = `${box.top}px`;
+        item.style.width = `${box.width}px`;
+        item.style.height = `${box.height}px`;
+      });
+
+      // Set container height
+      gallery.style.height = `${layoutGeometry.containerHeight}px`;
+    } catch (error) {
+      console.error('Justified layout failed, using fallback grid layout', error);
+      gallery.classList.add('gallery-fallback');
     }
-
-    // Calculate layout
-    const layoutGeometry = justifiedLayout(imageDimensions, {
-      containerWidth,
-      targetRowHeight,
-      targetRowHeightTolerance: 0.25,
-      boxSpacing: gapSize,
-      containerPadding: 0,
-    }) as LayoutGeometry;
-
-    // Apply positions to items
-    items.forEach((item, index) => {
-      const box = layoutGeometry.boxes[index];
-      item.style.left = `${box.left}px`;
-      item.style.top = `${box.top}px`;
-      item.style.width = `${box.width}px`;
-      item.style.height = `${box.height}px`;
-    });
-
-    // Set container height
-    gallery.style.height = `${layoutGeometry.containerHeight}px`;
   }
 
   // Initialize on page load
