@@ -17,38 +17,80 @@ interface Props {
 const { columns = 3, layout = "normal", aspectRatio, images } = Astro.props;
 const cssAspectRatio = aspectRatio?.toString().replace("/", " / ");
 
-// Helper to clamp and compute position
+/**
+ * Responsive breakpoint thresholds (in pixels)
+ */
+const BREAKPOINTS = {
+  mobile: 500,
+  tablet: 800,
+  desktop: 1400,
+} as const;
+
+/**
+ * Image widths for optimization at each layout type
+ */
+const IMAGE_WIDTHS = {
+  normal: [500, 800],
+  full: [500, 800, 1220],
+  fullscreen: [500, 800, 1600],
+};
+
+/**
+ * Default widths for each layout type (largest responsive size)
+ */
+const DEFAULT_WIDTHS = {
+  normal: 800,
+  full: 1220,
+  fullscreen: 1600,
+} as const;
+
+/**
+ * Clamps offset values and computes CSS object-position
+ * @param xoff - Horizontal offset (-50 to 50)
+ * @param yoff - Vertical offset (-50 to 50)
+ * @returns CSS object-position value
+ */
 const computePosition = (xoff = 0, yoff = 0) => {
   const x = 50 - Math.max(-50, Math.min(50, xoff));
   const y = 50 - Math.max(-50, Math.min(50, yoff));
   return `${x}% ${y}%`;
 };
 
-// Define widths based on layout type
+/**
+ * Generates responsive sizes attribute based on layout type
+ * @param src - Image metadata
+ * @param layoutWidth - Layout type (normal/full/fullscreen)
+ * @returns Sizes attribute string for responsive images
+ */
 const getImageSizes = (src: ImageMetadata, layoutWidth: typeof layout) => {
   switch (layoutWidth) {
     case "normal":
-      return "(max-width: 500px) 500px, (max-width: 800px) 800px, 800px";
+      return `(max-width: ${BREAKPOINTS.mobile}px) ${BREAKPOINTS.mobile}px, (max-width: ${BREAKPOINTS.tablet}px) ${BREAKPOINTS.tablet}px, ${DEFAULT_WIDTHS.normal}px`;
     case "full":
-      return "(max-width: 500px) 500px, (max-width: 800px) 800px, 1220px";
+      return `(max-width: ${BREAKPOINTS.mobile}px) ${BREAKPOINTS.mobile}px, (max-width: ${BREAKPOINTS.tablet}px) ${BREAKPOINTS.tablet}px, ${DEFAULT_WIDTHS.full}px`;
     case "fullscreen":
-      return `(max-width: 500px) 500px, (max-width: 800px) 800px, (max-width: 1400px) 1600px, ${src.width}px`;
+      return `(max-width: ${BREAKPOINTS.mobile}px) ${BREAKPOINTS.mobile}px, (max-width: ${BREAKPOINTS.tablet}px) ${BREAKPOINTS.tablet}px, (max-width: ${BREAKPOINTS.desktop}px) ${DEFAULT_WIDTHS.fullscreen}px, ${src.width}px`;
     default:
-      return "800px";
+      return `${DEFAULT_WIDTHS.normal}px`;
   }
 };
 
-// Define widths for image optimization
+/**
+ * Returns array of widths for image optimization based on layout type
+ * @param src - Image metadata
+ * @param layoutWidth - Layout type (normal/full/fullscreen)
+ * @returns Array of pixel widths for srcset generation
+ */
 const getImageWidths = (src: ImageMetadata, layoutWidth: typeof layout) => {
   switch (layoutWidth) {
     case "normal":
-      return [500, 800];
+      return IMAGE_WIDTHS.normal;
     case "full":
-      return [500, 800, 1220];
+      return IMAGE_WIDTHS.full;
     case "fullscreen":
-      return [500, 800, 1600, src.width];
+      return [...IMAGE_WIDTHS.fullscreen, src.width];
     default:
-      return [800];
+      return [DEFAULT_WIDTHS.normal];
   }
 };
 ---
