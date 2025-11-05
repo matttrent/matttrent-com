@@ -1,5 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
+import { getImage } from "astro:assets";
 import GalleryLayout from "@layouts/GalleryLayout.astro";
 import Header from "@components/Header.astro";
 import PhotoSwipeGallery from "@components/PhotoSwipeGallery.astro";
@@ -30,6 +31,22 @@ const galleryImages = await getGalleryImages(
   gallery.id,
   gallery.data.photos
 );
+
+// Get full-size image metadata for PhotoSwipe and justified layout
+const fullSizeImages = await Promise.all(
+  galleryImages.map(async (img) => {
+    const fullSize = await getImage({
+      src: img.src,
+      width: Math.min(1600, img.width), // Cap at 1600px or original
+      format: "webp",
+    });
+    return {
+      src: fullSize.src,
+      width: fullSize.attributes.width as number,
+      height: fullSize.attributes.height as number,
+    };
+  })
+);
 ---
 
 <GalleryLayout title={title}>
@@ -43,8 +60,8 @@ const galleryImages = await getGalleryImages(
     <>
       <PhotoSwipeGallery
         images={galleryImages}
+        fullSizeImages={fullSizeImages}
         galleryId={gallery.id}
-        columns={4}
       />
     </>
   ) : (

@@ -9,6 +9,8 @@ export interface GalleryImage {
   src: ImageMetadata;
   alt: string;
   title?: string;
+  width: number;
+  height: number;
 }
 
 /**
@@ -49,6 +51,8 @@ export async function getGalleryImages(
         return {
           src: entry.module.default,
           alt: filename.replace(/\.[^/.]+$/, ''),
+          width: entry.module.default.width,
+          height: entry.module.default.height,
         };
       })
       .filter((img): img is GalleryImage => img !== null);
@@ -59,6 +63,8 @@ export async function getGalleryImages(
     .map(([path, module]) => ({
       src: module.default,
       alt: path.split('/').pop()?.replace(/\.[^/.]+$/, '') || 'Gallery image',
+      width: module.default.width,
+      height: module.default.height,
     }))
     .sort((a, b) => a.alt.localeCompare(b.alt));
 }

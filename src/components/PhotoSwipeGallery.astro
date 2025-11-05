@@ -1,69 +1,54 @@
 ---
-import { Image, getImage } from "astro:assets";
-import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import type { GalleryImage } from "@utils/gallery";
 import 'photoswipe/style.css';
 import '@css/photoswipe.css';
 
 interface Props {
-  images: {
-    src: ImageMetadata;
-    alt: string;
-    title?: string;
-  }[];
+  images: GalleryImage[];
+  fullSizeImages: Array<{ src: string; width: number; height: number }>;
   galleryId: string;
-  columns?: number;
 }
 
-const { images, galleryId, columns = 3 } = Astro.props;
-
-// Generate full-size image data for PhotoSwipe lightbox
-const fullsizeData = await Promise.all(
-  images.map(async ({ src, alt, title }) => {
-    // Full-size for lightbox (1600px max, or original if smaller)
-    const fullsize = await getImage({
-      src,
-      width: Math.min(src.width, 1600),
-      format: 'webp',
-    });
-
-    return {
-      src,
-      alt,
-      title,
-      fullsizeSrc: fullsize.src,
-      fullsizeWidth: fullsize.attributes.width,
-      fullsizeHeight: fullsize.attributes.height,
-    };
-  })
-);
+const { images, fullSizeImages, galleryId } = Astro.props;
 ---
 
 <div class="photoswipe-gallery" id={`gallery-${galleryId}`}>
-  <div class="gallery-grid" data-pswp-gallery={galleryId}>
+  <div class="gallery-justified" data-pswp-gallery={galleryId} data-gallery-id={galleryId}>
     {
-      fullsizeData.map(({ src, alt, title, fullsizeSrc, fullsizeWidth, fullsizeHeight }) => (
-        <a
-          href={fullsizeSrc}
-          data-pswp-width={fullsizeWidth}
-          data-pswp-height={fullsizeHeight}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Image
-            src={src}
-            alt={alt}
-            widths={[400, 600, 800]}
-            sizes="(max-width: 500px) 100vw, (max-width: 760px) 50vw, 400px"
-            loading="lazy"
-          />
-          {title && <span class="hidden-caption">{title}</span>}
-        </a>
-      ))
+      images.map((image, index) => {
+        const fullSizeImage = fullSizeImages[index];
+        return (
+          <a
+            href={fullSizeImage.src}
+            data-pswp-width={fullSizeImage.width}
+            data-pswp-height={fullSizeImage.height}
+            data-width={fullSizeImage.width}
+            data-height={fullSizeImage.height}
+            class="gallery-item"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Image
+              src={image.src}
+              width={1200}
+              height={Math.round((1200 * fullSizeImage.height) / fullSizeImage.width)}
+              sizes="(max-width: 500px) 400px, (max-width: 800px) 600px, (max-width: 1400px) 800px, 1200px"
+              widths={[400, 600, 800, 1200]}
+              format="webp"
+              loading={index < 8 ? "eager" : "lazy"}
+              decoding="async"
+              alt={image.alt}
+            />
+            {image.title && <span class="hidden-caption">{image.title}</span>}
+          </a>
+        );
+      })
     }
   </div>
 </div>
 
-<style define:vars={{ columns }}>
+<style>
   .photoswipe-gallery {
     width: 100%;
     margin: 2rem 0;
