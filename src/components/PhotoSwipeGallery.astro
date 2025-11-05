@@ -54,52 +54,39 @@ const { images, fullSizeImages, galleryId } = Astro.props;
     margin: 2rem 0;
   }
 
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(var(--columns), 1fr);
-    gap: 0.5rem;
+  .gallery-justified {
+    position: relative;
     width: 100%;
+    /* height will be set dynamically by JavaScript */
   }
 
-  .gallery-grid a {
+  .gallery-item {
+    position: absolute;
     display: block;
-    position: relative;
     overflow: hidden;
     cursor: pointer;
     line-height: 0;
+    /* left, top, width, height will be set dynamically by JavaScript */
   }
 
-  .gallery-grid a:hover {
+  .gallery-item:hover {
     opacity: 0.9;
   }
 
   /* Target both direct img and img within picture element */
-  .gallery-grid a :global(img) {
+  .gallery-item :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    aspect-ratio: 3 / 2;
+    display: block;
     transition: transform 0.2s ease;
   }
 
-  .gallery-grid a:hover :global(img) {
+  .gallery-item:hover :global(img) {
     transform: scale(1.05);
   }
 
   .hidden-caption {
     display: none;
-  }
-
-  /* Responsive: 2 columns on tablets, 1 column on mobile */
-  @media (max-width: 760px) {
-    .gallery-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 500px) {
-    .gallery-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>
