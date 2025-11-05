@@ -11,13 +11,18 @@ interface Props {
 
 const { images, galleryId } = Astro.props;
 
-// Configuration constants
+/**
+ * Responsive breakpoint thresholds (in pixels)
+ */
 const BREAKPOINTS = {
   mobile: 500,
   tablet: 800,
   desktop: 1400,
 } as const;
 
+/**
+ * Target row heights for justified layout at each breakpoint (in pixels)
+ */
 const TARGET_ROW_HEIGHTS = {
   mobile: 150,
   tablet: 180,
@@ -25,11 +30,19 @@ const TARGET_ROW_HEIGHTS = {
   desktop: 280,
 } as const;
 
+/** Responsive image widths for srcset generation */
 const IMAGE_WIDTHS = [400, 600, 800, 1200];
+
+/** Number of images to load eagerly (rest are lazy loaded) */
 const EAGER_LOAD_COUNT = 8;
+
+/** Maximum width for full-size images in PhotoSwipe lightbox */
 const MAX_FULL_SIZE_WIDTH = 1600;
 
-// Helper functions
+/**
+ * Generates responsive sizes attribute for images
+ * @returns Sizes attribute string matching IMAGE_WIDTHS and BREAKPOINTS
+ */
 const getImageSizes = () => {
   return `(max-width: ${BREAKPOINTS.mobile}px) ${IMAGE_WIDTHS[0]}px, (max-width: ${BREAKPOINTS.tablet}px) ${IMAGE_WIDTHS[1]}px, (max-width: ${BREAKPOINTS.desktop}px) ${IMAGE_WIDTHS[2]}px, ${IMAGE_WIDTHS[3]}px`;
 };
@@ -166,6 +179,16 @@ const fullSizeImages = await Promise.all(
   import justifiedLayout from 'justified-layout';
   import type { LayoutBox, LayoutGeometry, Breakpoints, RowHeights } from '@mttypes/gallery';
 
+  /**
+   * Applies justified layout to a gallery by calculating and positioning images
+   * in rows with consistent heights while preserving aspect ratios.
+   *
+   * Reads configuration from data attributes, calculates optimal image positions
+   * using the justified-layout algorithm, and applies absolute positioning to
+   * each gallery item. Falls back to grid layout on error.
+   *
+   * @param gallery - The gallery container element with data-gallery-id attribute
+   */
   function applyJustifiedLayout(gallery: HTMLElement) {
     try {
       const items = Array.from(gallery.querySelectorAll('.gallery-item')) as HTMLAnchorElement[];
