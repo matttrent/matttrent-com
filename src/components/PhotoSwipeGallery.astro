@@ -11,10 +11,40 @@ interface Props {
 }
 
 const { images, fullSizeImages, galleryId } = Astro.props;
+
+// Configuration constants
+const BREAKPOINTS = {
+  mobile: 500,
+  tablet: 800,
+  desktop: 1400,
+} as const;
+
+const TARGET_ROW_HEIGHTS = {
+  mobile: 150,
+  tablet: 180,
+  medium: 220,
+  desktop: 280,
+} as const;
+
+const IMAGE_WIDTHS = [400, 600, 800, 1200];
+const GAP_SIZE = 8; // 0.5rem ≈ 8px
+const EAGER_LOAD_COUNT = 8;
+
+// Helper functions
+const getImageSizes = () => {
+  return `(max-width: ${BREAKPOINTS.mobile}px) ${IMAGE_WIDTHS[0]}px, (max-width: ${BREAKPOINTS.tablet}px) ${IMAGE_WIDTHS[1]}px, (max-width: ${BREAKPOINTS.desktop}px) ${IMAGE_WIDTHS[2]}px, ${IMAGE_WIDTHS[3]}px`;
+};
 ---
 
 <div class="photoswipe-gallery" id={`gallery-${galleryId}`}>
-  <div class="gallery-justified" data-pswp-gallery={galleryId} data-gallery-id={galleryId}>
+  <div
+    class="gallery-justified"
+    data-pswp-gallery={galleryId}
+    data-gallery-id={galleryId}
+    data-breakpoints={JSON.stringify(BREAKPOINTS)}
+    data-row-heights={JSON.stringify(TARGET_ROW_HEIGHTS)}
+    data-gap-size={GAP_SIZE}
+  >
     {
       images.map((image, index) => {
         const fullSizeImage = fullSizeImages[index];
@@ -31,12 +61,12 @@ const { images, fullSizeImages, galleryId } = Astro.props;
           >
             <Image
               src={image.src}
-              width={1200}
-              height={Math.round((1200 * fullSizeImage.height) / fullSizeImage.width)}
-              sizes="(max-width: 500px) 400px, (max-width: 800px) 600px, (max-width: 1400px) 800px, 1200px"
-              widths={[400, 600, 800, 1200]}
+              width={IMAGE_WIDTHS[3]}
+              height={Math.round((IMAGE_WIDTHS[3] * fullSizeImage.height) / fullSizeImage.width)}
+              sizes={getImageSizes()}
+              widths={IMAGE_WIDTHS}
               format="webp"
-              loading={index < 8 ? "eager" : "lazy"}
+              loading={index < EAGER_LOAD_COUNT ? "eager" : "lazy"}
               decoding="async"
               alt={image.alt}
             />
@@ -90,3 +120,105 @@ const { images, fullSizeImages, galleryId } = Astro.props;
     display: none;
   }
 </style>
+
+<script>
+  import justifiedLayout from 'justified-layout';
+
+  interface LayoutBox {
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  }
+
+  interface LayoutGeometry {
+    containerHeight: number;
+    boxes: LayoutBox[];
+  }
+
+  interface Breakpoints {
+    mobile: number;
+    tablet: number;
+    desktop: number;
+  }
+
+  interface RowHeights {
+    mobile: number;
+    tablet: number;
+    medium: number;
+    desktop: number;
+  }
+
+  function applyJustifiedLayout(gallery: HTMLElement) {
+    const items = Array.from(gallery.querySelectorAll('.gallery-item')) as HTMLAnchorElement[];
+    if (items.length === 0) return;
+
+    // Read configuration from data attributes
+    const breakpoints: Breakpoints = JSON.parse(gallery.dataset.breakpoints || '{}');
+    const rowHeights: RowHeights = JSON.parse(gallery.dataset.rowHeights || '{}');
+    const gapSize = parseInt(gallery.dataset.gapSize || '8', 10);
+
+    // Extract image dimensions
+    const imageDimensions = items.map(item => ({
+      width: parseInt(item.dataset.width || '1', 10),
+      height: parseInt(item.dataset.height || '1', 10),
+    }));
+
+    // Get container width
+    const containerWidth = gallery.offsetWidth;
+
+    // Determine target row height based on viewport
+    const viewportWidth = window.innerWidth;
+    let targetRowHeight: number;
+    if (viewportWidth < breakpoints.mobile) {
+      targetRowHeight = rowHeights.mobile;
+    } else if (viewportWidth < breakpoints.tablet) {
+      targetRowHeight = rowHeights.tablet;
+    } else if (viewportWidth < breakpoints.desktop) {
+      targetRowHeight = rowHeights.medium;
+    } else {
+      targetRowHeight = rowHeights.desktop;
+    }
+
+    // Calculate layout
+    const layoutGeometry = justifiedLayout(imageDimensions, {
+      containerWidth,
+      targetRowHeight,
+      targetRowHeightTolerance: 0.25,
+      boxSpacing: gapSize,
+      containerPadding: 0,
+    }) as LayoutGeometry;
+
+    // Apply positions to items
+    items.forEach((item, index) => {
+      const box = layoutGeometry.boxes[index];
+      item.style.left = `${box.left}px`;
+      item.style.top = `${box.top}px`;
+      item.style.width = `${box.width}px`;
+      item.style.height = `${box.height}px`;
+    });
+
+    // Set container height
+    gallery.style.height = `${layoutGeometry.containerHeight}px`;
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleries = document.querySelectorAll('[data-gallery-id]') as NodeListOf<HTMLElement>;
+
+    galleries.forEach(gallery => {
+      applyJustifiedLayout(gallery);
+    });
+
+    // Debounced resize handler
+    let resizeTimeout: number;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        galleries.forEach(gallery => {
+          applyJustifiedLayout(gallery);
+        });
+      }, 150);
+    });
+  });
+</script>

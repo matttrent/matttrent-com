@@ -23,6 +23,9 @@ interface Props {
 
 const { gallery } = Astro.props;
 
+// Configuration constants
+const MAX_FULL_SIZE_WIDTH = 1600;
+
 // Build title with draft indicator
 const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 
@@ -37,7 +40,7 @@ const fullSizeImages = await Promise.all(
   galleryImages.map(async (img) => {
     const fullSize = await getImage({
       src: img.src,
-      width: Math.min(1600, img.width), // Cap at 1600px or original
+      width: Math.min(MAX_FULL_SIZE_WIDTH, img.width), // Cap at 1600px or original
       format: "webp",
     });
     return {
@@ -57,110 +60,15 @@ const fullSizeImages = await Promise.all(
   />
 
   {galleryImages.length > 0 ? (
-    <>
-      <PhotoSwipeGallery
-        images={galleryImages}
-        fullSizeImages={fullSizeImages}
-        galleryId={gallery.id}
-      />
-    </>
+    <PhotoSwipeGallery
+      images={galleryImages}
+      fullSizeImages={fullSizeImages}
+      galleryId={gallery.id}
+    />
   ) : (
     <p>No images found in this gallery.</p>
   )}
 </GalleryLayout>
-
-<!-- Justified Layout Script -->
-<script>
-  import justifiedLayout from 'justified-layout';
-
-  interface LayoutBox {
-    top: number;
-    left: number;
-    width: number;
-    height: number;
-  }
-
-  interface LayoutGeometry {
-    containerHeight: number;
-    boxes: LayoutBox[];
-  }
-
-  function applyJustifiedLayout(galleryId: string) {
-    const gallery = document.querySelector(`[data-gallery-id="${galleryId}"]`) as HTMLElement;
-    if (!gallery) return;
-
-    const items = Array.from(gallery.querySelectorAll('.gallery-item')) as HTMLAnchorElement[];
-    if (items.length === 0) return;
-
-    // Extract image dimensions
-    const imageDimensions = items.map(item => ({
-      width: parseInt(item.dataset.width || '1', 10),
-      height: parseInt(item.dataset.height || '1', 10),
-    }));
-
-    // Get container width
-    const containerWidth = gallery.offsetWidth;
-
-    // Determine target row height based on viewport
-    const viewportWidth = window.innerWidth;
-    let targetRowHeight: number;
-    if (viewportWidth < 500) {
-      targetRowHeight = 150;
-    } else if (viewportWidth < 800) {
-      targetRowHeight = 180;
-    } else if (viewportWidth < 1400) {
-      targetRowHeight = 220;
-    } else {
-      targetRowHeight = 280;
-    }
-
-    // Calculate layout
-    const layoutGeometry = justifiedLayout(imageDimensions, {
-      containerWidth,
-      targetRowHeight,
-      targetRowHeightTolerance: 0.25,
-      boxSpacing: 8, // 0.5rem ≈ 8px
-      containerPadding: 0,
-    }) as LayoutGeometry;
-
-    // Apply positions to items
-    items.forEach((item, index) => {
-      const box = layoutGeometry.boxes[index];
-      item.style.left = `${box.left}px`;
-      item.style.top = `${box.top}px`;
-      item.style.width = `${box.width}px`;
-      item.style.height = `${box.height}px`;
-    });
-
-    // Set container height
-    gallery.style.height = `${layoutGeometry.containerHeight}px`;
-  }
-
-  // Initialize on page load
-  document.addEventListener('DOMContentLoaded', () => {
-    const galleries = document.querySelectorAll('[data-gallery-id]');
-    galleries.forEach(gallery => {
-      const galleryId = gallery.getAttribute('data-gallery-id');
-      if (galleryId) {
-        applyJustifiedLayout(galleryId);
-      }
-    });
-
-    // Debounced resize handler
-    let resizeTimeout: number;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = window.setTimeout(() => {
-        galleries.forEach(gallery => {
-          const galleryId = gallery.getAttribute('data-gallery-id');
-          if (galleryId) {
-            applyJustifiedLayout(galleryId);
-          }
-        });
-      }, 150);
-    });
-  });
-</script>
 
 <!-- PhotoSwipe Script -->
 <script>
