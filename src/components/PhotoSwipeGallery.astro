@@ -164,31 +164,7 @@ const fullSizeImages = await Promise.all(
 
 <script>
   import justifiedLayout from 'justified-layout';
-
-  interface LayoutBox {
-    top: number;
-    left: number;
-    width: number;
-    height: number;
-  }
-
-  interface LayoutGeometry {
-    containerHeight: number;
-    boxes: LayoutBox[];
-  }
-
-  interface Breakpoints {
-    mobile: number;
-    tablet: number;
-    desktop: number;
-  }
-
-  interface RowHeights {
-    mobile: number;
-    tablet: number;
-    medium: number;
-    desktop: number;
-  }
+  import type { LayoutBox, LayoutGeometry, Breakpoints, RowHeights } from '@mttypes/gallery';
 
   function applyJustifiedLayout(gallery: HTMLElement) {
     try {
