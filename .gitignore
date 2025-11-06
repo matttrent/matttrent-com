@@ -27,6 +27,9 @@ pnpm-debug.log*
 .obsidian
 public/images
 
+# Claude Code local settings
+.claude/settings.local.json
+
 # photo heavy directories (use --force to add)
 src/assets/2024-eastern-sierra-trip
 
