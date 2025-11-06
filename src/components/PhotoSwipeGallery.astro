@@ -295,39 +295,6 @@ const fullSizeImages = await Promise.all(
         clickToCloseNonZoomable: false,
       });
 
-      // Add caption support
-      lightbox.on('uiRegister', function() {
-        if (!lightbox.pswp || !lightbox.pswp.ui) return;
-
-        lightbox.pswp.ui.registerElement({
-          name: 'caption',
-          order: 9,
-          isButton: false,
-          appendTo: 'root',
-          html: '',
-          onInit: (el) => {
-            if (!lightbox.pswp) return;
-
-            lightbox.pswp.on('change', () => {
-              if (!lightbox.pswp || !lightbox.pswp.currSlide) return;
-
-              const currSlideElement = lightbox.pswp.currSlide.data.element;
-              let captionHTML = '';
-
-              if (currSlideElement) {
-                const hiddenCaption = currSlideElement.querySelector('.hidden-caption');
-                if (hiddenCaption) {
-                  captionHTML = hiddenCaption.innerHTML;
-                }
-                // No fallback to alt text - only show captions when explicitly provided
-              }
-
-              el.innerHTML = captionHTML || '';
-            });
-          }
-        });
-      });
-
       lightbox.init();
     });
   });
