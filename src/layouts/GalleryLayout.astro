@@ -1,0 +1,23 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<Layout title={title}>
+  <Header
+    title={title}
+    subtitle={subtitle}
+    slot="header"
+  />
+
+  <!-- Main gallery content - no gridContainer, no ProseWrapper -->
+  <slot />
+</Layout>
+

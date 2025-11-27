@@ -1,0 +1,33 @@
+/* PhotoSwipe Custom Styles - Tufte-inspired */
+
+/* Override PhotoSwipe background to match site aesthetic */
+.pswp__bg {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+/* UI buttons - match site minimalism */
+.pswp__button {
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.pswp__button:hover {
+  opacity: 1;
+}
+
+/* Hide zoom button */
+.pswp__button--zoom {
+  display: none !important;
+}
+
+/* Hide counter (1 / N) */
+.pswp__counter {
+  display: none !important;
+}
+
+/* Dark mode considerations - PhotoSwipe already dark, but ensure consistency */
+@media (prefers-color-scheme: dark) {
+  .pswp__bg {
+    background: rgba(0, 0, 0, 0.98);
+  }
+}

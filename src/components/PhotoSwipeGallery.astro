@@ -1,0 +1,302 @@
+---
+import { Image, getImage } from "astro:assets";
+import type { GalleryImage } from "@mttypes/gallery";
+import 'photoswipe/style.css';
+import '@css/photoswipe.css';
+
+interface Props {
+  images: GalleryImage[];
+  galleryId: string;
+}
+
+const { images, galleryId } = Astro.props;
+
+/**
+ * Responsive breakpoint thresholds (in pixels)
+ */
+const BREAKPOINTS = {
+  mobile: 500,
+  tablet: 800,
+  desktop: 1400,
+} as const;
+
+/**
+ * Target row heights for justified layout at each breakpoint (in pixels)
+ */
+const TARGET_ROW_HEIGHTS = {
+  mobile: 150,
+  tablet: 180,
+  medium: 220,
+  desktop: 280,
+} as const;
+
+/** Responsive image widths for srcset generation */
+const IMAGE_WIDTHS = [400, 600, 800, 1200];
+
+/** Number of images to load eagerly (rest are lazy loaded) */
+const EAGER_LOAD_COUNT = 8;
+
+/** Maximum width for full-size images in PhotoSwipe lightbox */
+const MAX_FULL_SIZE_WIDTH = 1600;
+
+/**
+ * Generates responsive sizes attribute for images
+ * @returns Sizes attribute string matching IMAGE_WIDTHS and BREAKPOINTS
+ */
+const getImageSizes = () => {
+  return `(max-width: ${BREAKPOINTS.mobile}px) ${IMAGE_WIDTHS[0]}px, (max-width: ${BREAKPOINTS.tablet}px) ${IMAGE_WIDTHS[1]}px, (max-width: ${BREAKPOINTS.desktop}px) ${IMAGE_WIDTHS[2]}px, ${IMAGE_WIDTHS[3]}px`;
+};
+
+// Generate full-size images for PhotoSwipe and justified layout
+const fullSizeImages = await Promise.all(
+  images.map(async (img) => {
+    const fullSize = await getImage({
+      src: img.src,
+      width: Math.min(MAX_FULL_SIZE_WIDTH, img.width), // Cap at 1600px or original
+      format: "webp",
+    });
+    return {
+      src: fullSize.src,
+      width: fullSize.attributes.width as number,
+      height: fullSize.attributes.height as number,
+    };
+  })
+);
+---
+
+<div class="photoswipe-gallery" id={`gallery-${galleryId}`}>
+  <div
+    class="gallery-justified"
+    data-pswp-gallery={galleryId}
+    data-gallery-id={galleryId}
+    data-breakpoints={JSON.stringify(BREAKPOINTS)}
+    data-row-heights={JSON.stringify(TARGET_ROW_HEIGHTS)}
+  >
+    {
+      images.map((image, index) => {
+        const fullSizeImage = fullSizeImages[index];
+        return (
+          <a
+            href={fullSizeImage.src}
+            data-pswp-width={fullSizeImage.width}
+            data-pswp-height={fullSizeImage.height}
+            data-width={fullSizeImage.width}
+            data-height={fullSizeImage.height}
+            class="gallery-item"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Image
+              src={image.src}
+              width={IMAGE_WIDTHS[3]}
+              height={Math.round((IMAGE_WIDTHS[3] * fullSizeImage.height) / fullSizeImage.width)}
+              sizes={getImageSizes()}
+              widths={IMAGE_WIDTHS}
+              format="webp"
+              loading={index < EAGER_LOAD_COUNT ? "eager" : "lazy"}
+              decoding="async"
+              alt={image.alt}
+            />
+            {image.title && <span class="hidden-caption">{image.title}</span>}
+          </a>
+        );
+      })
+    }
+  </div>
+</div>
+
+<style>
+  /* CSS custom properties */
+  :root {
+    --gallery-gap: 0.5rem;
+  }
+
+  .photoswipe-gallery {
+    width: 100%;
+    margin: 2rem 0;
+  }
+
+  .gallery-justified {
+    position: relative;
+    width: 100%;
+    /* height will be set dynamically by JavaScript */
+  }
+
+  /* Fallback layout if JavaScript fails */
+  .gallery-fallback {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--gallery-gap);
+    position: static;
+  }
+
+  .gallery-fallback .gallery-item {
+    position: static;
+    width: 100% !important;
+    height: auto !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  .gallery-fallback .gallery-item :global(img) {
+    aspect-ratio: auto;
+    width: 100%;
+    height: auto;
+  }
+
+  .gallery-item {
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    line-height: 0;
+    /* left, top, width, height will be set dynamically by JavaScript */
+  }
+
+  .gallery-item:hover {
+    /* opacity: 0.9; */
+    filter: brightness(0.9);
+  }
+
+  /* Target both direct img and img within picture element */
+  .gallery-item :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+
+  .gallery-item:hover :global(img) {
+    transform: scale(1.05);
+  }
+
+  .hidden-caption {
+    display: none;
+  }
+</style>
+
+<script>
+  import justifiedLayout from 'justified-layout';
+  import type { LayoutGeometry, Breakpoints, RowHeights } from '@mttypes/gallery';
+
+  /**
+   * Applies justified layout to a gallery by calculating and positioning images
+   * in rows with consistent heights while preserving aspect ratios.
+   *
+   * Reads configuration from data attributes, calculates optimal image positions
+   * using the justified-layout algorithm, and applies absolute positioning to
+   * each gallery item. Falls back to grid layout on error.
+   *
+   * @param gallery - The gallery container element with data-gallery-id attribute
+   */
+  function applyJustifiedLayout(gallery: HTMLElement) {
+    try {
+      const items = Array.from(gallery.querySelectorAll('.gallery-item')) as HTMLAnchorElement[];
+      if (items.length === 0) return;
+
+      // Read configuration from data attributes
+      const breakpoints: Breakpoints = JSON.parse(gallery.dataset.breakpoints || '{}');
+      const rowHeights: RowHeights = JSON.parse(gallery.dataset.rowHeights || '{}');
+
+      // Read gap from CSS custom property
+      const computedStyle = getComputedStyle(document.documentElement);
+      const gapRem = computedStyle.getPropertyValue('--gallery-gap').trim();
+      const gapSize = parseFloat(gapRem) * parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+      // Extract image dimensions
+      const imageDimensions = items.map(item => ({
+        width: parseInt(item.dataset.width || '1', 10),
+        height: parseInt(item.dataset.height || '1', 10),
+      }));
+
+      // Get container width
+      const containerWidth = gallery.offsetWidth;
+
+      // Determine target row height based on viewport
+      const viewportWidth = window.innerWidth;
+      let targetRowHeight: number;
+      if (viewportWidth < breakpoints.mobile) {
+        targetRowHeight = rowHeights.mobile;
+      } else if (viewportWidth < breakpoints.tablet) {
+        targetRowHeight = rowHeights.tablet;
+      } else if (viewportWidth < breakpoints.desktop) {
+        targetRowHeight = rowHeights.medium;
+      } else {
+        targetRowHeight = rowHeights.desktop;
+      }
+
+      // Calculate layout
+      const layoutGeometry = justifiedLayout(imageDimensions, {
+        containerWidth,
+        targetRowHeight,
+        targetRowHeightTolerance: 0.25,
+        boxSpacing: gapSize,
+        containerPadding: 0,
+      }) as LayoutGeometry;
+
+      // Apply positions to items
+      items.forEach((item, index) => {
+        const box = layoutGeometry.boxes[index];
+        item.style.left = `${box.left}px`;
+        item.style.top = `${box.top}px`;
+        item.style.width = `${box.width}px`;
+        item.style.height = `${box.height}px`;
+      });
+
+      // Set container height
+      gallery.style.height = `${layoutGeometry.containerHeight}px`;
+    } catch (error) {
+      console.error('Justified layout failed, using fallback grid layout', error);
+      gallery.classList.add('gallery-fallback');
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleries = document.querySelectorAll('[data-gallery-id]') as NodeListOf<HTMLElement>;
+
+    galleries.forEach(gallery => {
+      applyJustifiedLayout(gallery);
+    });
+
+    // Debounced resize handler
+    let resizeTimeout: number;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        galleries.forEach(gallery => {
+          applyJustifiedLayout(gallery);
+        });
+      }, 150);
+    });
+  });
+</script>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import PhotoSwipe from 'photoswipe';
+
+  // Initialize PhotoSwipe for all galleries on the page
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleries = document.querySelectorAll('[data-pswp-gallery]');
+
+    galleries.forEach((galleryEl) => {
+      const galleryId = galleryEl.getAttribute('data-pswp-gallery');
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: `[data-pswp-gallery="${galleryId}"]`,
+        children: 'a',
+        pswpModule: PhotoSwipe,
+        showHideAnimationType: 'fade',
+        initialZoomLevel: 'fit',
+        secondaryZoomLevel: 1,
+        maxZoomLevel: 1,
+        zoom: false,
+        clickToCloseNonZoomable: false,
+      });
+
+      lightbox.init();
+    });
+  });
+</script>

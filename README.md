@@ -32,3 +32,10 @@ Other
 - [x] Add sitemap
 - [ ] Migrate to server-side rendering provider
 
+Gallery
+
+- [x] Create GalleryLayout component and have better gallery styling on gallery pages
+- [x] Refartor code in [..id].astro to have a cleaner component.  Figure out what nedes to be in helper method
+- [x] Create GalleryList component to share with root page
+- [x] Think about how I want to merge with ImageGrid
+- [ ] Consider switching galleries from YAML to MDX format (like notes) to support richer introductory content with markdown/MDX before photo grid

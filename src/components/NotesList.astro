@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import { groupAndSortByDate } from "@utils/dateGrouping";
+import { isPublished } from "@utils/content";
 
 // import "@css/shared.css";
 import "@css/deflist.css";
@@ -8,9 +9,7 @@ import "@css/deflist.css";
 type Note = CollectionEntry<"notes">;
 
 // Get all non-draft notes
-const allNotes = await getCollection("notes", ({ data }: Note) => {
-  return import.meta.env.PROD ? data.isDraft !== true : true;
-});
+const allNotes = await getCollection("notes", isPublished);
 
 const sortedYearGroups = groupAndSortByDate(allNotes, {
   groupKey: (note: Note) => note.data.createdAt.getFullYear(),

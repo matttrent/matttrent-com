@@ -1,18 +1,18 @@
 ---
 import type { Note } from "@mttypes/note";
-
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import ProseWrapper from "@components/ProseWrapper.astro";
 import DevOnly from "@components/DevOnly.astro";
+
 interface Props {
+  title: string;
   content: Note;
 }
 
-const { content } = Astro.props;
-var title = content.title + (content.isDraft ? " (draft)" : "");
+const { title, content } = Astro.props;
 
-// Process content into formatted key-value pairs
+// Process content metadata for dev display
 const processedContent = Object.entries(content).map(([key, value]) => {
   let processedValue = value;
 

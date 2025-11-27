@@ -1,0 +1,22 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import ProseWrapper from "@components/ProseWrapper.astro";
+import GalleryList from "@components/GalleryList.astro";
+
+const pageTitle = "Photographs";
+
+---
+
+<Layout title={pageTitle}>
+  <Header
+    title={pageTitle}
+    subtitle="Photo collections from travels and explorations."
+    slot="header"
+  />
+
+  <ProseWrapper>
+    <GalleryList />
+  </ProseWrapper>
+</Layout>
+

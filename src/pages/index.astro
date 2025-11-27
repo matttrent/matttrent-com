@@ -6,6 +6,7 @@ import NotesList from "@components/NotesList.astro";
 import ArtifactsList from "@components/ArtifactsList.astro";
 
 import artifacts from "@data/artifacts";
+import GalleryList from "@components/GalleryList.astro";
 
 const pageTitle = "Matthew Trentacoste";
 ---
@@ -16,8 +17,8 @@ const pageTitle = "Matthew Trentacoste";
   <ProseWrapper>
     <h2 class="newsection">Now</h2>
     <p>
-      I work on AI video generation at <a href="/cv#meta">Meta</a>, where I spend a
-      lot of time thinking about training data.
+      I work on AI video generation at <a href="/cv#meta">Meta</a>, where I
+      spend a lot of time thinking about training data.
     </p>
     <p>
       When I'm not doing that, I'm usually trying to get lost in the wilderness.
@@ -56,6 +57,9 @@ const pageTitle = "Matthew Trentacoste";
 
     <h2 class="newsection">Notes</h2>
     <NotesList />
+
+    <h2 class="newsection">Photographs</h2>
+    <GalleryList />
 
     <h2 class="newsection">Random artifacts</h2>
     <ArtifactsList items={artifacts} />
