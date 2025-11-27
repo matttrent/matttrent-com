@@ -29,9 +29,11 @@ const { gallery } = Astro.props;
 const title = gallery.data.title + (gallery.data.isDraft ? " (draft)" : "");
 
 // Get gallery images using utility function
+// Use imageDir field if present, otherwise fall back to gallery ID
 const galleryImages = await getGalleryImages(
   gallery.id,
-  gallery.data.photos
+  gallery.data.photos,
+  gallery.data.imageDir
 );
 ---
 

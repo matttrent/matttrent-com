@@ -7,6 +7,7 @@ export const gallerySchema = z.object({
   createdAt: z.coerce.date(),
   modifiedAt: z.coerce.date().optional(),
   isDraft: z.boolean().default(false),
+  imageDir: z.string().optional(),
   photos: z.array(z.string()).optional(),
 });
 

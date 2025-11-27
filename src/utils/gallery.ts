@@ -6,14 +6,19 @@ import { isPublished } from "@utils/content";
 /**
  * Get images for a specific gallery, respecting photos array if present
  *
- * @param galleryId - Directory name of the gallery (e.g., "eastern-sierra-test")
+ * @param galleryId - ID of the gallery (from YAML filename)
  * @param photos - Optional array of filenames for manual ordering
+ * @param imageDir - Optional image directory name (defaults to galleryId if not specified)
  * @returns Array of images ready for PhotoSwipeGallery component
  */
 export async function getGalleryImages(
   galleryId: string,
-  photos?: string[]
+  photos?: string[],
+  imageDir?: string
 ): Promise<GalleryImage[]> {
+  // Use imageDir if provided, otherwise fall back to galleryId
+  const imageDirPath = imageDir || galleryId;
+
   // Glob all images from gallery directory
   const allImages = import.meta.glob<{ default: ImageMetadata }>(
     "@assets/gallery/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}",
@@ -22,7 +27,7 @@ export async function getGalleryImages(
 
   // Filter images that belong to this gallery
   const galleryImageEntries = Object.entries(allImages)
-    .filter(([path]) => path.includes(`/gallery/${galleryId}/`))
+    .filter(([path]) => path.includes(`/gallery/${imageDirPath}/`))
     .filter(([path]) => !path.endsWith('gallery.yaml'));
 
   // If photos array specified, use that for ordering
