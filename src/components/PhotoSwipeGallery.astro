@@ -30,8 +30,30 @@ const TARGET_ROW_HEIGHTS = {
   desktop: 280,
 } as const;
 
-/** Responsive image widths for srcset generation */
-const IMAGE_WIDTHS = [400, 600, 800, 1200];
+/**
+ * Maximum display height for grid thumbnails (in pixels)
+ *
+ * Calculation:
+ * - Maximum target row height: 280px (desktop)
+ * - Row height tolerance: ±25% (set in justified-layout config)
+ * - Maximum actual height: 280 × 1.25 = 350px
+ * - For 2x DPI (retina): 350 × 2 = 700px
+ *
+ * This ensures sharp images on retina displays without over-serving pixels.
+ */
+const MAX_GRID_HEIGHT = 700;
+
+/**
+ * Responsive image widths for srcset generation
+ *
+ * Since grid images are height-constrained (700px max) but aspect ratios vary,
+ * these widths cover common scenarios:
+ * - 350px: 1x DPI or portrait images (2:3 aspect at 700px height = 467px wide)
+ * - 525px: 1.5x DPI or square images
+ * - 700px: 2x DPI square (1:1) or 1x wide landscape
+ * - 1050px: 2x DPI landscape (3:2 aspect at 700px height = 1050px wide)
+ */
+const IMAGE_WIDTHS = [350, 525, 700, 1050];
 
 /** Number of images to load eagerly (rest are lazy loaded) */
 const EAGER_LOAD_COUNT = 8;
@@ -41,10 +63,27 @@ const MAX_FULL_SIZE_WIDTH = 1600;
 
 /**
  * Generates responsive sizes attribute for images
- * @returns Sizes attribute string matching IMAGE_WIDTHS and BREAKPOINTS
+ *
+ * Calculates expected display widths based on target row heights and average aspect ratio.
+ * Assumes 3:2 (landscape) aspect ratio, which is common in photography. The browser will
+ * multiply these by device pixel ratio (2x for retina) when selecting from srcset.
+ *
+ * Calculation:
+ * - Mobile (150px height): 150 × (3/2) = 225px width
+ * - Tablet (180px height): 180 × (3/2) = 270px width
+ * - Medium (220px height): 220 × (3/2) = 330px width
+ * - Desktop (280px height): 280 × (3/2) = 420px width
+ *
+ * @returns Sizes attribute string providing accurate width hints at each breakpoint
  */
 const getImageSizes = () => {
-  return `(max-width: ${BREAKPOINTS.mobile}px) ${IMAGE_WIDTHS[0]}px, (max-width: ${BREAKPOINTS.tablet}px) ${IMAGE_WIDTHS[1]}px, (max-width: ${BREAKPOINTS.desktop}px) ${IMAGE_WIDTHS[2]}px, ${IMAGE_WIDTHS[3]}px`;
+  // Calculate display widths assuming 3:2 aspect ratio
+  const mobileWidth = Math.round(TARGET_ROW_HEIGHTS.mobile * 1.5);
+  const tabletWidth = Math.round(TARGET_ROW_HEIGHTS.tablet * 1.5);
+  const mediumWidth = Math.round(TARGET_ROW_HEIGHTS.medium * 1.5);
+  const desktopWidth = Math.round(TARGET_ROW_HEIGHTS.desktop * 1.5);
+
+  return `(max-width: ${BREAKPOINTS.mobile}px) ${mobileWidth}px, (max-width: ${BREAKPOINTS.tablet}px) ${tabletWidth}px, (max-width: ${BREAKPOINTS.desktop}px) ${mediumWidth}px, ${desktopWidth}px`;
 };
 
 // Generate full-size images for PhotoSwipe and justified layout
@@ -88,8 +127,8 @@ const fullSizeImages = await Promise.all(
           >
             <Image
               src={image.src}
-              width={IMAGE_WIDTHS[3]}
-              height={Math.round((IMAGE_WIDTHS[3] * fullSizeImage.height) / fullSizeImage.width)}
+              height={MAX_GRID_HEIGHT}
+              width={Math.round((MAX_GRID_HEIGHT * fullSizeImage.width) / fullSizeImage.height)}
               sizes={getImageSizes()}
               widths={IMAGE_WIDTHS}
               format="webp"
