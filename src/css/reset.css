@@ -18,8 +18,6 @@ html {
 body {
   /* 3. Add accessible line-height */
   line-height: 1.5;
-  /* 4. Improve text rendering */
-  -webkit-font-smoothing: antialiased;
 }
 
 /* 5. Improve media defaults */
