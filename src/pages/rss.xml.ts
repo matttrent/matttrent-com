@@ -2,7 +2,7 @@ import rss from '@astrojs/rss';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
+import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx/container-renderer";
 import { loadRenderers } from "astro:container";
 import type { APIContext } from 'astro';
 
@@ -15,9 +15,11 @@ export async function GET(context: APIContext) {
   const renderers = await loadRenderers([getMDXRenderer()]);
   const container = await AstroContainer.create({ renderers });
 
-  const noteEntries = await getCollection("notes", ({ data }: Note) => {
-    return import.meta.env.PROD ? data.isDraft !== true : true;
-  });
+  const noteEntries = (
+    await getCollection("notes", ({ data }: Note) => {
+      return import.meta.env.PROD ? data.isDraft !== true : true;
+    })
+  ).sort((a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf());
 
   const items = [];
   for (const note of noteEntries) {
