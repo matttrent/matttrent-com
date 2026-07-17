@@ -1,5 +1,9 @@
 const artifacts = [
   {
+    date: "2026",
+    content: `Meta <a href="https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/">Muse Image and Muse Video</a> agentic media generation models`
+  },
+  {
     date: "2025",
     content: `Meta <a href="https://about.fb.com/news/2025/06/edit-videos-with-meta-ai/">generative AI video editing</a> in Meta.AI and Edits`,
   },
