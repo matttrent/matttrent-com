@@ -1,0 +1,4 @@
+# The dev config for this repository, which the `dev` script reads. The review rules are prose in CLAUDE.md.
+linear_project = "matttrent.com"
+check = "npm run build"
+design_notes = "design/notes"
